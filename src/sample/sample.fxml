@@ -14,6 +14,6 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <Button mnemonicParsing="false" text="ouais" />
+      <Button mnemonicParsing="false" text="opuais" />
    </children>
 </GridPane>
