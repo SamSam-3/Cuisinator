@@ -15,7 +15,7 @@ public class Main extends Application {
         View view = new View();
         Controller ctrl = new Controller();
 
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Cuisinator");
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
     }
