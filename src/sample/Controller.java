@@ -3,6 +3,7 @@ package sample;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 
 public class Controller {
@@ -15,15 +16,16 @@ public class Controller {
 
             switch(test.getId()){
                 case "categorie":
-                    //Faire le layer à gauche
+
+                    //Slide layer categorie vers la droite
 
 
                 case "course":
-                    //Faire le layer liste de course
+                    //Slide layer liste de course vers la gauche
 
 
                 case "avancée":
-                    //Faire le layer avancée
+                    //Apparition layer recherche avancée
 
             }
 

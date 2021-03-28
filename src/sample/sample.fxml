@@ -3,15 +3,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
-   <columnConstraints>
-      <ColumnConstraints />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints />
-   </rowConstraints>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="403.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="test" mnemonicParsing="false" onAction="#handleButtonClick" text="ouais" />
+      <Pane prefHeight="53.0" prefWidth="600.0" style="-fx-background-color: orange;">
+         <children>
+            <Button fx:id="test" mnemonicParsing="false" prefHeight="52.0" prefWidth="52.0" style="-fx-background-color: grey;" text="btnBurger" />
+            <Button layoutX="548.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="52.0" style="-fx-background-color: grey;" text="btnCourse" />
+         </children>
+      </Pane>
+      <Pane fx:id="layerCategorie" layoutX="-167.0" layoutY="53.0" prefHeight="350.0" prefWidth="160.0" style="-fx-background-color: green;" />
+      <ScrollPane fx:id="layerCourse" hbarPolicy="NEVER" layoutX="600.0" layoutY="53.0" prefHeight="350.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+         <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="349.0" prefWidth="200.0" style="-fx-background-color: green;" />
+         </content>
+      </ScrollPane>
    </children>
-</GridPane>
+</Pane>
