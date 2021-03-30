@@ -21,9 +21,9 @@ public class WebScraper {
         Elements possibleIngredients = doc.select("ul a.autobesttag");
 
         // TODO: Test si on a trouvé tout les ingredients de la liste 
-        if (possibleIngredients == null) { //  || possibleIngredients.size() < doc.select("ul li").size()
+        if (possibleIngredients == null) {
             // System.out.println(possibleIngredients.size());
-            // System.out.println(doc.select("????? ul li").size());
+            // System.out.println(doc.select(".entry-content > ul li").size());
             return null;
         }
 
