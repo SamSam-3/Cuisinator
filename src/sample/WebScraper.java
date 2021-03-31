@@ -15,28 +15,33 @@ import org.jsoup.select.Elements;
 
 public class WebScraper {
 
-    static public String[] collectIngredient(String url) throws Exception {
+    static public String[] collectIngredient(Elements psbIngredients) {
 
-        Document doc = Jsoup.connect(url).get();
-        Elements possibleIngredients = doc.select("ul a.autobesttag");
-
-        Elements tableOfContent = doc.select(".entry-content > ul li");
-        System.out.println(possibleIngredients.size());
-        System.out.println(tableOfContent.size());
-
-        if (possibleIngredients == null ) {
-            return null;
-        }
-
-        // Stockage des ingredients dans un tableau
-        String[] ingredients = new String[possibleIngredients.size()];
+        String[] ingredients = new String[psbIngredients.size()];
         int i = 0;
-        for(Element el : possibleIngredients){
+        for(Element el : psbIngredients){
             System.out.println(el.text());
             ingredients[i++] = el.text().toLowerCase();
         }
-
         return ingredients;
+    }
+
+    static public Recipe makeRecipe(String url) throws Exception {
+
+        Document doc = Jsoup.connect(url).get();
+        Elements psbIngredients = doc.select("ul a.autobesttag");
+        Elements tableOfContent = doc.select(".entry-content > ul li");
+
+        // Verifie si on a pu obtenir tout les ingredients
+        if (psbIngredients == null || psbIngredients.size() != tableOfContent.size()) {
+            return null;
+        }
+        // Obtenir le titre de la recette
+        String title = doc.selectFirst(".entry-title").text();
+
+        Recipe rcp = new Recipe(title, "dinner", collectIngredient(psbIngredients));
+
+        return rcp;
     }
 
     static public ArrayList<Recipe> collectRecipes() {
@@ -54,16 +59,14 @@ public class WebScraper {
                 System.out.println("( " + acc + "/" + size + " )");
                 acc ++;
                 ////////// Echantillon de test //////////
-                if (acc > 5)
+                if (acc > 10000)
                     break;
 
-                ////////// Trouve les ingredients dans l'url //////////
-                String[] ingredients = collectIngredient(e.attr("href"));
+                ////////// Création les recettes a partir de l'url //////////
+                Recipe rcp = makeRecipe(e.attr("href"));
+                if (rcp != null)  // Si la creation est un succés
+                    recipes.add(rcp);
 
-                if (ingredients == null)  // Si pas d'ingrédients
-                    continue;
-
-                recipes.add(new Recipe(e.text(), "dinner", ingredients));
             }
 
         } catch (Exception e) {
@@ -124,14 +127,14 @@ public class WebScraper {
 
 
         //////////////////// Test de collecte de donnée ////////////////////
-        ArrayList<Recipe> recipes = collectRecipes();
-        
+        ArrayList<Recipe> r = collectRecipes();
+
         //////////////////// Test de sauvegarde ////////////////////
         // saveRecipes(recipes);
 
         //////////////////// Test de charge en memoire ////////////////////
         //ArrayList<Recipe> r = load();
-        //System.out.println(r);
+        System.out.println(r);
 
         //////////////////// Test mapping ////////////////////
         // RecipeMap mappedRecipe = new RecipeMap(r);
