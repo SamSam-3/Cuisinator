@@ -20,10 +20,11 @@ public class WebScraper {
         Document doc = Jsoup.connect(url).get();
         Elements possibleIngredients = doc.select("ul a.autobesttag");
 
-        // TODO: Test si on a trouvé tout les ingredients de la liste 
-        if (possibleIngredients == null) {
-            // System.out.println(possibleIngredients.size());
-            // System.out.println(doc.select(".entry-content > ul li").size());
+        Elements tableOfContent = doc.select(".entry-content > ul li");
+        System.out.println(possibleIngredients.size());
+        System.out.println(tableOfContent.size());
+
+        if (possibleIngredients == null ) {
             return null;
         }
 
@@ -42,8 +43,6 @@ public class WebScraper {
         String url = "http://www.lesrecettesdecuisine.com/liste-recettes-cuisine-html";
         ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 
-    
-
         try {
             Document doc = Jsoup.connect(url).get();
             Elements linkGroup = doc.select("h3 a");
@@ -55,13 +54,13 @@ public class WebScraper {
                 System.out.println("( " + acc + "/" + size + " )");
                 acc ++;
                 ////////// Echantillon de test //////////
-                // if (acc > 50) 
-                //     break; 
+                if (acc > 5)
+                    break;
 
                 ////////// Trouve les ingredients dans l'url //////////
                 String[] ingredients = collectIngredient(e.attr("href"));
 
-                if (ingredients == null) 
+                if (ingredients == null)  // Si pas d'ingrédients
                     continue;
 
                 recipes.add(new Recipe(e.text(), "dinner", ingredients));
@@ -124,15 +123,17 @@ public class WebScraper {
         // recipes.add(new Recipe("Crème brulée", "dessert", new String[]{"crème"}));
 
 
-        //////////////////// Test collecte de donnée ////////////////////
-        // ArrayList<Recipe> recipes = collectRecipes();
+        //////////////////// Test de collecte de donnée ////////////////////
+        ArrayList<Recipe> recipes = collectRecipes();
         
-        //////////////////// Sauvegarde test ////////////////////
+        //////////////////// Test de sauvegarde ////////////////////
         // saveRecipes(recipes);
 
-        //////////////////// Load test ////////////////////
-        ArrayList<Recipe> r = load();
-        System.out.println(r);
+        //////////////////// Test de charge en memoire ////////////////////
+        //ArrayList<Recipe> r = load();
+        //System.out.println(r);
+
+        //////////////////// Test mapping ////////////////////
         // RecipeMap mappedRecipe = new RecipeMap(r);
         // System.out.println(mappedRecipe);
     }
