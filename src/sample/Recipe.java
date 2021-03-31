@@ -7,15 +7,16 @@ public class Recipe implements Serializable{
     private String category;
     private String name;
     private String[] ingredients;
-    //String[] steps;
+    private String[] requirements;
 
-    public Recipe(String name, String category, String[] ingredients) {
+    public Recipe(String name, String category, String[] ingredients, String[] requirements) {
         this.name = name;
         this.ingredients = ingredients;
         this.category = category;
-        //this.steps = steps;
+        this.requirements = requirements;
+
     }
-    
+
     @Override
     public String toString() {
         return this.name;
@@ -43,5 +44,13 @@ public class Recipe implements Serializable{
 
     public void setIngredients(String[] ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public String[] getRequirements() {
+        return requirements;
+    }
+
+    public void setRequirements(String[] steps) {
+        this.requirements = requirements;
     }
 }
