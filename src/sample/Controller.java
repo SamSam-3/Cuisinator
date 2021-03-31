@@ -3,10 +3,10 @@ package sample;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.Pane;
 
 public class Controller {
@@ -19,6 +19,9 @@ public class Controller {
 
     @FXML
     private Button btnCourse;
+
+    @FXML
+    private TextField barreRecherche;
 
     @FXML
     private Pane parent;
@@ -42,18 +45,28 @@ public class Controller {
             switch(test.getId()){
                 case "categorie":
                     //Slide layer categorie vers la droite
-
+                    //layerCategorie.setTranslateX(layerCategorie.layoutXProperty().getValue()+167);
 
                 case "course":
                     //Slide layer liste de course vers la gauche
 
 
-                case "avancée":
+                case "avancee":
                     //Apparition layer recherche avancée
 
             }
-
         }
+
+    @FXML
+    public void recipeFinder(){
+
+        barreRecherche.setOnInputMethodTextChanged(new EventHandler<InputMethodEvent>() {
+            @Override
+            public void handle(InputMethodEvent inputMethodEvent) {
+                System.out.println("oui");
+            }
+        });
+    }
 
     public Controller() {
 
