@@ -3,12 +3,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="403.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="403.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <Pane prefHeight="53.0" prefWidth="600.0" style="-fx-background-color: orange;">
          <children>
-            <Button fx:id="btnBurger" mnemonicParsing="false" prefHeight="52.0" prefWidth="52.0" style="-fx-background-color: grey;" text="btnBurger" />
-            <Button layoutX="548.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="52.0" style="-fx-background-color: grey;" text="btnCourse" />
+            <Button fx:id="categorie" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="52.0" prefWidth="52.0" style="-fx-background-color: grey;" text="btnBurger" />
+            <Button fx:id="course" layoutX="548.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="52.0" style="-fx-background-color: grey;" text="btnCourse" />
          </children>
       </Pane>
       <Pane fx:id="layerCategorie" layoutX="-167.0" layoutY="53.0" prefHeight="350.0" prefWidth="160.0" style="-fx-background-color: green;" />

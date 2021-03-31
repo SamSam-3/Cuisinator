@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
@@ -12,20 +13,34 @@ public class Controller {
 
     @FXML
     private Button btnAvancee;
+
+    @FXML
     private Button btnCategorie;
+
+    @FXML
     private Button btnCourse;
+
+    @FXML
     private Pane parent;
+
+    @FXML
     private Pane toolbar;
+
+    @FXML
     private Pane layerCategorie;
+
+    @FXML
     private ScrollPane layerCourse;
 
     @FXML
     public void handleButtonClick(ActionEvent evt){
             Button test = (Button) evt.getSource();
+
+            //Affiche IDs boutons
             System.out.println(test.getId());
+
             switch(test.getId()){
                 case "categorie":
-
                     //Slide layer categorie vers la droite
 
 
@@ -38,32 +53,9 @@ public class Controller {
 
             }
 
-
-            System.out.println(test.getId());
         }
 
     public Controller() {
-        this.btnAvancee = new Button();
-        this.btnCategorie = new Button();
-        this.btnCourse = new Button();
-        this.parent = new Pane();
-        this.toolbar = new Pane();
-        this.layerCategorie = new Pane();
-        this.layerCourse = new ScrollPane();
 
-        //Ajout de la toolbar à la pane principal
-        parent.getChildren().add(toolbar);
-
-        //Ajout des éléments à la toolbar
-        toolbar.getChildren().add(btnCategorie);
-        btnCategorie.setId("btnBurger");
-        toolbar.getChildren().add(btnCourse);
-        toolbar.getChildren().add(btnAvancee);
-
-        //Ajout des panes Categorie et liste de course
-        parent.getChildren().add(layerCategorie);
-        parent.getChildren().add(layerCourse);
-
-        btnCategorie.setOnAction(this::handleButtonClick);
         }
 }
