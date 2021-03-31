@@ -15,32 +15,36 @@ import org.jsoup.select.Elements;
 
 public class WebScraper {
 
-    static public String[] collectIngredient(Elements psbIngredients) {
-
-        String[] ingredients = new String[psbIngredients.size()];
-        int i = 0;
-        for(Element el : psbIngredients){
-            System.out.println(el.text());
-            ingredients[i++] = el.text().toLowerCase();
-        }
-        return ingredients;
-    }
 
     static public Recipe makeRecipe(String url) throws Exception {
-
+        ////////// Collect des elements //////////
         Document doc = Jsoup.connect(url).get();
         Elements psbIngredients = doc.select("ul a.autobesttag");
         Elements tableOfContent = doc.select(".entry-content > ul li");
+        Elements steps = doc.select(".entry-content > ul li");
 
         // Verifie si on a pu obtenir tout les ingredients
         if (psbIngredients == null || psbIngredients.size() != tableOfContent.size()) {
             return null;
         }
-        // Obtenir le titre de la recette
+
+        ////////// Obtention des attribut pour construire la recette //////////
         String title = doc.selectFirst(".entry-title").text();
+        String category = "dinner";
+        String[] ingredients = new String[tableOfContent.size()];
+        String[] requirements = new String[tableOfContent.size()];
 
-        Recipe rcp = new Recipe(title, "dinner", collectIngredient(psbIngredients));
-
+        int i = 0;
+        for(Element el : tableOfContent){
+            requirements[i] = el.text();
+            Element a = el.selectFirst("a.autobesttag");
+            if (a == null)
+                return null;
+            ingredients[i] = a.text().toLowerCase();
+            i++;
+        }
+        ////////// Creation de la recette //////////
+        Recipe rcp = new Recipe(title, category, ingredients, requirements);
         return rcp;
     }
 
@@ -59,7 +63,7 @@ public class WebScraper {
                 System.out.println("( " + acc + "/" + size + " )");
                 acc ++;
                 ////////// Echantillon de test //////////
-                if (acc > 10000)
+                if (acc > 20)
                     break;
 
                 ////////// Création les recettes a partir de l'url //////////
@@ -137,8 +141,8 @@ public class WebScraper {
         System.out.println(r);
 
         //////////////////// Test mapping ////////////////////
-        // RecipeMap mappedRecipe = new RecipeMap(r);
-        // System.out.println(mappedRecipe);
+        RecipeMap mappedRecipe = new RecipeMap(r);
+        System.out.println(mappedRecipe);
     }
 
 }
