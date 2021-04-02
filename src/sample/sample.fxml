@@ -8,13 +8,20 @@
       <Pane prefHeight="53.0" prefWidth="600.0" style="-fx-background-color: orange;">
          <children>
             <Button fx:id="categorie" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="52.0" prefWidth="52.0" style="-fx-background-color: grey;" text="btnBurger" />
-            <Button fx:id="course" layoutX="548.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="52.0" style="-fx-background-color: grey;" text="btnCourse" />
+            <Button fx:id="course" layoutX="548.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="52.0" prefWidth="52.0" style="-fx-background-color: grey;" text="btnCourse" />
+            <TextField fx:id="barreRecherche" layoutX="147.0" layoutY="10.0" onKeyReleased="#recipeFinder" prefHeight="31.0" prefWidth="267.0" promptText="Je cherche ..." />
+            <Button fx:id="avancee" layoutX="414.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="40.0" prefWidth="40.0" text="btnAvancee" />
          </children>
       </Pane>
       <Pane fx:id="layerCategorie" layoutX="-167.0" layoutY="53.0" prefHeight="350.0" prefWidth="160.0" style="-fx-background-color: green;" />
       <ScrollPane fx:id="layerCourse" hbarPolicy="NEVER" layoutX="600.0" layoutY="53.0" prefHeight="350.0" prefWidth="200.0" vbarPolicy="ALWAYS">
          <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="349.0" prefWidth="200.0" style="-fx-background-color: green;" />
+         </content>
+      </ScrollPane>
+      <ScrollPane fx:id="recettePossible" hbarPolicy="NEVER" layoutX="149.0" layoutY="53.0" onKeyPressed="#recipeFinder" prefHeight="118.0" prefWidth="305.0" visible="false">
+         <content>
+          <AnchorPane fx:id="liste" minHeight="0.0" minWidth="0.0" prefHeight="142.0" prefWidth="288.0" visible="false" />
          </content>
       </ScrollPane>
    </children>

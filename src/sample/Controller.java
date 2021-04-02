@@ -3,11 +3,23 @@ package sample;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.InputMethodEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+
+import java.awt.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
 
 public class Controller {
 
@@ -19,6 +31,12 @@ public class Controller {
 
     @FXML
     private Button btnCourse;
+
+    @FXML
+    private AnchorPane liste;
+
+    @FXML
+    private ScrollPane recettePossible;
 
     @FXML
     private TextField barreRecherche;
@@ -58,16 +76,44 @@ public class Controller {
         }
 
     @FXML
-    public void recipeFinder(){
+    public void recipeFinder() {
+        FlowPane fp = new FlowPane();
 
-        barreRecherche.setOnInputMethodTextChanged(new EventHandler<InputMethodEvent>() {
-            @Override
-            public void handle(InputMethodEvent inputMethodEvent) {
-                System.out.println("oui");
+        System.out.println(barreRecherche.getCharacters() + " | " + barreRecherche.getCharacters().length());
+
+        if (barreRecherche.getCharacters().length() > 0) {
+            ArrayList<Recipe> r = null;
+
+            recettePossible.setVisible(true);
+            recettePossible.setPannable(true);
+
+            try {
+                FileInputStream fis = new FileInputStream("recipes.data");
+                ObjectInputStream ois = new ObjectInputStream(fis);
+
+                r = (ArrayList<Recipe>) ois.readObject();
+
+                ois.close();
+                fis.close();
+
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
             }
-        });
-    }
 
+            //ArrayList<Recipe> recette = new ArrayList<Recipe>();
+
+            System.out.println("############################################################################################################");
+            for (int i = 0; i < r.size(); i++) {
+                if (r.get(i).getName().toLowerCase().contains(barreRecherche.getCharacters().toString().toLowerCase())) {
+                    fp.getChildren().add(new Label(r.get(i).getName())); //Modifier label pour qu'ils soient Clickable
+                    System.out.println(r.get(i).getName()); //Affiche les recettes correspondantes
+                }
+            }
+            fp.setOrientation(Orientation.VERTICAL);
+            recettePossible.setContent(fp);
+            System.out.println("############################################################################################################");
+        }
+    }
     public Controller() {
 
         }
