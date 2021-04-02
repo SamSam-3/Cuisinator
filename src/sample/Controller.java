@@ -3,16 +3,18 @@ package sample;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 import java.awt.*;
 import java.io.FileInputStream;
@@ -42,7 +44,7 @@ public class Controller {
     private TextField barreRecherche;
 
     @FXML
-    private Pane parent;
+    private Pane accueil;
 
     @FXML
     private Pane toolbar;
@@ -77,11 +79,15 @@ public class Controller {
 
     @FXML
     public void recipeFinder() {
-        FlowPane fp = new FlowPane();
+        VBox vb = new VBox();
 
         System.out.println(barreRecherche.getCharacters() + " | " + barreRecherche.getCharacters().length());
 
         if (barreRecherche.getCharacters().length() > 0) {
+            vb.setOnMouseClicked((mouseEvent -> {
+                Text recette = (Text) mouseEvent.getTarget();
+                System.out.println(recette.getText());
+            }));
             ArrayList<Recipe> r = null;
 
             recettePossible.setVisible(true);
@@ -100,18 +106,24 @@ public class Controller {
                 e.printStackTrace();
             }
 
-            //ArrayList<Recipe> recette = new ArrayList<Recipe>();
-
             System.out.println("############################################################################################################");
             for (int i = 0; i < r.size(); i++) {
                 if (r.get(i).getName().toLowerCase().contains(barreRecherche.getCharacters().toString().toLowerCase())) {
-                    fp.getChildren().add(new Label(r.get(i).getName())); //Modifier label pour qu'ils soient Clickable
+
+                    Label lb = new Label(r.get(i).getName());
+                    vb.getChildren().add(lb); //Modifier label pour qu'ils soient Clickable
+
                     System.out.println(r.get(i).getName()); //Affiche les recettes correspondantes
                 }
             }
-            fp.setOrientation(Orientation.VERTICAL);
-            recettePossible.setContent(fp);
+            recettePossible.setContent(vb);
             System.out.println("############################################################################################################");
+        }
+
+        if (barreRecherche.getCharacters().length() == 0) {
+            recettePossible.setVisible(false);
+            recettePossible.setPannable(false);
+
         }
     }
     public Controller() {

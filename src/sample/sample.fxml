@@ -19,9 +19,9 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="349.0" prefWidth="200.0" style="-fx-background-color: green;" />
          </content>
       </ScrollPane>
-      <ScrollPane fx:id="recettePossible" hbarPolicy="NEVER" layoutX="149.0" layoutY="53.0" onKeyPressed="#recipeFinder" prefHeight="118.0" prefWidth="305.0" visible="false">
+      <ScrollPane fx:id="recettePossible" hbarPolicy="NEVER" layoutX="149.0" layoutY="53.0" maxHeight="305.0" maxWidth="305.0" onKeyPressed="#recipeFinder" prefHeight="118.0" prefWidth="305.0" visible="false">
          <content>
-          <AnchorPane fx:id="liste" minHeight="0.0" minWidth="0.0" prefHeight="142.0" prefWidth="288.0" visible="false" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="119.0" prefWidth="288.0" visible="false" />
          </content>
       </ScrollPane>
    </children>
