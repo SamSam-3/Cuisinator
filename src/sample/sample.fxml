@@ -2,8 +2,9 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="403.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<Pane fx:id="accueil" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="403.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <Pane prefHeight="53.0" prefWidth="600.0" style="-fx-background-color: orange;">
          <children>
@@ -13,7 +14,15 @@
             <Button fx:id="avancee" layoutX="414.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="40.0" prefWidth="40.0" text="btnAvancee" />
          </children>
       </Pane>
-      <Pane fx:id="layerCategorie" layoutX="-167.0" layoutY="53.0" prefHeight="350.0" prefWidth="160.0" style="-fx-background-color: green;" />
+      <Pane fx:id="layerCategorie" layoutX="-150.0" layoutY="53.0" prefHeight="350.0" prefWidth="150.0" style="-fx-background-color: orange;">
+         <children>
+            <Label contentDisplay="CENTER" layoutX="13.0" layoutY="12.0" prefHeight="40.0" prefWidth="133.0" text="Catégorie :" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" underline="true">
+               <font>
+                  <Font name="Arial" size="25.0" />
+               </font>
+            </Label>
+            <VBox fx:id="diffCat" layoutY="75.0" prefHeight="272.0" prefWidth="160.0" />
+         </children></Pane>
       <ScrollPane fx:id="layerCourse" hbarPolicy="NEVER" layoutX="600.0" layoutY="53.0" prefHeight="350.0" prefWidth="200.0" vbarPolicy="ALWAYS">
          <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="349.0" prefWidth="200.0" style="-fx-background-color: green;" />
