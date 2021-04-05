@@ -7,6 +7,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.Effect;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -16,6 +20,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Controller {
 
@@ -25,6 +30,7 @@ public class Controller {
     int co=0;
     int av=0;
     ArrayList<Recipe> r = null;
+    ArrayList<Recipe> recetteclickable = new ArrayList<Recipe>();
 
     //####### ELEMENTS INTERACTIFS #######
     @FXML
@@ -39,13 +45,16 @@ public class Controller {
     @FXML
     private TextField barreRecherche;
 
+    @FXML
+    ImageView imageRecette = new ImageView();
+
+    @FXML
+    Label titreRecette = new Label();
+
     //####### AFFICHAGE PANE #######
 
     @FXML
     private ScrollPane recettePossible; //Affichage des recettes contenant le terme recherché
-
-    @FXML
-    private Pane accueil; //A modifier pour la page de trend
 
     @FXML
     private Pane layerCategorie;
@@ -54,7 +63,17 @@ public class Controller {
     private ScrollPane layerCourse;
 
     @FXML
-    private VBox diffCat; //Affichage éléments catégorie vertical et + propre
+    private ScrollPane recipeContainer;
+
+    @FXML
+    private VBox diffCat; //Affichage des éléments "catégorie" (vertical et + propre)
+
+    @FXML
+    private VBox vb;
+
+    @FXML
+    private VBox ingredientsRequis;
+
 
     //####### FONCTIONS #######
 
@@ -139,27 +158,26 @@ public class Controller {
 
     @FXML
     public void recipeFinder() {
-        VBox vb = new VBox();
         r = init();
 
-        System.out.println(barreRecherche.getCharacters() + " | " + barreRecherche.getCharacters().length());
+        System.out.println(recettePossible.isVisible());
 
         if (barreRecherche.getCharacters().length() > 0) {
-            vb.setOnMouseClicked((mouseEvent -> {
-                Text recette = (Text) mouseEvent.getTarget();
-                System.out.println(recette.getText());
-            }));
+            vb.getChildren().clear();
+            recetteclickable.clear();
 
+            recettePossible.toFront();
             recettePossible.setVisible(true);
             recettePossible.setPannable(true);
 
             System.out.println("############################################################################################################");
             for (int i = 0; i < r.size(); i++) {
-                if (r.get(i).getName().toLowerCase().contains(barreRecherche.getCharacters().toString().toLowerCase())) {
+                if (r.get(i).getName().toLowerCase().contains(barreRecherche.getCharacters().toString().toLowerCase())) { //A modifier pour faire des recherches sans accents et autres caracteres spéciaux
 
                     Label lb = new Label(r.get(i).getName());
                     lb.setFont(new Font("Arial",15));
-                    vb.getChildren().add(lb); //Modifier label pour qu'ils soient Clickable
+                    vb.getChildren().add(lb);
+                    recetteclickable.add(r.get(i));
 
                     System.out.println(r.get(i).getName()); //Affiche les recettes correspondantes
                 }
@@ -172,6 +190,33 @@ public class Controller {
             recettePossible.setVisible(false);
             recettePossible.setPannable(false);
 
+            vb.getChildren().clear();
+            recetteclickable.clear();
+
+        }
+    }
+
+    @FXML
+    public void watchRecipe(MouseEvent mouseEvent){
+
+        Text recette = (Text) mouseEvent.getTarget();
+
+        for(Recipe recipe : recetteclickable){
+            if(recipe.getName().equals(recette.getText())){
+
+                recettePossible.setVisible(false);
+                recipeContainer.setVisible(true);
+                titreRecette.setText(recipe.getName());
+                //imageRecette.setImage(new Image(r.getImage())); //Affichage de l'image (Ajouter une banque d'images)
+
+                for(String ing : recipe.getIngredients()){
+                    Label lb = new Label("\t-\t"+ing);
+                    lb.setFont(new Font("Arial",20));
+                    ingredientsRequis.getChildren().add(lb);
+                }
+                System.out.println(Arrays.toString(recipe.getRequirements()));
+
+            }
         }
     }
 
