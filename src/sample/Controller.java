@@ -3,10 +3,7 @@ package sample;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -31,6 +28,7 @@ public class Controller {
     int av=0;
     ArrayList<Recipe> r = null;
     ArrayList<Recipe> recetteclickable = new ArrayList<Recipe>();
+    ArrayList<String> ingredientsManquant = new ArrayList<String>();
 
     //####### ELEMENTS INTERACTIFS #######
     @FXML
@@ -126,9 +124,9 @@ public class Controller {
                             diffCat.setSpacing(10);
                             diffCat.setAlignment(Pos.TOP_CENTER);
                             diffCat.getChildren().add(lb);
-
                         }
                         layerCategorie.setTranslateX(Math.abs(layerCategorie.getLayoutX()));
+                        layerCategorie.toFront();
                         ca=1;
 
                     } else {
@@ -140,6 +138,16 @@ public class Controller {
 
                 case "course":
                     //Slide layer liste de course vers la gauche
+
+                    VBox liste = new VBox();
+                    for (String s : ingredientsManquant) {
+                        Label ig = new Label(s);
+                        ig.setFont(new Font("Arial", 15));
+                        liste.getChildren().add(ig);
+                    }
+
+                    layerCourse.setContent(liste);
+                    layerCourse.toFront();
 
                     if(co == 0){
                         layerCourse.setTranslateX(-layerCourse.getWidth());
@@ -157,7 +165,7 @@ public class Controller {
         }
 
     @FXML
-    public void recipeFinder() {
+    public void findRecipe() {
         r = init();
 
         System.out.println(recettePossible.isVisible());
@@ -203,22 +211,34 @@ public class Controller {
 
         for(Recipe recipe : recetteclickable){
             if(recipe.getName().equals(recette.getText())){
-
+                ingredientsRequis.getChildren().clear();
                 recettePossible.setVisible(false);
                 recipeContainer.setVisible(true);
                 titreRecette.setText(recipe.getName());
                 //imageRecette.setImage(new Image(r.getImage())); //Affichage de l'image (Ajouter une banque d'images)
 
                 for(String ing : recipe.getIngredients()){
-                    Label lb = new Label("\t-\t"+ing);
-                    lb.setFont(new Font("Arial",20));
-                    ingredientsRequis.getChildren().add(lb);
-                }
-                System.out.println(Arrays.toString(recipe.getRequirements()));
+                    CheckBox cb = new CheckBox(ing);
 
+                    cb.setOnAction(actionEvent -> {
+
+                        CheckBox ch = (CheckBox) actionEvent.getTarget();
+                        if(ingredientsManquant.contains(ch.getText())){
+                           ingredientsManquant.remove(ch.getText());
+                        } else {
+                            ingredientsManquant.add(ch.getText());
+                        }
+                        System.out.println(ingredientsManquant);
+                    });
+
+                    ingredientsManquant.add(ing);
+                    ingredientsRequis.getChildren().add(cb);
+                }
             }
         }
+
     }
+
 
     public Controller() {
 

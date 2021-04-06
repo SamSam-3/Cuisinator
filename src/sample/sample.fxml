@@ -11,7 +11,7 @@
          <children>
             <Button fx:id="categorie" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="52.0" prefWidth="52.0" style="-fx-background-color: grey;" text="btnBurger" />
             <Button fx:id="course" layoutX="548.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="52.0" prefWidth="52.0" style="-fx-background-color: grey;" text="btnCourse" />
-            <TextField fx:id="barreRecherche" layoutX="147.0" layoutY="10.0" onKeyReleased="#recipeFinder" prefHeight="31.0" prefWidth="267.0" promptText="Je cherche ..." />
+            <TextField fx:id="barreRecherche" layoutX="147.0" layoutY="10.0" onKeyReleased="#findRecipe" prefHeight="31.0" prefWidth="267.0" promptText="Je cherche ..." />
             <Button fx:id="avancee" layoutX="414.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="40.0" prefWidth="40.0" text="btnAvancee" />
          </children>
       </Pane>
@@ -29,7 +29,7 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="349.0" prefWidth="200.0" style="-fx-background-color: green;" />
          </content>
       </ScrollPane>
-      <ScrollPane fx:id="recettePossible" cache="true" hbarPolicy="NEVER" layoutX="149.0" layoutY="53.0" maxHeight="305.0" maxWidth="305.0" onKeyPressed="#recipeFinder" prefHeight="118.0" prefWidth="305.0" visible="false">
+      <ScrollPane fx:id="recettePossible" cache="true" hbarPolicy="NEVER" layoutX="149.0" layoutY="53.0" maxHeight="305.0" maxWidth="305.0" onKeyPressed="#findRecipe" prefHeight="118.0" prefWidth="305.0" visible="false">
          <content>
             <VBox fx:id="vb" onMouseClicked="#watchRecipe" prefHeight="118.0" prefWidth="304.0" />
          </content>
@@ -44,7 +44,7 @@
                      </font>
                   </Label>
                   <ImageView fx:id="imageRecette" fitHeight="166.0" fitWidth="322.0" layoutX="139.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true" />
-                  <VBox fx:id="ingredientsRequis" alignment="CENTER_LEFT" layoutX="-1.0" layoutY="192.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="156.0" prefWidth="305.0" />
+                  <VBox fx:id="ingredientsRequis" alignment="CENTER_LEFT" layoutX="37.0" layoutY="192.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="156.0" prefWidth="267.0" />
                </children>
             </Pane>
          </content>
