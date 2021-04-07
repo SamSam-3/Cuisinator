@@ -32,7 +32,7 @@ public class WebScraper {
         String title = doc.selectFirst(".entry-title").text();
         String[] ingredients = new String[tableOfContent.size()];
         String[] requirements = new String[tableOfContent.size()];
-        String img = doc.selectFirst("div[class='post-thumbnail']").text();
+        String img = doc.selectFirst(".post-thumbnail img").absUrl("src");
 
         int i = 0;
         for(Element el : tableOfContent){
