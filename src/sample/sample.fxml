@@ -29,11 +29,20 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="349.0" prefWidth="200.0" style="-fx-background-color: green;" />
          </content>
       </ScrollPane>
-      <ScrollPane fx:id="recettePossible" cache="true" hbarPolicy="NEVER" layoutX="149.0" layoutY="53.0" maxHeight="305.0" maxWidth="305.0" onKeyPressed="#findRecipe" prefHeight="118.0" prefWidth="305.0" visible="false">
-         <content>
-            <VBox fx:id="vb" onMouseClicked="#watchRecipe" prefHeight="118.0" prefWidth="304.0" />
-         </content>
-      </ScrollPane>
+      <VBox fx:id="listing" layoutX="149.0" layoutY="53.0">
+         <children>
+            <ScrollPane fx:id="recettePossible" cache="true" hbarPolicy="NEVER" maxHeight="300.0" maxWidth="300.0" onKeyPressed="#findRecipe" prefHeight="120.0" prefWidth="300.0" visible="false">
+               <content>
+                  <VBox fx:id="vb" onMouseClicked="#watchRecipe" prefHeight="120.0" prefWidth="300.0" />
+               </content>
+            </ScrollPane>
+            <ScrollPane fx:id="ingredientsPossible" disable="true" hbarPolicy="NEVER" prefHeight="120.0" prefWidth="300.0" visible="false">
+               <content>
+                  <VBox fx:id="vbI" prefHeight="120.0" prefWidth="300.0" />
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
       <ScrollPane fx:id="recipeContainer" cache="true" focusTraversable="false" hbarPolicy="NEVER" layoutY="53.0" prefHeight="350.0" prefWidth="600.0" visible="false">
          <content>
             <Pane prefHeight="351.0" prefWidth="600.0">

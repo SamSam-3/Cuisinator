@@ -26,19 +26,13 @@ public class Controller {
     int ca=0;
     int co=0;
     int av=0;
-    ArrayList<Recipe> r = null;
+    ArrayList<Recipe> r = init();
+    ArrayList<String> I = null;
+
     ArrayList<Recipe> recetteclickable = new ArrayList<Recipe>();
     ArrayList<String> ingredientsManquant = new ArrayList<String>();
 
     //####### ELEMENTS INTERACTIFS #######
-    @FXML
-    private Button btnAvancee;
-
-    @FXML
-    private Button btnCategorie;
-
-    @FXML
-    private Button btnCourse;
 
     @FXML
     private TextField barreRecherche;
@@ -55,6 +49,9 @@ public class Controller {
     private ScrollPane recettePossible; //Affichage des recettes contenant le terme recherché
 
     @FXML
+    private ScrollPane ingredientsPossible;
+
+    @FXML
     private Pane layerCategorie;
 
     @FXML
@@ -68,6 +65,12 @@ public class Controller {
 
     @FXML
     private VBox vb;
+
+    @FXML
+    private VBox vbI;
+
+    @FXML
+    private VBox listing;
 
     @FXML
     private VBox ingredientsRequis;
@@ -95,16 +98,27 @@ public class Controller {
     } //Initialisation de l'ArrayList plus simple
 
     private ArrayList<String> getCategories(){
-        r = init();
         ArrayList<String> categories = new ArrayList<String>();
 
-        for(int i=0;i<r.size();i++){
-            if(!categories.contains(r.get(i).getCategory())){
-                categories.add(r.get(i).getCategory());
+        for (Recipe recipe : r) {
+            if (!categories.contains(recipe.getCategory())) {
+                categories.add(recipe.getCategory());
             }
         }
         return categories;
     } //Récupère les catégories pour le layer Catégorie
+
+    private ArrayList<String> getAllIngredients(){
+        for (Recipe recipe : r) {
+            for (String ing : recipe.getIngredients()) {
+                if(!I.contains(ing)){
+                    I.add(ing);
+                }
+            }
+        }
+
+        return I;
+    }
 
     @FXML
     public void handleButtonClick(ActionEvent evt){
@@ -112,7 +126,6 @@ public class Controller {
 
             //Affiche IDs boutons
             System.out.println(test.getId());
-
             switch(test.getId()){
                 case "categorie":
 
@@ -160,47 +173,55 @@ public class Controller {
 
                 case "avancee":
                     //Apparition layer recherche avancée
+                    if(av == 0 && recettePossible.isVisible()) {
+                        vbI.getChildren().add(new Label("Test"));
+                        ingredientsPossible.setVisible(true);
+                        av=1;
+                    } else {
+                        ingredientsPossible.setVisible(false);
+
+                        av=0;
+                    }
                     break;
             }
         }
 
     @FXML
     public void findRecipe() {
-        r = init();
-
         System.out.println(recettePossible.isVisible());
 
         if (barreRecherche.getCharacters().length() > 0) {
             vb.getChildren().clear();
             recetteclickable.clear();
 
-            recettePossible.toFront();
+            listing.toFront();
+            listing.setVisible(true);
             recettePossible.setVisible(true);
-            recettePossible.setPannable(true);
 
             System.out.println("############################################################################################################");
-            for (int i = 0; i < r.size(); i++) {
-                if (r.get(i).getName().toLowerCase().contains(barreRecherche.getCharacters().toString().toLowerCase())) { //A modifier pour faire des recherches sans accents et autres caracteres spéciaux
+            for (Recipe recipe : r) {
+                if (recipe.getName().toLowerCase().contains(barreRecherche.getCharacters().toString().toLowerCase())) { //A modifier pour faire des recherches sans accents et autres caracteres spéciaux
 
-                    Label lb = new Label(r.get(i).getName());
-                    lb.setFont(new Font("Arial",15));
+                    Label lb = new Label(recipe.getName());
+                    lb.setFont(new Font("Arial", 15));
                     vb.getChildren().add(lb);
-                    recetteclickable.add(r.get(i));
+                    recetteclickable.add(recipe);
 
-                    System.out.println(r.get(i).getName()); //Affiche les recettes correspondantes
+                    System.out.println(recipe.getName()); //Affiche les recettes correspondantes
                 }
             }
             recettePossible.setContent(vb);
             System.out.println("############################################################################################################");
+
+
         }
 
         if (barreRecherche.getCharacters().length() == 0) {
-            recettePossible.setVisible(false);
-            recettePossible.setPannable(false);
+            listing.setVisible(false);
 
             vb.getChildren().clear();
             recetteclickable.clear();
-
+            vbI.getChildren().clear();
         }
     }
 
@@ -238,7 +259,6 @@ public class Controller {
         }
 
     }
-
 
     public Controller() {
 
