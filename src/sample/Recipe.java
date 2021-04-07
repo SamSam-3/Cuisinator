@@ -8,13 +8,14 @@ public class Recipe implements Serializable{
     private String name;
     private String[] ingredients;
     private String[] requirements;
+    private String image;  
 
-    public Recipe(String name, String category, String[] ingredients, String[] requirements) {
+    public Recipe(String name, String category, String[] ingredients, String[] requirements, String image) {
         this.name = name;
         this.ingredients = ingredients;
         this.category = category;
         this.requirements = requirements;
-
+        this.image = image;
     }
 
     @Override
@@ -50,7 +51,14 @@ public class Recipe implements Serializable{
         return requirements;
     }
 
-    public void setRequirements(String[] steps) {
+    public void setRequirements(String[] requirements) {
         this.requirements = requirements;
+    }
+    public String[] getImage() {
+        return image;
+    }
+
+    public void setImage(String img) {
+        this.image = img;
     }
 }

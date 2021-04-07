@@ -131,18 +131,18 @@ public class WebScraper {
 
 
         //////////////////// Test de collecte de donnée ////////////////////
-        ArrayList<Recipe> r = collectRecipes();
+        //ArrayList<Recipe> r = collectRecipes();
 
         //////////////////// Test de sauvegarde ////////////////////
         // saveRecipes(recipes);
 
         //////////////////// Test de charge en memoire ////////////////////
         //ArrayList<Recipe> r = load();
-        System.out.println(r);
+        //System.out.println(r);
 
         //////////////////// Test mapping ////////////////////
-        RecipeMap mappedRecipe = new RecipeMap(r);
-        System.out.println(mappedRecipe);
+        //RecipeMap mappedRecipe = new RecipeMap(r);
+        //System.out.println(mappedRecipe);
     }
 
 }
