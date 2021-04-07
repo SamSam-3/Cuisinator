@@ -16,7 +16,6 @@ import org.jsoup.select.Elements;
 
 public class WebScraper {
 
-
     static public Recipe makeRecipe(String url, String category) throws Exception {
         ////////// Collect des elements //////////
         Document doc = Jsoup.connect(url).get();
@@ -25,7 +24,7 @@ public class WebScraper {
         Elements stepsP = doc.select("p");
 
         // Verifie si on a pu obtenir tout les ingredients
-        if (psbIngredients == null || psbIngredients.size() != tableOfContent.size() || psbIngredients.size() == 0) {
+        if (psbIngredients == null || tableOfContent == null || psbIngredients.size() != tableOfContent.size() || psbIngredients.size() == 0) {
             return null;
         }
 
@@ -83,7 +82,7 @@ public class WebScraper {
                         System.out.println(i + " - ( " + acc + "/" + size + " )");
                         acc ++;
                         ////////// Echantillon de test //////////
-                        if (acc > 20)
+                        if (acc > 10000)
                             break;
         
                         ////////// Création les recettes a partir de l'url //////////
@@ -156,18 +155,18 @@ public class WebScraper {
 
 
         //////////////////// Test de collecte de donnée ////////////////////
-        //ArrayList<Recipe> r = collectRecipes();
+        ArrayList<Recipe> r = collectRecipes();
+
+        //////////////////// Test mapping ////////////////////
+        RecipeMap mappedRecipe = new RecipeMap(r);
+        System.out.println(mappedRecipe);
 
         //////////////////// Test de sauvegarde ////////////////////
-        // saveRecipes(recipes);
+        saveRecipes(r);
 
         //////////////////// Test de charge en memoire ////////////////////
         //ArrayList<Recipe> r = load();
         //System.out.println(r);
-
-        //////////////////// Test mapping ////////////////////
-        //RecipeMap mappedRecipe = new RecipeMap(r);
-        //System.out.println(mappedRecipe);
     }
 
 }
