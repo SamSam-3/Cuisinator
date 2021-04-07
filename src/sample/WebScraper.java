@@ -33,6 +33,7 @@ public class WebScraper {
         String category = "dinner";
         String[] ingredients = new String[tableOfContent.size()];
         String[] requirements = new String[tableOfContent.size()];
+        String img = doc.selectFirst("div[class='post-thumbnail']").text();
 
         int i = 0;
         for(Element el : tableOfContent){
@@ -44,7 +45,7 @@ public class WebScraper {
             i++;
         }
         ////////// Creation de la recette //////////
-        Recipe rcp = new Recipe(title, category, ingredients, requirements);
+        Recipe rcp = new Recipe(title, category, ingredients, requirements, img);
         return rcp;
     }
 
