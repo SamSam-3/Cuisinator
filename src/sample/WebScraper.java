@@ -32,8 +32,7 @@ public class WebScraper {
         String title = doc.selectFirst(".entry-title").text();
         String[] ingredients = new String[tableOfContent.size()];
         String[] requirements = new String[tableOfContent.size()];
-        String img = doc.selectFirst(".post-thumbnail img").absUrl("src");
-
+        String img = doc.selectFirst(".post-thumbnail img").attr("data-src");
         int i = 0;
         for(Element el : tableOfContent){
             requirements[i] = el.text();
@@ -149,9 +148,6 @@ public class WebScraper {
         //////////////////// Test ////////////////////
         //////////////////// Test de donnée ////////////////////
         // ArrayList<Recipe> recipes = new ArrayList<Recipe>();
-        // recipes.add(new Recipe("Ratatouille", "dinner", new String[]{"oignon", "carotte"}));
-        // recipes.add(new Recipe("Mousse au chocolat", "dessert", new String[]{"crème", "chocolat"}));
-        // recipes.add(new Recipe("Crème brulée", "dessert", new String[]{"crème"}));
 
 
         //////////////////// Test de collecte de donnée ////////////////////
