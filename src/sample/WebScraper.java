@@ -55,14 +55,14 @@ public class WebScraper {
         ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 
         String[][] urlDir = {
-            {"salades-economiques"},
+            {"salades-economiques", "avocat-en-salade"},
 
             {"cuisine-indienne", "les-paellas", "recette-brochette-grillade", "les-oeufs", 
             "les-poissons", "gibiers", "recette-brochette-grillade", "viande-dinde", "viande-de-porc", 
             "viande-de-boeuf", "volaille-poulet", "viande-de-veau", "viande-mouton", "viande-oie", 
-            "cuisine-exotique", "les-legumes",  "potages-et-soupes", "terrines-de-legumes", "les-spaghettis"},
+            "cuisine-exotique", "les-legumes",  "potages-et-soupes", "terrines-de-legumes", "les-spaghettis", "tomato-ketchup", "terrines-de-legumes"},
             
-            {"les-desserts"},
+            {"les-desserts" , "les-pates-levees"},
             
             {"les-sauces"}
         };
@@ -72,7 +72,7 @@ public class WebScraper {
             for (String url : urlDir[i]) {
 
                 try {
-                    Document doc = Jsoup.connect("http://www.lesrecettesdecuisine.com/recette-de-cuisine/category/" + url).get();
+                    Document doc = Jsoup.connect("http://www.lesrecettesdecuisine.com/recette-de-cuisine/" + url).get();
                     Elements linkGroup = doc.select("h3 a");
                     int size = linkGroup.size();
                     int acc = 0;
