@@ -27,7 +27,7 @@ public class Controller {
     int co=0;
     int av=0;
     ArrayList<Recipe> r = init();
-    ArrayList<String> I = null;
+    ArrayList<String> I = getAllIngredients();
 
     ArrayList<Recipe> recetteclickable = new ArrayList<Recipe>();
     ArrayList<String> ingredientsManquant = new ArrayList<String>();
@@ -109,15 +109,17 @@ public class Controller {
     } //Récupère les catégories pour le layer Catégorie
 
     private ArrayList<String> getAllIngredients(){
+        ArrayList<String> ingAll = new ArrayList<String>();
+
         for (Recipe recipe : r) {
             for (String ing : recipe.getIngredients()) {
-                if(!I.contains(ing)){
-                    I.add(ing);
+                if(!ingAll.contains(ing)){
+                    ingAll.add(ing);
                 }
             }
         }
 
-        return I;
+        return ingAll;
     }
 
     @FXML
@@ -174,7 +176,6 @@ public class Controller {
                 case "avancee":
                     //Apparition layer recherche avancée
                     if(av == 0 && recettePossible.isVisible()) {
-                        vbI.getChildren().add(new Label("Test"));
                         ingredientsPossible.setVisible(true);
                         av=1;
                     } else {
@@ -211,8 +212,19 @@ public class Controller {
                 }
             }
             recettePossible.setContent(vb);
-            System.out.println("############################################################################################################");
+            System.out.println("############################################# Ingrédients #################################################");
 
+            for(String ing : I){
+                if(ing.toLowerCase().contains(barreRecherche.getCharacters().toString().toLowerCase())){
+                    Label lb = new Label(ing);
+                    lb.setFont(new Font("Arial",15));
+                    vbI.getChildren().add(lb);
+
+                    System.out.println(ing);
+                }
+            }
+            ingredientsPossible.setContent(vbI);
+            System.out.println("############################################################################################################");
 
         }
 

@@ -54,7 +54,8 @@ public class Recipe implements Serializable{
     public void setRequirements(String[] requirements) {
         this.requirements = requirements;
     }
-    public String[] getImage() {
+
+    public String getImage() {
         return image;
     }
 
