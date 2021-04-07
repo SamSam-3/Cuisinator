@@ -250,7 +250,7 @@ public class Controller {
                 recettePossible.setVisible(false);
                 recipeContainer.setVisible(true);
                 titreRecette.setText(recipe.getName());
-                //imageRecette.setImage(new Image(r.getImage())); //Affichage de l'image (Ajouter une banque d'images)
+                //imageRecette.setImage(new Image(recipe.getImage())); //Affichage de l'image (Ajouter une banque d'images)
 
                 for(String ing : recipe.getIngredients()){
                     CheckBox cb = new CheckBox(ing);
@@ -276,7 +276,10 @@ public class Controller {
 
     @FXML
     public void stackIngredients(MouseEvent mouseEvent){
-        frigo.add(mouseEvent.getTarget().toString());
+        Text element = (Text) mouseEvent.getTarget();
+        frigo.add(element.getText());
+
+        System.out.println("Elements dans le frigo :"+frigo.toString());
 
         System.out.println("Recette correspondantes : ");
 
