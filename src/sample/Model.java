@@ -14,6 +14,6 @@ public class Model {
 
         // Tri dans un dictionnaire
         mappedRecipe = new RecipeMap(recipes);
-        System.out.println(mappedRecipe);
+        //System.out.println(mappedRecipe);
     }
 }

@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Stack;
 
 public class Controller {
 
@@ -28,6 +29,7 @@ public class Controller {
     int av=0;
     ArrayList<Recipe> r = init();
     ArrayList<String> I = getAllIngredients();
+    Stack<String> frigo = new Stack<String>();
 
     ArrayList<Recipe> recetteclickable = new ArrayList<Recipe>();
     ArrayList<String> ingredientsManquant = new ArrayList<String>();
@@ -189,17 +191,17 @@ public class Controller {
 
     @FXML
     public void findRecipe() {
-        System.out.println(recettePossible.isVisible());
 
         if (barreRecherche.getCharacters().length() > 0) {
             vb.getChildren().clear();
+            vbI.getChildren().clear();
             recetteclickable.clear();
 
             listing.toFront();
             listing.setVisible(true);
             recettePossible.setVisible(true);
 
-            System.out.println("############################################################################################################");
+            System.out.println("############################################# Recettes #####################################################");
             for (Recipe recipe : r) {
                 if (recipe.getName().toLowerCase().contains(barreRecherche.getCharacters().toString().toLowerCase())) { //A modifier pour faire des recherches sans accents et autres caracteres spéciaux
 
@@ -270,6 +272,24 @@ public class Controller {
             }
         }
 
+    }
+
+    @FXML
+    public void stackIngredients(MouseEvent mouseEvent){
+        frigo.add(mouseEvent.getTarget().toString());
+
+        System.out.println("Recette correspondantes : ");
+
+        for(String s : frigo){
+            for(Recipe recipe : r){
+                //Faire page d'accueil qui montre les recettes dispo
+                for(String ing : recipe.getIngredients()){
+                    if(ing.equals(s)){
+                        System.out.println(recipe.getName());
+                    }
+                }
+            }
+        }
     }
 
     public Controller() {
