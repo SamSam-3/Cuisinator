@@ -22,7 +22,7 @@ public class WebScraper {
         Document doc = Jsoup.connect(url).get();
         Elements psbIngredients = doc.select("ul a.autobesttag");
         Elements tableOfContent = doc.select(".entry-content > ul li");
-        Elements steps = doc.select(".entry-content > ul li");
+        Elements stepsP = doc.select("p");
 
         // Verifie si on a pu obtenir tout les ingredients
         if (psbIngredients == null || psbIngredients.size() != tableOfContent.size() || psbIngredients.size() == 0) {
@@ -44,8 +44,12 @@ public class WebScraper {
             ingredients[i] = a.text().toLowerCase();
             i++;
         }
+        String steps = "";
+        for (Element el : stepsP) {
+            steps += el.text();
+        }
         ////////// Creation de la recette //////////
-        return new Recipe(title, category, ingredients, requirements, img);
+        return new Recipe(title, category, ingredients, requirements, img, steps);
     }
 
     static public ArrayList<Recipe> collectRecipes() {

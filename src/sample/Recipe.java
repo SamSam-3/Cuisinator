@@ -9,13 +9,15 @@ public class Recipe implements Serializable{
     private String[] ingredients;
     private String[] requirements;
     private String image;  
+    private String steps;
 
-    public Recipe(String name, String category, String[] ingredients, String[] requirements, String image) {
+    public Recipe(String name, String category, String[] ingredients, String[] requirements, String image, String steps) {
         this.name = name;
         this.ingredients = ingredients;
         this.category = category;
         this.requirements = requirements;
         this.image = image;
+        this.steps = steps;
     }
 
     @Override
@@ -59,7 +61,14 @@ public class Recipe implements Serializable{
         return image;
     }
 
-    public void setImage(String img) {
-        this.image = img;
+    public void setImage(String image) {
+        this.image = image;
+    }
+    public String getSteps() {
+        return steps;
+    }
+
+    public void setSteps(String steps) {
+        this.steps = steps;
     }
 }
