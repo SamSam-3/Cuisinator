@@ -8,6 +8,7 @@ import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -129,7 +130,8 @@ public class Controller {
             Button test = (Button) evt.getSource();
 
             //Affiche IDs boutons
-            System.out.println(test.getId());
+            //System.out.println(test.getId());
+
             switch(test.getId()){
                 case "categorie":
 
@@ -220,7 +222,14 @@ public class Controller {
                 if(ing.toLowerCase().contains(barreRecherche.getCharacters().toString().toLowerCase())){
                     Label lb = new Label(ing);
                     lb.setFont(new Font("Arial",15));
-                    vbI.getChildren().add(lb);
+                    Button cancel = new Button("X");
+                    cancel.setPrefSize(5,5);
+                    HBox hb = new HBox();
+                    hb.getChildren().add(lb);
+                    hb.getChildren().add(cancel);
+                    hb.setAlignment(Pos.CENTER);
+
+                    vbI.getChildren().add(hb);
 
                     System.out.println(ing);
                 }
@@ -250,9 +259,10 @@ public class Controller {
                 recettePossible.setVisible(false);
                 recipeContainer.setVisible(true);
                 titreRecette.setText(recipe.getName());
-                //imageRecette.setImage(new Image(recipe.getImage())); //Affichage de l'image (Ajouter une banque d'images)
+                System.out.println(recipe.getImage());
+                imageRecette.setImage(new Image(recipe.getImage())); // Affichage de l'image (Ajouter une banque d'images)
 
-                for(String ing : recipe.getIngredients()){
+                for(String ing : recipe.getRequirements()){
                     CheckBox cb = new CheckBox(ing);
 
                     cb.setOnAction(actionEvent -> {

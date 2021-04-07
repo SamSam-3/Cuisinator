@@ -52,11 +52,12 @@
                         <Font name="Arial Black" size="20.0" />
                      </font>
                   </Label>
-                  <ImageView fx:id="imageRecette" fitHeight="166.0" fitWidth="322.0" layoutX="139.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageRecette" fitHeight="166.0" fitWidth="322.0" layoutX="150.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true" />
                   <VBox fx:id="ingredientsRequis" alignment="CENTER_LEFT" layoutX="37.0" layoutY="192.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="156.0" prefWidth="267.0" />
                </children>
             </Pane>
          </content>
       </ScrollPane>
+      <Pane layoutX="291.0" layoutY="252.0" prefHeight="152.0" prefWidth="307.0" />
    </children>
 </Pane>
