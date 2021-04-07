@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Locale.Category;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,7 +17,7 @@ import org.jsoup.select.Elements;
 public class WebScraper {
 
 
-    static public Recipe makeRecipe(String url) throws Exception {
+    static public Recipe makeRecipe(String url, String category) throws Exception {
         ////////// Collect des elements //////////
         Document doc = Jsoup.connect(url).get();
         Elements psbIngredients = doc.select("ul a.autobesttag");
@@ -24,13 +25,12 @@ public class WebScraper {
         Elements steps = doc.select(".entry-content > ul li");
 
         // Verifie si on a pu obtenir tout les ingredients
-        if (psbIngredients == null || psbIngredients.size() != tableOfContent.size()) {
+        if (psbIngredients == null || psbIngredients.size() != tableOfContent.size() || psbIngredients.size() == 0) {
             return null;
         }
 
         ////////// Obtention des attribut pour construire la recette //////////
         String title = doc.selectFirst(".entry-title").text();
-        String category = "dinner";
         String[] ingredients = new String[tableOfContent.size()];
         String[] requirements = new String[tableOfContent.size()];
         String img = doc.selectFirst("div[class='post-thumbnail']").text();
@@ -45,38 +45,58 @@ public class WebScraper {
             i++;
         }
         ////////// Creation de la recette //////////
-        Recipe rcp = new Recipe(title, category, ingredients, requirements, img);
-        return rcp;
+        return new Recipe(title, category, ingredients, requirements, img);
     }
 
     static public ArrayList<Recipe> collectRecipes() {
-        String url = "http://www.lesrecettesdecuisine.com/liste-recettes-cuisine-html";
         ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 
-        try {
-            Document doc = Jsoup.connect(url).get();
-            Elements linkGroup = doc.select("h3 a");
-            int size = linkGroup.size();
-            int acc = 0;
+        String[][] urlDir = {
+            {"salades-economiques"},
 
-            for (Element e : linkGroup) {
-                ////////// Affiche le progrès //////////
-                System.out.println("( " + acc + "/" + size + " )");
-                acc ++;
-                ////////// Echantillon de test //////////
-                if (acc > 20)
-                    break;
+            {"cuisine-indienne", "les-paellas", "recette-brochette-grillade", "les-oeufs", 
+            "les-poissons", "gibiers", "recette-brochette-grillade", "viande-dinde", "viande-de-porc", 
+            "viande-de-boeuf", "volaille-poulet", "viande-de-veau", "viande-mouton", "viande-oie", 
+            "cuisine-exotique", "les-legumes",  "potages-et-soupes", "terrines-de-legumes", "les-spaghettis"},
+            
+            {"les-desserts"},
+            
+            {"les-sauces"}
+        };
+        String[] tags = {"salade", "plat", "dessert", "sauce"};
+ 
+        for (int i = 0; i < tags.length; i++) {
+            for (String url : urlDir[i]) {
 
-                ////////// Création les recettes a partir de l'url //////////
-                Recipe rcp = makeRecipe(e.attr("href"));
-                if (rcp != null)  // Si la creation est un succés
-                    recipes.add(rcp);
-
+                try {
+                    Document doc = Jsoup.connect("http://www.lesrecettesdecuisine.com/recette-de-cuisine/category/" + url).get();
+                    Elements linkGroup = doc.select("h3 a");
+                    int size = linkGroup.size();
+                    int acc = 0;
+        
+                    for (Element e : linkGroup) {
+                        ////////// Affiche le progrès //////////
+                        System.out.println(i + " - ( " + acc + "/" + size + " )");
+                        acc ++;
+                        ////////// Echantillon de test //////////
+                        if (acc > 20)
+                            break;
+        
+                        ////////// Création les recettes a partir de l'url //////////
+                        Recipe rcp = makeRecipe(e.attr("href"), tags[i]);
+                        if (rcp != null)  // Si la creation est un succés
+                            recipes.add(rcp);
+        
+                    }
+        
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
-
-        } catch (Exception e) {
-            System.out.println(e);
+            
         }
+
+        
 
         return recipes;
     }
