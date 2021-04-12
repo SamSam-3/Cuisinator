@@ -1,0 +1,27 @@
+.root{
+   -fx-font-familly: "Arial";
+}
+
+#categorie{
+  -fx-background-position: center;
+  -fx-background-image: url("images/burger.png");
+}
+
+#course{
+  -fx-background-position: center;
+  -fx-background-image: url("images/course.png");
+}
+
+#avancee{
+  -fx-background-position: center;
+  image-resolution: 1;
+  -fx-background-image: url("images/avancee.png");
+}
+
+.hb:hover{
+  -fx-background-color: grey;
+}
+
+#imageRecette{
+  align-content: center;
+}

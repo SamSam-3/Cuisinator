@@ -130,7 +130,7 @@ public class Controller {
             Button test = (Button) evt.getSource();
 
             //Affiche IDs boutons
-            //System.out.println(test.getId());
+            System.out.println(test.getId());
 
             switch(test.getId()){
                 case "categorie":
@@ -208,7 +208,6 @@ public class Controller {
                 if (recipe.getName().toLowerCase().contains(barreRecherche.getCharacters().toString().toLowerCase())) { //A modifier pour faire des recherches sans accents et autres caracteres spéciaux
 
                     Label lb = new Label(recipe.getName());
-                    lb.setFont(new Font("Arial", 15));
                     vb.getChildren().add(lb);
                     recetteclickable.add(recipe);
 
@@ -228,7 +227,6 @@ public class Controller {
                     hb.getChildren().add(lb);
                     hb.getChildren().add(cancel);
                     hb.setAlignment(Pos.CENTER);
-
                     vbI.getChildren().add(hb);
 
                     System.out.println(ing);
@@ -259,8 +257,11 @@ public class Controller {
                 recettePossible.setVisible(false);
                 recipeContainer.setVisible(true);
                 titreRecette.setText(recipe.getName());
-                System.out.println(recipe.getImage());
-                imageRecette.setImage(new Image(recipe.getImage())); // Affichage de l'image (Ajouter une banque d'images)
+
+                Image image = new Image(recipe.getImage());
+                imageRecette.setImage(image); // Affichage de l'image (Ajouter une banque d'images)
+                System.out.println(imageRecette.getFitWidth()+" - "+image.getWidth());
+                imageRecette.setX((imageRecette.getFitWidth()-image.getWidth())/2);
 
                 for(String ing : recipe.getRequirements()){
                     CheckBox cb = new CheckBox(ing);
