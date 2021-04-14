@@ -39,14 +39,11 @@ public class RecipeMap extends HashMap<String, HashMap<String, ArrayList<Recipe>
         return this.keySet();
     }
     
-    public ArrayList<String> getIngredients(){
-        ArrayList<String> ingreds = new ArrayList<String>();
+    public Set<String> getIngredients(){
+        Set<String> ingreds = new HashSet<String>();
+
         for (var ingMap : this.values()) {
-            for (String ing : ingMap.keySet()) {
-                if (! ingreds.contains(ing)) {
-                    ingreds.add(ing);
-                }
-            }
+            ingreds.addAll(ingMap.keySet()); // Merge les sets entres eux
         }
         return ingreds;
     }

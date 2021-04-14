@@ -13,9 +13,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -142,13 +139,16 @@ public class Controller {
             for (Recipe recipe : this.model.recipeList) {
                 if (recipe.getName().toLowerCase().contains(input)) { //A modifier pour faire des recherches sans accents et autres caracteres spéciaux
 
-                    Label lb = new Label(recipe.getName());
-                    vb.getChildren().add(lb);
+                    Label lbl = new Label(recipe.getName());
+                    vb.getChildren().add(lbl);
                     recetteclickable.add(recipe);
 
                     System.out.println(recipe.getName()); //Affiche les recettes correspondantes
                 }
             }
+            /*
+            this.model.search(input, ingFilter);
+            */
             recettePossible.setContent(vb); // TODO: deplacer tout ca dans la vue
 
             //////// Ingrédients \\\\\\\\
@@ -238,12 +238,14 @@ public class Controller {
         Text element = (Text) mouseEvent.getTarget();
         frigo.add(element.getText());
 
-        System.out.println("Elements dans le frigo :"+frigo.toString());
+        System.out.println("Elements dans le frigo :" + frigo);
 
         System.out.println("Recette correspondantes : ");
+        
 
-        for(String s : frigo){
-            for(Recipe recipe : this.model.recipeList){
+        // Non.
+        for (String s : frigo){
+            for (Recipe recipe : this.model.recipeList){
                 //Faire page d'accueil qui montre les recettes dispo 
                 for(String ing : recipe.getIngredients()){
                     if(ing.equals(s)){
