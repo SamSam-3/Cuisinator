@@ -25,3 +25,12 @@
 #imageRecette{
   align-content: center;
 }
+
+.img{
+    /* Centrer l'image dans le fxml */
+}
+
+.h1{
+    -fx-background-color: green;
+    /* Mettre tout les titres en gras et trouver une taille convenable */
+}

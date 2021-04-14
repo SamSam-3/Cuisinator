@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -18,7 +17,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Stack;
 
 public class Controller {
@@ -43,8 +41,8 @@ public class Controller {
     @FXML
     ImageView imageRecette = new ImageView();
 
-    @FXML
-    Label titreRecette = new Label();
+    //@FXML
+    //Label titreRecette = new Label();
 
     //####### AFFICHAGE PANE #######
 
@@ -56,6 +54,9 @@ public class Controller {
 
     @FXML
     private Pane layerCategorie;
+
+    @FXML
+    private Pane accueil;
 
     @FXML
     private ScrollPane layerCourse;
@@ -256,13 +257,17 @@ public class Controller {
                 ingredientsRequis.getChildren().clear();
                 recettePossible.setVisible(false);
                 recipeContainer.setVisible(true);
-                titreRecette.setText(recipe.getName());
+                Pane rectPane = (Pane) recipeContainer.getContent();
 
-                Image image = new Image(recipe.getImage());
-                imageRecette.setImage(image); // Affichage de l'image (Ajouter une banque d'images)
-                System.out.println(imageRecette.getFitWidth()+" - "+image.getWidth());
-                imageRecette.setX((imageRecette.getFitWidth()-image.getWidth())/2);
+                Label titreRecette = new Label(recipe.getName());
+                titreRecette.setFont(new Font("Arial Black",25));
+                titreRecette.getStyleClass().add("h1");
 
+
+                ImageView img = new ImageView(new Image(recipe.getImage()));
+                img.getStyleClass().add("img");
+
+                VBox ingre = new VBox();
                 for(String ing : recipe.getRequirements()){
                     CheckBox cb = new CheckBox(ing);
 
@@ -278,8 +283,15 @@ public class Controller {
                     });
 
                     ingredientsManquant.add(ing);
-                    ingredientsRequis.getChildren().add(cb);
+                    ingre.getChildren().add(cb);
                 }
+
+                rectPane.getChildren().add(titreRecette);
+                rectPane.getChildren().add(img);
+                rectPane.getChildren().add(ingre);
+
+                rectPane.getChildren().add(new Label("Les étapes :"));
+                rectPane.getChildren().add(new Label(recipe.getSteps()));
             }
         }
 
@@ -308,5 +320,6 @@ public class Controller {
 
     public Controller() {
 
-        }
+    }
+
 }
