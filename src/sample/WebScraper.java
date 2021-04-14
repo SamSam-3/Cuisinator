@@ -1,13 +1,10 @@
 package sample;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Locale.Category;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -44,7 +41,7 @@ public class WebScraper {
         }
         String steps = "";
         for (Element el : stepsP) {
-            steps += el.text();
+            steps += el.text() + "\n";
         }
         ////////// Creation de la recette //////////
         return new Recipe(title, category, ingredients, requirements, img, steps);
@@ -124,25 +121,7 @@ public class WebScraper {
         
 
     }
-    static public ArrayList<Recipe> load() {
-
-        ArrayList<Recipe> r = null;
-		
-
-		try {
-			FileInputStream fis = new FileInputStream("recipes.data");
-			ObjectInputStream ois = new ObjectInputStream(fis);
-            
-			r = (ArrayList<Recipe>)ois.readObject();
-
-			ois.close();
-			fis.close();
-
-		} catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-		}
-        return r;
-    }
+    
 
     public static void main(String[] args) {
         //////////////////// Test ////////////////////
@@ -158,10 +137,10 @@ public class WebScraper {
         System.out.println(mappedRecipe);
 
         //////////////////// Test de sauvegarde ////////////////////
-        saveRecipes(r);
+        //DataManager.save("recipes", mappedRecipe);
 
         //////////////////// Test de charge en memoire ////////////////////
-        //ArrayList<Recipe> r = load();
+        //RecipeMap r = (RecipeMap)DataManager.load("recipes");
         //System.out.println(r);
     }
 

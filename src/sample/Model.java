@@ -4,16 +4,19 @@ import java.util.ArrayList;
 
 public class Model {
 
-    private RecipeMap mappedRecipe;
+    private RecipeMap recipes;
 
     public Model() {
-        // TODO: Vérifier que les recettes ne sont pas déjà existantes sur la machine
+        recipes = (RecipeMap)DataManager.load("recipes");
 
-        // Récuperation des differentes recettes
-        ArrayList<Recipe> recipes = WebScraper.load();
+        if (recipes == null) {
+            throw new RuntimeException("Data base not found");
+        }
+    }
 
-        // Tri dans un dictionnaire
-        mappedRecipe = new RecipeMap(recipes);
-        //System.out.println(mappedRecipe);
+    public void search(String input, ArrayList<String> ingredients) {
+        ArrayList<String> names = new ArrayList<String>();
+        // TODO: search
+        // view.showIngredients()
     }
 }
