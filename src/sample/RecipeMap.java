@@ -1,13 +1,15 @@
 package sample;
 
-import java.util.HashMap;
-import java.util.ArrayList;
+import java.util.*;
 
 public class RecipeMap extends HashMap<String, HashMap<String, ArrayList<Recipe>>> {
     private static final long serialVersionUID = 1L;
     
-    public RecipeMap(ArrayList<Recipe> recipes) { 
+    public RecipeMap(ArrayList<Recipe> r) { 
+        makeRecipeMapFrom(r);
+    }
 
+    private void makeRecipeMapFrom(ArrayList<Recipe> recipes) {
         for (Recipe r : recipes) {
 
             // Récupère le dictionnaire par categorie
@@ -33,6 +35,21 @@ public class RecipeMap extends HashMap<String, HashMap<String, ArrayList<Recipe>
         }
     }
 
+    public Set<String> getCategories() {
+        return this.keySet();
+    }
+    
+    public ArrayList<String> getIngredients(){
+        ArrayList<String> ingreds = new ArrayList<String>();
+        for (var ingMap : this.values()) {
+            for (String ing : ingMap.keySet()) {
+                if (! ingreds.contains(ing)) {
+                    ingreds.add(ing);
+                }
+            }
+        }
+        return ingreds;
+    }
     
     @Override
     public String toString() {

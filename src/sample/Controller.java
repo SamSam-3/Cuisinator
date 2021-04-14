@@ -21,110 +21,42 @@ import java.util.Stack;
 
 public class Controller {
 
-    //####### VARIABLES #######
+    ///////// VARIABLES \\\\\\\\\\
+    private Model model;
 
-    int ca=0;
-    int co=0;
-    int av=0;
-    ArrayList<Recipe> r = init();
-    ArrayList<String> I = getAllIngredients();
+    private int ca=0;
+    private int co=0;
+    private int av=0;
+    ArrayList<String> I; 
     Stack<String> frigo = new Stack<String>();
 
     ArrayList<Recipe> recetteclickable = new ArrayList<Recipe>();
     ArrayList<String> ingredientsManquant = new ArrayList<String>();
 
-    //####### ELEMENTS INTERACTIFS #######
+    ///////// ELEMENTS INTERACTIFS \\\\\\\\\\
 
-    @FXML
-    private TextField barreRecherche;
+    @FXML private TextField barreRecherche;
+    @FXML ImageView imageRecette = new ImageView();
+    //@FXML Label titreRecette = new Label();
 
-    @FXML
-    ImageView imageRecette = new ImageView();
+    ///////// AFFICHAGE PANE \\\\\\\\\\
+    @FXML private ScrollPane recettePossible; //Affichage des recettes contenant le terme recherché
+    @FXML private ScrollPane ingredientsPossible;
+    @FXML private Pane layerCategorie; 
+    @FXML private Pane accueil;
+    @FXML private ScrollPane layerCourse;
+    @FXML private ScrollPane recipeContainer;
+    @FXML private VBox diffCat; //Affichage des éléments "catégorie" (vertical et + propre)
+    @FXML private VBox vb;
+    @FXML private VBox vbI; 
+    @FXML private VBox listing;
+    @FXML private VBox ingredientsRequis;
 
-    //@FXML
-    //Label titreRecette = new Label();
-
-    //####### AFFICHAGE PANE #######
-
-    @FXML
-    private ScrollPane recettePossible; //Affichage des recettes contenant le terme recherché
-
-    @FXML
-    private ScrollPane ingredientsPossible;
-
-    @FXML
-    private Pane layerCategorie;
-
-    @FXML
-    private Pane accueil;
-
-    @FXML
-    private ScrollPane layerCourse;
-
-    @FXML
-    private ScrollPane recipeContainer;
-
-    @FXML
-    private VBox diffCat; //Affichage des éléments "catégorie" (vertical et + propre)
-
-    @FXML
-    private VBox vb;
-
-    @FXML
-    private VBox vbI;
-
-    @FXML
-    private VBox listing;
-
-    @FXML
-    private VBox ingredientsRequis;
-
-
-    //####### FONCTIONS #######
-
-    private ArrayList<Recipe> init(){
-
-        ArrayList<Recipe> r = null;
-
-        try {
-            FileInputStream fis = new FileInputStream("recipes.data");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-
-            r = (ArrayList<Recipe>) ois.readObject();
-
-            ois.close();
-            fis.close();
-
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return r;
-    } //Initialisation de l'ArrayList plus simple
-
-    private ArrayList<String> getCategories(){
-        ArrayList<String> categories = new ArrayList<String>();
-
-        for (Recipe recipe : r) {
-            if (!categories.contains(recipe.getCategory())) {
-                categories.add(recipe.getCategory());
-            }
-        }
-        return categories;
-    } //Récupère les catégories pour le layer Catégorie
-
-    private ArrayList<String> getAllIngredients(){
-        ArrayList<String> ingAll = new ArrayList<String>();
-
-        for (Recipe recipe : r) {
-            for (String ing : recipe.getIngredients()) {
-                if(!ingAll.contains(ing)){
-                    ingAll.add(ing);
-                }
-            }
-        }
-
-        return ingAll;
+    ///////// FONCTIONS \\\\\\\\\\
+    public Controller(Model model) {
+        this.model = model;
     }
+
 
     @FXML
     public void handleButtonClick(ActionEvent evt){
@@ -138,12 +70,12 @@ public class Controller {
 
                     //Slide layer categorie vers la droite
                     if(ca == 0){
-                        for(int i=0;i<getCategories().size();i++){
-                            Label lb = new Label(getCategories().get(i));
-                            lb.setFont(new Font("Arial",20));
+                        for (String name : this.model.recipes.getCategories()) {
+                            Label lbl = new Label(name);
+                            lbl.setFont(new Font("Arial",20));
                             diffCat.setSpacing(10);
                             diffCat.setAlignment(Pos.TOP_CENTER);
-                            diffCat.getChildren().add(lb);
+                            diffCat.getChildren().add(lbl);
                         }
                         layerCategorie.setTranslateX(Math.abs(layerCategorie.getLayoutX()));
                         layerCategorie.toFront();
@@ -194,8 +126,9 @@ public class Controller {
 
     @FXML
     public void findRecipe() {
-
-        if (barreRecherche.getCharacters().length() > 0) {
+        String input = barreRecherche.getCharacters().toString().toLowerCase();
+        
+        if (input.length() > 0) {
             vb.getChildren().clear();
             vbI.getChildren().clear();
             recetteclickable.clear();
@@ -204,9 +137,9 @@ public class Controller {
             listing.setVisible(true);
             recettePossible.setVisible(true);
 
-            System.out.println("############################################# Recettes #####################################################");
+            System.out.println("############################################# Recettes #####################################################"); // Wtf?
             for (Recipe recipe : r) {
-                if (recipe.getName().toLowerCase().contains(barreRecherche.getCharacters().toString().toLowerCase())) { //A modifier pour faire des recherches sans accents et autres caracteres spéciaux
+                if (recipe.getName().toLowerCase().contains(input)) { //A modifier pour faire des recherches sans accents et autres caracteres spéciaux
 
                     Label lb = new Label(recipe.getName());
                     vb.getChildren().add(lb);
@@ -215,11 +148,11 @@ public class Controller {
                     System.out.println(recipe.getName()); //Affiche les recettes correspondantes
                 }
             }
-            recettePossible.setContent(vb);
+            recettePossible.setContent(vb); // TODO: deplacer tout ca dans la vue
             System.out.println("############################################# Ingrédients #################################################");
 
             for(String ing : I){
-                if(ing.toLowerCase().contains(barreRecherche.getCharacters().toString().toLowerCase())){
+                if(ing.toLowerCase().contains(input)){
                     Label lb = new Label(ing);
                     lb.setFont(new Font("Arial",15));
                     Button cancel = new Button("X");
@@ -318,8 +251,5 @@ public class Controller {
         }
     }
 
-    public Controller() {
-
-    }
 
 }

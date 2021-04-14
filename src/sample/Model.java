@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Model {
 
-    private RecipeMap recipes;
+    public RecipeMap recipes;
 
     public Model() {
         recipes = (RecipeMap)DataManager.load("recipes");

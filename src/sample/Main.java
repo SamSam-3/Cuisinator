@@ -13,7 +13,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         Model model = new Model();
         View view = new View();
-        Controller ctrl = new Controller();
+        Controller ctrl = new Controller(model);
 
         primaryStage.setTitle("Cuisinator");
         Scene scene = new Scene(root, 600, 403);
