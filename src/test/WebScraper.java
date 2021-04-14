@@ -1,4 +1,4 @@
-package sample;
+package test;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -10,6 +10,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import sample.*;
 
 public class WebScraper {
     static double nSample = Double.POSITIVE_INFINITY; // quantité max de recettes à récuperer
