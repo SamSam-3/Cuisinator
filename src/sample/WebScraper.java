@@ -12,6 +12,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class WebScraper {
+    static double nSample = Double.POSITIVE_INFINITY; // quantité max de recettes à récuperer
 
     static public Recipe makeRecipe(String url, String category) throws Exception {
         ////////// Collect des elements //////////
@@ -77,17 +78,16 @@ public class WebScraper {
                         ////////// Affiche le progrès //////////
                         System.out.println(i + " - ( " + acc + "/" + size + " )");
                         acc ++;
-                        ////////// Echantillon de test //////////
-                        if (acc > 10000)
+                        ////////// Échantillon de test //////////
+                        if (acc > nSample)
                             break;
         
                         ////////// Création les recettes a partir de l'url //////////
                         Recipe rcp = makeRecipe(e.attr("href"), tags[i]);
-                        if (rcp != null)  // Si la creation est un succés
+                        if (rcp != null)  // Si la création est un succès
                             recipes.add(rcp);
         
                     }
-        
                 } catch (Exception e) {
                     System.out.println(e);
                 }
@@ -95,8 +95,7 @@ public class WebScraper {
             
         }
 
-        
-
+        System.out.println("Data has been collected succesfully");
         return recipes;
     }
 
@@ -137,7 +136,7 @@ public class WebScraper {
         System.out.println(mappedRecipe);
 
         //////////////////// Test de sauvegarde ////////////////////
-        //DataManager.save("recipes", mappedRecipe);
+        DataManager.save("recipes", mappedRecipe);
 
         //////////////////// Test de charge en memoire ////////////////////
         //RecipeMap r = (RecipeMap)DataManager.load("recipes");

@@ -10,6 +10,7 @@ public class Recipe implements Serializable{
     private String[] requirements;
     private String image;  
     private String steps;
+    private int likes;
 
     public Recipe(String name, String category, String[] ingredients, String[] requirements, String image, String steps) {
         this.name = name;
@@ -18,6 +19,7 @@ public class Recipe implements Serializable{
         this.requirements = requirements;
         this.image = image;
         this.steps = steps;
+        this.likes = (int)Math.random()*1000;
     }
 
     @Override
@@ -70,5 +72,13 @@ public class Recipe implements Serializable{
 
     public void setSteps(String steps) {
         this.steps = steps;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 }
