@@ -17,7 +17,7 @@ public class Main extends Application {
 
         primaryStage.setTitle("Cuisinator");
         Scene scene = new Scene(root, 600, 403);
-        scene.getStylesheets().add(getClass().getResource("theme.css").toExternalForm());
+        scene.getStylesheets().add("theme.css");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
