@@ -1,16 +1,11 @@
 package test;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-
+import java.io.*;
+import java.util.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
 import sample.*;
 
 public class WebScraper {
@@ -76,22 +71,24 @@ public class WebScraper {
                     int size = linkGroup.size();
                     int acc = 0;
         
-                    for (Element e : linkGroup) {
+                    for (Element el : linkGroup) {
                         ////////// Affiche le progrès //////////
                         System.out.println(i + " - ( " + acc + "/" + size + " )");
                         acc ++;
                         ////////// Échantillon de test //////////
                         if (acc > nSample)
                             break;
-        
-                        ////////// Création les recettes a partir de l'url //////////
-                        Recipe rcp = makeRecipe(e.attr("href"), tags[i]);
-                        if (rcp != null)  // Si la création est un succès
-                            recipes.add(rcp);
-        
+                        try {
+                            ////////// Création les recettes a partir de l'url //////////
+                            Recipe rcp = makeRecipe(el.attr("href"), tags[i]);
+                            if (rcp != null)  // Si la création est un succès
+                                recipes.add(rcp);
+                        } catch (Exception err) {
+
+                        }
                     }
-                } catch (Exception e) {
-                    System.out.println(e);
+                } catch (Exception err) {
+                    System.out.println(err);
                 }
             }
             
@@ -138,7 +135,8 @@ public class WebScraper {
         System.out.println(mappedRecipe);
 
         //////////////////// Test de sauvegarde ////////////////////
-        DataManager.save("recipes", mappedRecipe);
+        DataManager.save("recipeMap", mappedRecipe);
+        DataManager.save("recipeList", r);
 
         //////////////////// Test de charge en memoire ////////////////////
         //RecipeMap r = (RecipeMap)DataManager.load("recipes");

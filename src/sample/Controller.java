@@ -70,7 +70,7 @@ public class Controller {
 
                     //Slide layer categorie vers la droite
                     if(ca == 0){
-                        for (String name : this.model.recipes.getCategories()) {
+                        for (String name : this.model.recipeMap.getCategories()) {
                             Label lbl = new Label(name);
                             lbl.setFont(new Font("Arial",20));
                             diffCat.setSpacing(10);
@@ -137,8 +137,9 @@ public class Controller {
             listing.setVisible(true);
             recettePossible.setVisible(true);
 
-            System.out.println("############################################# Recettes #####################################################"); // Wtf?
-            for (Recipe recipe : r) {
+            //////// Recettes \\\\\\\\
+            System.out.println("############################################# Recettes #####################################################");
+            for (Recipe recipe : this.model.recipeList) {
                 if (recipe.getName().toLowerCase().contains(input)) { //A modifier pour faire des recherches sans accents et autres caracteres spéciaux
 
                     Label lb = new Label(recipe.getName());
@@ -149,6 +150,8 @@ public class Controller {
                 }
             }
             recettePossible.setContent(vb); // TODO: deplacer tout ca dans la vue
+
+            //////// Ingrédients \\\\\\\\
             System.out.println("############################################# Ingrédients #################################################");
 
             for(String ing : I){
@@ -240,8 +243,8 @@ public class Controller {
         System.out.println("Recette correspondantes : ");
 
         for(String s : frigo){
-            for(Recipe recipe : r){
-                //Faire page d'accueil qui montre les recettes dispo
+            for(Recipe recipe : this.model.recipeList){
+                //Faire page d'accueil qui montre les recettes dispo 
                 for(String ing : recipe.getIngredients()){
                     if(ing.equals(s)){
                         System.out.println(recipe.getName());

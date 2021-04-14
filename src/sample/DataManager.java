@@ -17,7 +17,7 @@ public class DataManager {
         ObjectOutputStream oos;
 
         try {
-            fos = new FileOutputStream(path + key + ".data");
+            fos = new FileOutputStream(path + key + ".save");
             oos = new ObjectOutputStream(fos);
 
             oos.writeObject(value);
@@ -38,7 +38,7 @@ public class DataManager {
     static public Object load(String key) {
         Object obj = null;
 		try {
-			FileInputStream fis = new FileInputStream(path + key + ".data");
+			FileInputStream fis = new FileInputStream(path + key + ".save");
 			ObjectInputStream ois = new ObjectInputStream(fis);
             
 			obj = ois.readObject();
@@ -47,7 +47,7 @@ public class DataManager {
 			fis.close();
 
 		} catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException("Error while loading the binary file: " + key + ".data");
+            throw new RuntimeException("Error while loading the binary file: " + key + ".save");
 		}
         return obj;
     }

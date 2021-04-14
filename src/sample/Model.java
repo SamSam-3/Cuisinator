@@ -4,12 +4,15 @@ import java.util.ArrayList;
 
 public class Model {
 
-    public RecipeMap recipes;
+    public RecipeMap recipeMap;
+    public ArrayList<Recipe> recipeList;
 
+    @SuppressWarnings("unchecked")
     public Model() {
-        recipes = (RecipeMap)DataManager.load("recipes");
+        recipeMap = (RecipeMap)DataManager.load("recipeMap");
+        recipeList = (ArrayList<Recipe>)DataManager.load("recipeList");
 
-        if (recipes == null) {
+        if (recipeMap == null || recipeList == null) {
             throw new RuntimeException("Data base not found");
         }
     }
@@ -19,4 +22,5 @@ public class Model {
         // TODO: search
         // view.showIngredients()
     }
+    
 }
