@@ -1,13 +1,15 @@
 package sample;
 
+import java.util.ArrayList;
+
 //  import javafx.event.ActionEvent;
 //  import javafx.event.EventHandler;
 
- import javafx.fxml.FXML;
+//  import javafx.fxml.FXML;
  import javafx.geometry.Pos;
  import javafx.scene.control.CheckBox;
  import javafx.scene.control.Label;
- import javafx.scene.control.ScrollPane;
+//  import javafx.scene.control.ScrollPane;
  import javafx.scene.image.Image;
  import javafx.scene.image.ImageView;
  import javafx.scene.layout.Pane;
@@ -81,7 +83,7 @@ public class View {
         }
     }
 
-    public void showRecipe(String title, String img, String[] req, String steps){
+    public void showRecipe(String title, String img, String[] req, String steps, ArrayList<String> ingredientsManquant){
 
         /// View
         this.ctrl.ingredientsRequis.getChildren().clear();
@@ -103,15 +105,15 @@ public class View {
 
             cb.setOnAction(actionEvent -> {
                 String txt = ((CheckBox) actionEvent.getTarget()).getText();
-                if (this.ctrl.ingredientsManquant.contains(txt)){
-                    this.ctrl.ingredientsManquant.remove(txt);
+                if (ingredientsManquant.contains(txt)){
+                    ingredientsManquant.remove(txt);
                 } else {
-                    this.ctrl.ingredientsManquant.add(txt);
+                    ingredientsManquant.add(txt);
                 }
-                System.out.println(this.ctrl.ingredientsManquant);
+                System.out.println(ingredientsManquant);
             });
 
-            this.ctrl.ingredientsManquant.add(ing);
+            ingredientsManquant.add(ing);
             ingre.getChildren().add(cb);
         }
 

@@ -1,16 +1,16 @@
 package sample;
 
-import javafx.fxml.FXML;
+// import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
+// import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+// import javafx.scene.control.ScrollPane;
+// import javafx.scene.image.Image;
+// import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+// import javafx.scene.layout.Pane;
+// import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import java.util.ArrayList;
@@ -23,12 +23,16 @@ public class Model {
 
     private View view;
     private Controller ctrl;
+    private ArrayList<String> ingredsLeft;
+    private ArrayList<Recipe> recipeDisp;
 
     public Model(View view, Controller ctrl)
     {
         this.view = view;
         this.ctrl = ctrl;
         this.loadData();
+        this.ingredsLeft = new ArrayList<String>();
+        this.recipeDisp = new ArrayList<Recipe>();
     }
 
     @SuppressWarnings("unchecked")
@@ -59,7 +63,7 @@ public class Model {
             case "course":
 
                 // Slide layer liste de course vers la gauche
-                for (String s : this.ctrl.ingredientsManquant) {
+                for (String s : ingredsLeft) {
                     this.view.newIngredient(s);
                 }
 
@@ -78,9 +82,9 @@ public class Model {
 
     public void actualRecipe(String recipeName){
 
-        for (Recipe recipe : this.ctrl.recetteclickable){
+        for (Recipe recipe : this.recipeDisp){
             if (recipe.getName().equals(recipeName)) {
-                this.view.showRecipe(recipe.getName(), recipe.getImage(), recipe.getRequirements(), recipe.getSteps());
+                this.view.showRecipe(recipe.getName(), recipe.getImage(), recipe.getRequirements(), recipe.getSteps(), this.ingredsLeft);
             }
         }
 
@@ -92,7 +96,7 @@ public class Model {
 
             this.ctrl.vb.getChildren().clear();
             this.ctrl.vbI.getChildren().clear();
-            this.ctrl.recetteclickable.clear();
+            this.recipeDisp.clear();
 
             //// View
             this.ctrl.listing.toFront();
@@ -108,7 +112,7 @@ public class Model {
                     /// View
                     Label lbl = new Label(name);
                     this.ctrl.vb.getChildren().add(lbl);
-                    this.ctrl.recetteclickable.add(recipe);
+                    this.recipeDisp.add(recipe);
 
                     System.out.println(name); // Affiche les recettes correspondantes
                 }
@@ -145,7 +149,7 @@ public class Model {
 
             this.ctrl.vb.getChildren().clear();
             this.ctrl.vbI.getChildren().clear();
-            this.ctrl.recetteclickable.clear();
+            this.recipeDisp.clear();
         }
     }    
 }
