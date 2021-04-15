@@ -2,15 +2,8 @@ package sample;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.util.*;
@@ -19,8 +12,6 @@ public class Controller {
 
     ///////// VARIABLES \\\\\\\\\\
     private Model model;
-    private Set<String> ingredients;  
-    private Set<String> categories;
     int ca=0;
     int co=0;
     int av=0;
@@ -36,8 +27,6 @@ public class Controller {
 
     public void setModel(Model model) {
         this.model = model;
-        this.ingredients = model.recipeMap.getIngredients();
-        this.categories = model.recipeMap.getCategories();
     }
 
 
@@ -53,12 +42,10 @@ public class Controller {
     public void findRecipe() {
         String input = barreRecherche.getCharacters().toString().toLowerCase();
         this.model.search(input);
-
     }
 
     @FXML
     public void watchRecipe(MouseEvent mouseEvent){
-
         Text recette = (Text) mouseEvent.getTarget();
         this.model.showRecipe(recette);
     }
