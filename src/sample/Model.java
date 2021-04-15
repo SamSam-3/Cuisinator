@@ -109,8 +109,8 @@ public class Model {
 
     public void showRecipe(String recipeName){
 
-        for(Recipe recipe : this.recetteclickable){
-            if(recipe.getName().equals(recipeName)){
+        for (Recipe recipe : this.recetteclickable){
+            if (recipe.getName().equals(recipeName)){
 
                 /// View
                 this.view.ingredientsRequis.getChildren().clear();
@@ -128,12 +128,12 @@ public class Model {
                 img.getStyleClass().add("img");
                 VBox ingre = new VBox();
 
-                for(String ing : recipe.getRequirements()){
+                for (String ing : recipe.getRequirements()){
                     CheckBox cb = new CheckBox(ing);
 
                     cb.setOnAction(actionEvent -> {
                         String txt = ((CheckBox) actionEvent.getTarget()).getText();
-                        if(this.ingredientsManquant.contains(txt)){
+                        if (this.ingredientsManquant.contains(txt)){
                             this.ingredientsManquant.remove(txt);
                         } else {
                             this.ingredientsManquant.add(txt);

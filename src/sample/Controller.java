@@ -35,8 +35,7 @@ public class Controller {
 
     @FXML
     public void findRecipe() {
-        String input = barreRecherche.getCharacters().toString().toLowerCase();
-        this.model.search(input);
+        this.model.search(barreRecherche.getCharacters().toString().toLowerCase());
     }
 
     @FXML
