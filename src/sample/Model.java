@@ -1,19 +1,12 @@
 package sample;
 
-// import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-// import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-// import javafx.scene.control.ScrollPane;
-// import javafx.scene.image.Image;
-// import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-// import javafx.scene.layout.Pane;
-// import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Model {
 
@@ -22,16 +15,18 @@ public class Model {
 
 
     private View view;
-    private Controller ctrl;
+    private Controller control;
+    private Set<String> categories;
     private ArrayList<String> ingredsLeft;
-    private ArrayList<Recipe> recipeDisp;
+    private ArrayList<Recipe> recipeDisplay;
 
-    public Model(View view, Controller ctrl) {
+    public Model(View view, Controller control) {
         this.view = view;
-        this.ctrl = ctrl;
+        this.control = control;
         this.loadData();
         this.ingredsLeft = new ArrayList<String>();
-        this.recipeDisp = new ArrayList<Recipe>();
+        this.recipeDisplay = new ArrayList<Recipe>();
+        this.categories = recipeMap.getCategories();
     }
 
     @SuppressWarnings("unchecked")
@@ -53,7 +48,7 @@ public class Model {
 
         switch (btn) {
             case "categorie" -> {
-                for (String name : recipeMap.getCategories()) {
+                for (String name : this.categories) {
                     this.view.newCategories(name);
                     System.out.println("Cat trouvé");
                 }
@@ -72,9 +67,9 @@ public class Model {
 
     public void actualRecipe(String recipeName){
 
-        for (Recipe recipe : this.recipeDisp){
+        for (Recipe recipe : this.recipeDisplay){
             if (recipe.getName().equals(recipeName)) {
-                this.view.showRecipe(recipe.getName(), recipe.getImage(), recipe.getRequirements(), recipe.getSteps(), this.ingredsLeft);
+                this.view.showRecipe(recipe, this.ingredsLeft);
             }
         }
 
@@ -84,7 +79,7 @@ public class Model {
 
         if(input.length()>0){
 
-            this.recipeDisp.clear();
+            this.recipeDisplay.clear();
             this.view.wipe(input);
 
             //////// Recettes \\\\\\\\
@@ -94,7 +89,7 @@ public class Model {
                 if (name.toLowerCase().contains(input)) { // A modifier pour faire des recherches sans accents et autres caracteres spéciaux
 
                     this.view.addRecipe(name);
-                    this.recipeDisp.add(recipe);
+                    this.recipeDisplay.add(recipe);
                     System.out.println(name); // Affiche les recettes correspondantes
                 }
             }
@@ -116,7 +111,7 @@ public class Model {
         }
 
         if (input.length() == 0) {
-            this.recipeDisp.clear();
+            this.recipeDisplay.clear();
             this.view.wipe(input);
         }
     }    

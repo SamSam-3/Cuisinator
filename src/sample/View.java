@@ -85,7 +85,7 @@ public class View {
         }
     }
 
-    public void showRecipe(String title, String img, String[] req, String steps, ArrayList<String> ingredientsManquant){
+    public void showRecipe(Recipe recipe, ArrayList<String> ingredientsManquant){
 
         /// View
         this.ctrl.ingredientsRequis.getChildren().clear();
@@ -94,15 +94,15 @@ public class View {
         this.ctrl.recipeContainer.setVisible(true);
 
         Pane rectPane = (Pane) this.ctrl.recipeContainer.getContent();
-        Label titreRecette = new Label(title);
+        Label titreRecette = new Label(recipe.getName());
         titreRecette.setFont(new Font("Arial Black",25));
         titreRecette.getStyleClass().add("h1");
 
-        ImageView image = new ImageView(new Image(img));
+        ImageView image = new ImageView(new Image(recipe.getImage()));
         image.getStyleClass().add("img");
         VBox ingre = new VBox();
 
-        for (String ing : req){
+        for (String ing : recipe.getRequirements()){
             CheckBox cb = new CheckBox(ing);
 
             cb.setOnAction(actionEvent -> {
@@ -124,7 +124,7 @@ public class View {
         rectPane.getChildren().add(ingre);
 
         rectPane.getChildren().add(new Label("Les étapes :"));
-        rectPane.getChildren().add(new Label(steps));
+        rectPane.getChildren().add(new Label(recipe.getSteps()));
     }
 
     public void wipe(String input){
