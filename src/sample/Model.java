@@ -6,9 +6,15 @@ public class Model {
 
     public RecipeMap recipeMap;
     public ArrayList<Recipe> recipeList;
+    private View view;
+
+    public Model(View view) {
+        this.view = view;
+        this.loadData();
+    }
 
     @SuppressWarnings("unchecked")
-    public Model() {
+    public void loadData() {
         recipeMap = (RecipeMap)DataManager.load("recipeMap");
         recipeList = (ArrayList<Recipe>)DataManager.load("recipeList");
 

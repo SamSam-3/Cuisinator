@@ -12,10 +12,10 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
         Parent root = loader.load();
-        
+
         Controller ctrl = (Controller) loader.getController();
-        Model model = new Model();
         View view = new View();
+        Model model = new Model(view);
         ctrl.setModel(model);
 
         primaryStage.setTitle("Cuisinator");
