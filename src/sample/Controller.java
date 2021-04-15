@@ -13,22 +13,19 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-import java.util.ArrayList;
-import java.util.Stack;
+import java.util.*;
 
 public class Controller {
 
     ///////// VARIABLES \\\\\\\\\\
     private Model model;
-
     private int ca=0;
     private int co=0;
     private int av=0;
-    ArrayList<String> I; 
-    Stack<String> frigo = new Stack<String>();
-
-    ArrayList<Recipe> recetteclickable = new ArrayList<Recipe>();
-    ArrayList<String> ingredientsManquant = new ArrayList<String>();
+    Set<String> I; 
+    Stack<String> frigo;
+    ArrayList<Recipe> recetteclickable;
+    ArrayList<String> ingredientsManquant;
 
     ///////// ELEMENTS INTERACTIFS \\\\\\\\\\
 
@@ -52,6 +49,11 @@ public class Controller {
     ///////// FONCTIONS \\\\\\\\\\
     public Controller(Model model) {
         this.model = model;
+        this.I = model.recipeMap.getIngredients();
+        
+        this.frigo = new Stack<String>();
+        this.recetteclickable = new ArrayList<Recipe>();
+        this.ingredientsManquant = new ArrayList<String>();
     }
 
 
@@ -208,12 +210,11 @@ public class Controller {
                     CheckBox cb = new CheckBox(ing);
 
                     cb.setOnAction(actionEvent -> {
-
-                        CheckBox ch = (CheckBox) actionEvent.getTarget();
-                        if(ingredientsManquant.contains(ch.getText())){
-                           ingredientsManquant.remove(ch.getText());
+                        String txt = ((CheckBox)actionEvent.getTarget()).getText();
+                        if(ingredientsManquant.contains(txt)){
+                            ingredientsManquant.remove(txt);
                         } else {
-                            ingredientsManquant.add(ch.getText());
+                            ingredientsManquant.add(txt);
                         }
                         System.out.println(ingredientsManquant);
                     });
@@ -247,8 +248,8 @@ public class Controller {
         for (String s : frigo){
             for (Recipe recipe : this.model.recipeList){
                 //Faire page d'accueil qui montre les recettes dispo 
-                for(String ing : recipe.getIngredients()){
-                    if(ing.equals(s)){
+                for (String ing : recipe.getIngredients()){
+                    if (ing.equals(s)){
                         System.out.println(recipe.getName());
                     }
                 }
