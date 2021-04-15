@@ -6,17 +6,17 @@ import java.util.ArrayList;
 //  import javafx.event.EventHandler;
 
 //  import javafx.fxml.FXML;
- import javafx.geometry.Pos;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
- import javafx.scene.control.Label;
+import javafx.scene.control.Label;
 //  import javafx.scene.control.ScrollPane;
- import javafx.scene.image.Image;
- import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
- import javafx.scene.layout.VBox;
- import javafx.scene.text.Font;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 public class View {
 
@@ -29,11 +29,10 @@ public class View {
 
     public void newCategories(String catName){
         Label lbl = new Label(catName);
-        lbl.setFont(new Font("Arial",20)); // A modifier avec css
+        lbl.setFont(new Font("Arial", 20)); // A modifier avec css
 
         this.ctrl.diffCat.setSpacing(10); // A modifier avec css
         this.ctrl.diffCat.setAlignment(Pos.TOP_CENTER); // A modifier avec css
-
         this.ctrl.diffCat.getChildren().add(lbl);
     }
 
@@ -48,7 +47,7 @@ public class View {
     }
 
     public void showCategories(){
-        if(etatCA == 0){
+        if (etatCA == 0){
             this.ctrl.layerCategorie.setTranslateX(Math.abs(this.ctrl.layerCategorie.getLayoutX()));
             this.ctrl.layerCategorie.toFront();
 
@@ -66,7 +65,7 @@ public class View {
     }
 
     public void showIngredients(){
-        if(etatCO == 0){
+        if (etatCO == 0){
             this.ctrl.layerCourse.setTranslateX(-this.ctrl.layerCourse.getWidth());
             etatCO=1;
         } else {
@@ -76,7 +75,7 @@ public class View {
     }
 
     public void showAdvanced(){
-        if(etatAV == 0 && this.ctrl.recettePossible.isVisible()) {
+        if (etatAV == 0 && this.ctrl.recettePossible.isVisible()) {
             this.ctrl.ingredientsPossible.setVisible(true);
             etatAV=1;
         } else {
@@ -87,9 +86,7 @@ public class View {
 
     public void showRecipe(Recipe recipe, ArrayList<String> ingredientsManquant){
 
-        /// View
         this.ctrl.ingredientsRequis.getChildren().clear();
-
         this.ctrl.recettePossible.setVisible(false);
         this.ctrl.recipeContainer.setVisible(true);
 

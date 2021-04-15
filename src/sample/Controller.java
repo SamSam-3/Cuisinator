@@ -12,7 +12,6 @@ import java.util.*;
 
 public class Controller {
 
-
     @FXML public ScrollPane recettePossible; // Affichage des recettes contenant le terme recherché
     @FXML public ScrollPane ingredientsPossible;
     @FXML public Pane layerCategorie;
@@ -24,19 +23,12 @@ public class Controller {
     @FXML public VBox vbI;
     @FXML public VBox listing;
     @FXML public VBox ingredientsRequis;
+    @FXML public TextField barreRecherche;
 
 
-    ///////// VARIABLES \\\\\\\\\\
     private Model model;
     Stack<String> frigo  = new Stack<String>();
 
-
-
-    ///////// ELEMENTS INTERACTIFS \\\\\\\\\\
-
-    @FXML public TextField barreRecherche;
-
-    ///////// FONCTIONS \\\\\\\\\\
 
     public void setModel(Model model) {
         this.model = model;
@@ -44,11 +36,18 @@ public class Controller {
 
     @FXML
     public void handleButtonClick(ActionEvent evt){
-            Button test = (Button) evt.getSource();
-            this.model.showLayer(test.getId());
-            //Affiche IDs boutons
-            System.out.println(test.getId());
-        }
+        Button test = (Button) evt.getSource();
+        this.model.showLayer(test.getId());
+        //Affiche IDs boutons
+        System.out.println(test.getId());
+    }
+    
+    /* @FXML
+    public void categorieBtn() { }
+    @FXML
+    public void courseBtn() { }
+    @FXML
+    public void advanceBtn() { } */
 
     @FXML
     public void findRecipe() {

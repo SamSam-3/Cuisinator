@@ -46,16 +46,15 @@ public class Model {
         // Slide layer liste de course vers la gauche
         // Apparition layer recherche avancée
 
-        switch (btn) {
+        switch (btn) { // TODO: a modifier
             case "categorie" -> {
                 for (String name : this.categories) {
-                    this.view.newCategories(name);
-                    System.out.println("Cat trouvé");
+                    this.view.newCategories(name); 
                 }
                 this.view.showCategories();
             }
             case "course" -> {
-                for (String s : ingredsLeft) {
+                for (String s : this.ingredsLeft) {
                     this.view.newIngredient(s);
                 }
                 this.view.showIngredients();
@@ -114,5 +113,5 @@ public class Model {
             this.recipeDisplay.clear();
             this.view.wipe(input);
         }
-    }    
+    }
 }
