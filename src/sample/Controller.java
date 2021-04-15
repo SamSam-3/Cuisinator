@@ -24,9 +24,9 @@ public class Controller {
     int ca=0;
     int co=0;
     int av=0;
-    Stack<String> frigo;
-    ArrayList<Recipe> recetteclickable;
-    ArrayList<String> ingredientsManquant;
+    Stack<String> frigo  = new Stack<String>();
+    ArrayList<Recipe> recetteclickable =  new ArrayList<Recipe>();
+    ArrayList<String> ingredientsManquant = new ArrayList<String>();
 
     ///////// ELEMENTS INTERACTIFS \\\\\\\\\\
 
@@ -48,13 +48,11 @@ public class Controller {
     @FXML private VBox ingredientsRequis;
 
     ///////// FONCTIONS \\\\\\\\\\
-    public Controller(Model model) {
+
+    public void setModel(Model model) {
         this.model = model;
         this.ingredients = model.recipeMap.getIngredients();
         this.categories = model.recipeMap.getCategories();
-        this.frigo = new Stack<String>();
-        this.recetteclickable = new ArrayList<Recipe>();
-        this.ingredientsManquant = new ArrayList<String>();
     }
 
 

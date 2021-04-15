@@ -10,11 +10,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
+        Parent root = loader.load();
+        
+        Controller ctrl = (Controller) loader.getController();
         Model model = new Model();
         View view = new View();
-        Controller ctrl = new Controller(model);
-
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        ctrl.setModel(model);
 
         primaryStage.setTitle("Cuisinator");
         Scene scene = new Scene(root, 600, 403);
