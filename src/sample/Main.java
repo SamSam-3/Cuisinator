@@ -13,9 +13,9 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
         Parent root = loader.load();
 
-        Controller ctrl = (Controller) loader.getController();
-        View view = new View();
-        Model model = new Model(view);
+        Controller ctrl = loader.getController();
+        View view = new View(ctrl);
+        Model model = new Model(view,ctrl);
         ctrl.setModel(model);
 
         primaryStage.setTitle("Cuisinator");
