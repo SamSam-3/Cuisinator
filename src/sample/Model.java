@@ -19,13 +19,15 @@ public class Model {
 
     public RecipeMap recipeMap;
     public ArrayList<Recipe> recipeList;
-    ArrayList<String> ingredientsManquant = new ArrayList<String>();
+
 
     private View view;
+    private Controller ctrl;
 
-    public Model(View view)
+    public Model(View view, Controller ctrl)
     {
         this.view = view;
+        this.ctrl = ctrl;
         this.loadData();
     }
 
@@ -57,7 +59,7 @@ public class Model {
             case "course":
 
                 // Slide layer liste de course vers la gauche
-                for (String s : this.ingredientsManquant) {
+                for (String s : this.ctrl.ingredientsManquant) {
                     this.view.newIngredient(s);
                 }
 
@@ -76,7 +78,7 @@ public class Model {
 
     public void actualRecipe(String recipeName){
 
-        for (Recipe recipe : this.recetteclickable){
+        for (Recipe recipe : this.ctrl.recetteclickable){
             if (recipe.getName().equals(recipeName)) {
                 this.view.showRecipe(recipe.getName(), recipe.getImage(), recipe.getRequirements(), recipe.getSteps());
             }
@@ -85,19 +87,17 @@ public class Model {
     }
 
     public void search(String input) {
-        // ArrayList<String> names = new ArrayList<String>();
-        //ArrayList<String> ingredients = new ArrayList<String>();
 
         if(input.length()>0){
 
-            this.view.vb.getChildren().clear();
-            this.view.vbI.getChildren().clear();
-            this.recetteclickable.clear();
+            this.ctrl.vb.getChildren().clear();
+            this.ctrl.vbI.getChildren().clear();
+            this.ctrl.recetteclickable.clear();
 
             //// View
-            this.view.listing.toFront();
-            this.view.listing.setVisible(true);
-            this.view.recettePossible.setVisible(true);
+            this.ctrl.listing.toFront();
+            this.ctrl.listing.setVisible(true);
+            this.ctrl.recettePossible.setVisible(true);
 
             //////// Recettes \\\\\\\\
             System.out.println("############################################# Recettes #####################################################");
@@ -107,14 +107,14 @@ public class Model {
 
                     /// View
                     Label lbl = new Label(name);
-                    this.view.vb.getChildren().add(lbl);
-                    this.recetteclickable.add(recipe);
+                    this.ctrl.vb.getChildren().add(lbl);
+                    this.ctrl.recetteclickable.add(recipe);
 
                     System.out.println(name); // Affiche les recettes correspondantes
                 }
             }
             /// View
-            this.view.recettePossible.setContent(this.view.vb); // TODO: deplacer tout ca dans la vue
+            this.ctrl.recettePossible.setContent(this.ctrl.vb); // TODO: deplacer tout ca dans la vue
 
             //////// Ingrédients \\\\\\\\
             System.out.println("############################################# Ingrédients #################################################");
@@ -131,21 +131,21 @@ public class Model {
                     hb.getChildren().add(lb);
                     hb.getChildren().add(cancel);
                     hb.setAlignment(Pos.CENTER);
-                    this.view.vbI.getChildren().add(hb);
+                    this.ctrl.vbI.getChildren().add(hb);
 
                     System.out.println(ing);
                 }
             }
-            this.ctrl.ingredientsPossible.setContent(this.view.vbI);
+            this.ctrl.ingredientsPossible.setContent(this.ctrl.vbI);
             System.out.println("############################################################################################################");
         }
 
         if (input.length() == 0) {
-            this.view.listing.setVisible(false);
+            this.ctrl.listing.setVisible(false);
 
-            this.view.vb.getChildren().clear();
-            this.view.vbI.getChildren().clear();
-            this.recetteclickable.clear();
+            this.ctrl.vb.getChildren().clear();
+            this.ctrl.vbI.getChildren().clear();
+            this.ctrl.recetteclickable.clear();
         }
     }    
 }

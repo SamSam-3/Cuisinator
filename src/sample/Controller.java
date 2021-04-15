@@ -30,7 +30,9 @@ public class Controller {
     private Model model;
     Stack<String> frigo  = new Stack<String>();
 
+    ArrayList<String> ingredientsManquant = new ArrayList<String>();
     ArrayList<Recipe> recetteclickable =  new ArrayList<Recipe>();
+
 
     ///////// ELEMENTS INTERACTIFS \\\\\\\\\\
 
