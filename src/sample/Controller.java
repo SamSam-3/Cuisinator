@@ -19,10 +19,11 @@ public class Controller {
 
     ///////// VARIABLES \\\\\\\\\\
     private Model model;
+    private Set<String> ingredients;  
+    private Set<String> categories;
     int ca=0;
     int co=0;
     int av=0;
-    Set<String> I; 
     Stack<String> frigo;
     ArrayList<Recipe> recetteclickable;
     ArrayList<String> ingredientsManquant;
@@ -34,13 +35,13 @@ public class Controller {
     //@FXML Label titreRecette = new Label();
 
     ///////// AFFICHAGE PANE \\\\\\\\\\
-    @FXML private ScrollPane recettePossible; //Affichage des recettes contenant le terme recherché
+    @FXML private ScrollPane recettePossible; // Affichage des recettes contenant le terme recherché
     @FXML private ScrollPane ingredientsPossible;
     @FXML private Pane layerCategorie; 
     @FXML private Pane accueil;
     @FXML private ScrollPane layerCourse;
     @FXML private ScrollPane recipeContainer;
-    @FXML private VBox diffCat; //Affichage des éléments "catégorie" (vertical et + propre)
+    @FXML private VBox diffCat; // Affichage des éléments "catégorie" (vertical et + propre)
     @FXML private VBox vb;
     @FXML private VBox vbI; 
     @FXML private VBox listing;
@@ -49,8 +50,8 @@ public class Controller {
     ///////// FONCTIONS \\\\\\\\\\
     public Controller(Model model) {
         this.model = model;
-        this.I = model.recipeMap.getIngredients();
-
+        this.ingredients = model.recipeMap.getIngredients();
+        this.categories = model.recipeMap.getCategories();
         this.frigo = new Stack<String>();
         this.recetteclickable = new ArrayList<Recipe>();
         this.ingredientsManquant = new ArrayList<String>();
@@ -67,9 +68,9 @@ public class Controller {
             switch(test.getId()){
                 case "categorie":
 
-                    //Slide layer categorie vers la droite
+                    // Slide layer categorie vers la droite
                     if(ca == 0){
-                        for (String name : this.model.recipeMap.getCategories()) {
+                        for (String name : this.categories) {
                             Label lbl = new Label(name);
                             lbl.setFont(new Font("Arial",20));
                             diffCat.setSpacing(10);
@@ -88,7 +89,7 @@ public class Controller {
                     break;
 
                 case "course":
-                    //Slide layer liste de course vers la gauche
+                    // Slide layer liste de course vers la gauche
 
                     VBox liste = new VBox();
                     for (String s : ingredientsManquant) {
@@ -110,7 +111,7 @@ public class Controller {
                     break;
 
                 case "avancee":
-                    //Apparition layer recherche avancée
+                    // Apparition layer recherche avancée
                     if(av == 0 && recettePossible.isVisible()) {
                         ingredientsPossible.setVisible(true);
                         av=1;
@@ -140,13 +141,13 @@ public class Controller {
             System.out.println("############################################# Recettes #####################################################");
             for (Recipe recipe : this.model.recipeList) {
                 String name = recipe.getName();
-                if (name.toLowerCase().contains(input)) { //A modifier pour faire des recherches sans accents et autres caracteres spéciaux
+                if (name.toLowerCase().contains(input)) { // A modifier pour faire des recherches sans accents et autres caracteres spéciaux
 
                     Label lbl = new Label(name);
                     vb.getChildren().add(lbl);
                     recetteclickable.add(recipe);
 
-                    System.out.println(name); //Affiche les recettes correspondantes
+                    System.out.println(name); // Affiche les recettes correspondantes
                 }
             }
             recettePossible.setContent(vb); // TODO: deplacer tout ca dans la vue
@@ -154,7 +155,7 @@ public class Controller {
             //////// Ingrédients \\\\\\\\
             System.out.println("############################################# Ingrédients #################################################");
 
-            for(String ing : I){
+            for(String ing : this.ingredients){
                 if(ing.toLowerCase().contains(input)){
                     Label lb = new Label(ing);
                     lb.setFont(new Font("Arial",15));
@@ -177,8 +178,8 @@ public class Controller {
             listing.setVisible(false);
 
             vb.getChildren().clear();
-            recetteclickable.clear();
             vbI.getChildren().clear();
+            recetteclickable.clear();
         }
     }
 
@@ -192,8 +193,8 @@ public class Controller {
                 ingredientsRequis.getChildren().clear();
                 recettePossible.setVisible(false);
                 recipeContainer.setVisible(true);
-                Pane rectPane = (Pane) recipeContainer.getContent();
 
+                Pane rectPane = (Pane) recipeContainer.getContent();
                 Label titreRecette = new Label(recipe.getName());
                 titreRecette.setFont(new Font("Arial Black",25));
                 titreRecette.getStyleClass().add("h1");
@@ -201,8 +202,8 @@ public class Controller {
 
                 ImageView img = new ImageView(new Image(recipe.getImage()));
                 img.getStyleClass().add("img");
-
                 VBox ingre = new VBox();
+
                 for(String ing : recipe.getRequirements()){
                     CheckBox cb = new CheckBox(ing);
 
@@ -237,14 +238,12 @@ public class Controller {
         frigo.add(element.getText());
 
         System.out.println("Elements dans le frigo :" + frigo);
-
         System.out.println("Recette correspondantes : ");
-        
 
         // Non.
         for (String s : frigo){
             for (Recipe recipe : this.model.recipeList){
-                //Faire page d'accueil qui montre les recettes dispo 
+                // Faire page d'accueil qui montre les recettes dispo 
                 for (String ing : recipe.getIngredients()){
                     if (ing.equals(s)){
                         System.out.println(recipe.getName());

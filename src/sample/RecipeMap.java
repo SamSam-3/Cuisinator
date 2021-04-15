@@ -43,7 +43,7 @@ public class RecipeMap extends HashMap<String, HashMap<String, ArrayList<Recipe>
         Set<String> ingreds = new HashSet<String>();
 
         for (var ingMap : this.values()) {
-            ingreds.addAll(ingMap.keySet()); // Merge les sets entres eux
+            ingreds.addAll(ingMap.keySet()); // Merge les sets entres eux sans doublons
         }
         return ingreds;
     }

@@ -18,7 +18,7 @@ public class Model {
     }
 
     public void search(String input, ArrayList<String> ingredients) {
-        ArrayList<String> names = new ArrayList<String>();
+        // ArrayList<String> names = new ArrayList<String>();
         // TODO: search
         // view.showIngredients()
     }
