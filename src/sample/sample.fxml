@@ -22,7 +22,8 @@
                </font>
             </Label>
             <VBox fx:id="diffCat" layoutY="75.0" prefHeight="272.0" prefWidth="160.0" />
-         </children></Pane>
+         </children>
+      </Pane>
       <ScrollPane fx:id="layerCourse" hbarPolicy="NEVER" layoutX="600.0" layoutY="53.0" prefHeight="350.0" prefWidth="200.0" vbarPolicy="ALWAYS">
          <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="349.0" prefWidth="200.0" style="-fx-background-color: green;" />

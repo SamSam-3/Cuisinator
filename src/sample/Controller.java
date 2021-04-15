@@ -4,15 +4,33 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.util.*;
 
 public class Controller {
 
+
+    @FXML public ScrollPane recettePossible; // Affichage des recettes contenant le terme recherché
+    @FXML public ScrollPane ingredientsPossible;
+    @FXML public Pane layerCategorie;
+    @FXML public Pane accueil;
+    @FXML public ScrollPane layerCourse;
+    @FXML public ScrollPane recipeContainer;
+    @FXML public VBox diffCat; // Affichage des éléments "catégorie" (vertical et + propre)
+    @FXML public VBox vb;
+    @FXML public VBox vbI;
+    @FXML public VBox listing;
+    @FXML public VBox ingredientsRequis;
+
+
     ///////// VARIABLES \\\\\\\\\\
     private Model model;
     Stack<String> frigo  = new Stack<String>();
+
+    ArrayList<Recipe> recetteclickable =  new ArrayList<Recipe>();
 
     ///////// ELEMENTS INTERACTIFS \\\\\\\\\\
 
@@ -23,7 +41,6 @@ public class Controller {
     public void setModel(Model model) {
         this.model = model;
     }
-
 
     @FXML
     public void handleButtonClick(ActionEvent evt){
@@ -41,7 +58,7 @@ public class Controller {
     @FXML
     public void watchRecipe(MouseEvent mouseEvent){
         Text recette = (Text) mouseEvent.getTarget();
-        this.model.showRecipe(recette.getText());
+        this.model.actualRecipe(recette.getText());
     }
 
     @FXML
@@ -64,6 +81,4 @@ public class Controller {
             }
         }
     }
-
-
 }

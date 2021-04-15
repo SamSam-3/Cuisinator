@@ -1,9 +1,11 @@
 package sample;
 
+import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -17,16 +19,12 @@ public class Model {
 
     public RecipeMap recipeMap;
     public ArrayList<Recipe> recipeList;
-    private View view;
-
-    // ??
-    int ca=0;
-    int co=0;
-    int av=0;
-    ArrayList<Recipe> recetteclickable =  new ArrayList<Recipe>();
     ArrayList<String> ingredientsManquant = new ArrayList<String>();
 
-    public Model(View view) {
+    private View view;
+
+    public Model(View view)
+    {
         this.view = view;
         this.loadData();
     }
@@ -42,115 +40,45 @@ public class Model {
         }
     }
 
+
     public void showLayer(String btn){
 
         switch(btn){
             case "categorie":
 
                 // Slide layer categorie vers la droite
-                if(this.ca == 0){
-                    for (String name : recipeMap.getCategories()) {
-
-                        Label lbl = new Label(name);
-                        lbl.setFont(new Font("Arial",20)); // A modifier avec css
-                        this.view.diffCat.setSpacing(10); // A modifier avec css
-                        this.view.diffCat.setAlignment(Pos.TOP_CENTER); // A modifier avec css
-
-                        this.view.diffCat.getChildren().add(lbl);
-                    }
-                    this.view.layerCategorie.setTranslateX(Math.abs(this.view.layerCategorie.getLayoutX()));
-                    this.view.layerCategorie.toFront();
-                    this.ca=1;
-
-                } else {
-                    this.view.layerCategorie.setTranslateX(0);
-                    this.view.diffCat.getChildren().clear();
-
-                    this.ca=0;
+                for (String name : recipeMap.getCategories()) {
+                    this.view.newCategories(name);
+                    System.out.println("Cat trouvé");
                 }
+                this.view.showCategories();
                 break;
 
             case "course":
+
                 // Slide layer liste de course vers la gauche
-
-                VBox liste = new VBox();
                 for (String s : this.ingredientsManquant) {
-                    Label ig = new Label(s);
-                    ig.setFont(new Font("Arial", 15)); // A modifier avec css
-                    liste.getChildren().add(ig);
+                    this.view.newIngredient(s);
                 }
 
-                this.view.layerCourse.setContent(liste);
-                this.view.layerCourse.toFront();
+                this.view.showIngredients();
 
-                if(this.co == 0){
-                    this.view.layerCourse.setTranslateX(-this.view.layerCourse.getWidth());
-                    this.co=1;
-                } else {
-                    this.view.layerCourse.setTranslateX(0);
-                    this.co=0;
-                }
                 break;
 
             case "avancee":
-                // Apparition layer recherche avancée
-                if(this.av == 0 && this.view.recettePossible.isVisible()) {
-                    this.view.ingredientsPossible.setVisible(true);
-                    this.av=1;
-                } else {
-                    this.view.ingredientsPossible.setVisible(false);
 
-                    this.av=0;
-                }
+                // Apparition layer recherche avancée
+                this.view.showAdvanced();
                 break;
         }
 
     }
 
-    public void showRecipe(String recipeName){
+    public void actualRecipe(String recipeName){
 
         for (Recipe recipe : this.recetteclickable){
-            if (recipe.getName().equals(recipeName)){
-
-                /// View
-                this.view.ingredientsRequis.getChildren().clear();
-
-                this.view.recettePossible.setVisible(false);
-                this.view.recipeContainer.setVisible(true);
-
-                Pane rectPane = (Pane) this.view.recipeContainer.getContent();
-                Label titreRecette = new Label(recipe.getName());
-                titreRecette.setFont(new Font("Arial Black",25));
-                titreRecette.getStyleClass().add("h1");
-
-
-                ImageView img = new ImageView(new Image(recipe.getImage()));
-                img.getStyleClass().add("img");
-                VBox ingre = new VBox();
-
-                for (String ing : recipe.getRequirements()){
-                    CheckBox cb = new CheckBox(ing);
-
-                    cb.setOnAction(actionEvent -> {
-                        String txt = ((CheckBox) actionEvent.getTarget()).getText();
-                        if (this.ingredientsManquant.contains(txt)){
-                            this.ingredientsManquant.remove(txt);
-                        } else {
-                            this.ingredientsManquant.add(txt);
-                        }
-                        System.out.println(this.ingredientsManquant);
-                    });
-
-                    this.ingredientsManquant.add(ing);
-                    ingre.getChildren().add(cb);
-                }
-
-                rectPane.getChildren().add(titreRecette);
-                rectPane.getChildren().add(img);
-                rectPane.getChildren().add(ingre);
-
-                rectPane.getChildren().add(new Label("Les étapes :"));
-                rectPane.getChildren().add(new Label(recipe.getSteps()));
+            if (recipe.getName().equals(recipeName)) {
+                this.view.showRecipe(recipe.getName(), recipe.getImage(), recipe.getRequirements(), recipe.getSteps());
             }
         }
 
@@ -208,7 +136,7 @@ public class Model {
                     System.out.println(ing);
                 }
             }
-            this.view.ingredientsPossible.setContent(this.view.vbI);
+            this.ctrl.ingredientsPossible.setContent(this.view.vbI);
             System.out.println("############################################################################################################");
         }
 
