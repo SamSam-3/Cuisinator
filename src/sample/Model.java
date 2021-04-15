@@ -10,7 +10,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 
@@ -19,11 +18,16 @@ public class Model {
     public RecipeMap recipeMap;
     public ArrayList<Recipe> recipeList;
     private View view;
-    private Controller ctrl;
 
-    public Model(View view, Controller ctrl) {
+    // ??
+    int ca=0;
+    int co=0;
+    int av=0;
+    ArrayList<Recipe> recetteclickable =  new ArrayList<Recipe>();
+    ArrayList<String> ingredientsManquant = new ArrayList<String>();
+
+    public Model(View view) {
         this.view = view;
-        this.ctrl = ctrl;
         this.loadData();
     }
 
@@ -44,7 +48,7 @@ public class Model {
             case "categorie":
 
                 // Slide layer categorie vers la droite
-                if(this.ctrl.ca == 0){
+                if(this.ca == 0){
                     for (String name : recipeMap.getCategories()) {
 
                         Label lbl = new Label(name);
@@ -56,13 +60,13 @@ public class Model {
                     }
                     this.view.layerCategorie.setTranslateX(Math.abs(this.view.layerCategorie.getLayoutX()));
                     this.view.layerCategorie.toFront();
-                    this.ctrl.ca=1;
+                    this.ca=1;
 
                 } else {
                     this.view.layerCategorie.setTranslateX(0);
                     this.view.diffCat.getChildren().clear();
 
-                    this.ctrl.ca=0;
+                    this.ca=0;
                 }
                 break;
 
@@ -70,7 +74,7 @@ public class Model {
                 // Slide layer liste de course vers la gauche
 
                 VBox liste = new VBox();
-                for (String s : this.ctrl.ingredientsManquant) {
+                for (String s : this.ingredientsManquant) {
                     Label ig = new Label(s);
                     ig.setFont(new Font("Arial", 15)); // A modifier avec css
                     liste.getChildren().add(ig);
@@ -79,34 +83,34 @@ public class Model {
                 this.view.layerCourse.setContent(liste);
                 this.view.layerCourse.toFront();
 
-                if(this.ctrl.co == 0){
+                if(this.co == 0){
                     this.view.layerCourse.setTranslateX(-this.view.layerCourse.getWidth());
-                    this.ctrl.co=1;
+                    this.co=1;
                 } else {
                     this.view.layerCourse.setTranslateX(0);
-                    this.ctrl.co=0;
+                    this.co=0;
                 }
                 break;
 
             case "avancee":
                 // Apparition layer recherche avancée
-                if(this.ctrl.av == 0 && this.view.recettePossible.isVisible()) {
+                if(this.av == 0 && this.view.recettePossible.isVisible()) {
                     this.view.ingredientsPossible.setVisible(true);
-                    this.ctrl.av=1;
+                    this.av=1;
                 } else {
                     this.view.ingredientsPossible.setVisible(false);
 
-                    this.ctrl.av=0;
+                    this.av=0;
                 }
                 break;
         }
 
     }
 
-    public void showRecipe(Text recipeName){
+    public void showRecipe(String recipeName){
 
-        for(Recipe recipe : this.ctrl.recetteclickable){
-            if(recipe.getName().equals(recipeName.getText())){
+        for(Recipe recipe : this.recetteclickable){
+            if(recipe.getName().equals(recipeName)){
 
                 /// View
                 this.view.ingredientsRequis.getChildren().clear();
@@ -128,16 +132,16 @@ public class Model {
                     CheckBox cb = new CheckBox(ing);
 
                     cb.setOnAction(actionEvent -> {
-                        String txt = ((CheckBox)actionEvent.getTarget()).getText();
-                        if(this.ctrl.ingredientsManquant.contains(txt)){
-                            this.ctrl.ingredientsManquant.remove(txt);
+                        String txt = ((CheckBox) actionEvent.getTarget()).getText();
+                        if(this.ingredientsManquant.contains(txt)){
+                            this.ingredientsManquant.remove(txt);
                         } else {
-                            this.ctrl.ingredientsManquant.add(txt);
+                            this.ingredientsManquant.add(txt);
                         }
-                        System.out.println(this.ctrl.ingredientsManquant);
+                        System.out.println(this.ingredientsManquant);
                     });
 
-                    this.ctrl.ingredientsManquant.add(ing);
+                    this.ingredientsManquant.add(ing);
                     ingre.getChildren().add(cb);
                 }
 
@@ -160,7 +164,7 @@ public class Model {
 
             this.view.vb.getChildren().clear();
             this.view.vbI.getChildren().clear();
-            this.ctrl.recetteclickable.clear();
+            this.recetteclickable.clear();
 
             //// View
             this.view.listing.toFront();
@@ -176,7 +180,7 @@ public class Model {
                     /// View
                     Label lbl = new Label(name);
                     this.view.vb.getChildren().add(lbl);
-                    this.ctrl.recetteclickable.add(recipe);
+                    this.recetteclickable.add(recipe);
 
                     System.out.println(name); // Affiche les recettes correspondantes
                 }
@@ -213,9 +217,7 @@ public class Model {
 
             this.view.vb.getChildren().clear();
             this.view.vbI.getChildren().clear();
-            this.ctrl.recetteclickable.clear();
+            this.recetteclickable.clear();
         }
-    }
-        // view.showIngredients()
-    
+    }    
 }

@@ -15,7 +15,7 @@ public class Main extends Application {
 
         Controller ctrl = loader.getController();
         View view = new View(ctrl);
-        Model model = new Model(view,ctrl);
+        Model model = new Model(view);
         ctrl.setModel(model);
 
         primaryStage.setTitle("Cuisinator");

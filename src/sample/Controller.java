@@ -12,12 +12,7 @@ public class Controller {
 
     ///////// VARIABLES \\\\\\\\\\
     private Model model;
-    int ca=0;
-    int co=0;
-    int av=0;
     Stack<String> frigo  = new Stack<String>();
-    ArrayList<Recipe> recetteclickable =  new ArrayList<Recipe>();
-    ArrayList<String> ingredientsManquant = new ArrayList<String>();
 
     ///////// ELEMENTS INTERACTIFS \\\\\\\\\\
 
@@ -47,7 +42,7 @@ public class Controller {
     @FXML
     public void watchRecipe(MouseEvent mouseEvent){
         Text recette = (Text) mouseEvent.getTarget();
-        this.model.showRecipe(recette);
+        this.model.showRecipe(recette.getText());
     }
 
     @FXML
