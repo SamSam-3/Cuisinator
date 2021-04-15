@@ -7,21 +7,23 @@ import java.util.ArrayList;
 
 //  import javafx.fxml.FXML;
  import javafx.geometry.Pos;
- import javafx.scene.control.CheckBox;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
  import javafx.scene.control.Label;
 //  import javafx.scene.control.ScrollPane;
  import javafx.scene.image.Image;
  import javafx.scene.image.ImageView;
- import javafx.scene.layout.Pane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
  import javafx.scene.layout.VBox;
  import javafx.scene.text.Font;
 
 public class View {
 
     private Controller ctrl;
-    private int etatCA = 1;
-    private int etatCO = 1;
-    private int etatAV = 1;
+    private int etatCA = 0;
+    private int etatCO = 0;
+    private int etatAV = 0;
 
     VBox liste = new VBox();
 
@@ -123,6 +125,55 @@ public class View {
 
         rectPane.getChildren().add(new Label("Les étapes :"));
         rectPane.getChildren().add(new Label(steps));
+    }
+
+    public void wipe(String input){
+
+        if(input.length()>0) {
+
+            this.ctrl.vb.getChildren().clear();
+            this.ctrl.vbI.getChildren().clear();
+
+            this.ctrl.listing.toFront();
+            this.ctrl.listing.setVisible(true);
+            this.ctrl.recettePossible.setVisible(true);
+
+        }
+
+        if (input.length() == 0) {
+            this.ctrl.listing.setVisible(false);
+            this.ctrl.ingredientsPossible.setVisible(false);
+
+            this.ctrl.vb.getChildren().clear();
+            this.ctrl.vbI.getChildren().clear();
+        }
+    }
+
+    public void addRecipe(String name){
+
+        /// A refaire par css
+        Label lbl = new Label(name);
+        this.ctrl.vb.getChildren().add(lbl);
+    }
+
+    public void addIngredients(String ing){
+
+        /// A refaire par css
+        Label lb = new Label(ing);
+        lb.setFont(new Font("Arial",15));
+        Button cancel = new Button("X");
+        cancel.setPrefSize(5,5);
+        HBox hb = new HBox();
+        hb.getChildren().add(lb);
+        hb.getChildren().add(cancel);
+        hb.setAlignment(Pos.CENTER);
+        this.ctrl.vbI.getChildren().add(hb);
+
+    }
+
+    public void saveState(){
+        this.ctrl.recettePossible.setContent(this.ctrl.vb);
+        this.ctrl.ingredientsPossible.setContent(this.ctrl.vbI);
     }
 
     public View(Controller ctrl) {
