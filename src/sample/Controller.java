@@ -19,9 +19,9 @@ public class Controller {
 
     ///////// VARIABLES \\\\\\\\\\
     private Model model;
-    private int ca=0;
-    private int co=0;
-    private int av=0;
+    int ca=0;
+    int co=0;
+    int av=0;
     Set<String> I; 
     Stack<String> frigo;
     ArrayList<Recipe> recetteclickable;
@@ -50,7 +50,7 @@ public class Controller {
     public Controller(Model model) {
         this.model = model;
         this.I = model.recipeMap.getIngredients();
-        
+
         this.frigo = new Stack<String>();
         this.recetteclickable = new ArrayList<Recipe>();
         this.ingredientsManquant = new ArrayList<String>();
@@ -139,18 +139,16 @@ public class Controller {
             //////// Recettes \\\\\\\\
             System.out.println("############################################# Recettes #####################################################");
             for (Recipe recipe : this.model.recipeList) {
-                if (recipe.getName().toLowerCase().contains(input)) { //A modifier pour faire des recherches sans accents et autres caracteres spéciaux
+                String name = recipe.getName();
+                if (name.toLowerCase().contains(input)) { //A modifier pour faire des recherches sans accents et autres caracteres spéciaux
 
-                    Label lbl = new Label(recipe.getName());
+                    Label lbl = new Label(name);
                     vb.getChildren().add(lbl);
                     recetteclickable.add(recipe);
 
-                    System.out.println(recipe.getName()); //Affiche les recettes correspondantes
+                    System.out.println(name); //Affiche les recettes correspondantes
                 }
             }
-            /*
-            this.model.search(input, ingFilter);
-            */
             recettePossible.setContent(vb); // TODO: deplacer tout ca dans la vue
 
             //////// Ingrédients \\\\\\\\
@@ -173,10 +171,9 @@ public class Controller {
             }
             ingredientsPossible.setContent(vbI);
             System.out.println("############################################################################################################");
-
         }
 
-        if (barreRecherche.getCharacters().length() == 0) {
+        if (input.length() == 0) {
             listing.setVisible(false);
 
             vb.getChildren().clear();
