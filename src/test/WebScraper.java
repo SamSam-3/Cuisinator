@@ -135,11 +135,11 @@ public class WebScraper {
         System.out.println(mappedRecipe);
 
         //////////////////// Test de sauvegarde ////////////////////
-        DataManager.save("recipeMap", mappedRecipe);
-        DataManager.save("recipeList", r);
+        DataManager.save("recipe-map", mappedRecipe);
+        DataManager.save("recipe-list", r);
 
         //////////////////// Test de charge en memoire ////////////////////
-        //RecipeMap r = (RecipeMap)DataManager.load("recipes");
+        //RecipeMap r = (RecipeMap)DataManager.load("recipes-map");
         //System.out.println(r);
     }
 

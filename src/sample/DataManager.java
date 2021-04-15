@@ -5,11 +5,15 @@ import java.io.*;
 public class DataManager {
 
     static private String path = "data/";  
+    static private String ext = ".save";  
 
+    static private String getPath(String fileName) {
+        return path + fileName + ext;
+    }
 
     static public boolean save(String key, Object value)  {
         try {
-            FileOutputStream fos = new FileOutputStream(path + key + ".save");
+            FileOutputStream fos = new FileOutputStream(getPath(key));
             ObjectOutputStream oos = new ObjectOutputStream(fos);
 
             oos.writeObject(value);
@@ -28,7 +32,7 @@ public class DataManager {
         Object obj = null;
 
 		try {
-			FileInputStream fis = new FileInputStream(path + key + ".save");
+			FileInputStream fis = new FileInputStream(getPath(key));
 			ObjectInputStream ois = new ObjectInputStream(fis);
 
 			obj = ois.readObject();
@@ -36,7 +40,7 @@ public class DataManager {
 			fis.close();
 
 		} catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException("Error while loading the binary file: " + key + ".save");
+            throw new RuntimeException("Error while loading the binary file: " + getPath(key));
 		}
 
         return obj;

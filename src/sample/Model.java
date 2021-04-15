@@ -15,8 +15,9 @@ public class Model {
 
     @SuppressWarnings("unchecked")
     public void loadData() {
-        recipeMap = (RecipeMap)DataManager.load("recipeMap");
-        recipeList = (ArrayList<Recipe>)DataManager.load("recipeList");
+        recipeMap = (RecipeMap)DataManager.load("recipe-map");
+        recipeList = (ArrayList<Recipe>)DataManager.load("recipe-list");
+        // TODO: fav.save
 
         if (recipeMap == null || recipeList == null) {
             throw new RuntimeException("Data base not found");
