@@ -8,10 +8,10 @@
    <children>
       <Pane prefHeight="53.0" prefWidth="600.0" style="-fx-background-color: orange;">
          <children>
-            <Button fx:id="categorie" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="52.0" prefWidth="52.0" />
-            <Button fx:id="course" layoutX="548.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="52.0" prefWidth="52.0" />
+            <Button fx:id="categorie" mnemonicParsing="false" onAction="#categorieBtn" prefHeight="52.0" prefWidth="52.0" />
+            <Button fx:id="course" layoutX="548.0" mnemonicParsing="false" onAction="#courseBtn" prefHeight="52.0" prefWidth="52.0" />
             <TextField fx:id="barreRecherche" layoutX="147.0" layoutY="10.0" onKeyReleased="#findRecipe" prefHeight="31.0" prefWidth="267.0" promptText="Je cherche ..." />
-            <Button fx:id="avancee" layoutX="414.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="40.0" prefWidth="40.0" />
+            <Button fx:id="avancee" layoutX="414.0" layoutY="6.0" mnemonicParsing="false" onAction="#showAdvanced" prefHeight="40.0" prefWidth="40.0" />
          </children>
       </Pane>
       <Pane fx:id="layerCategorie" layoutX="-150.0" layoutY="53.0" prefHeight="350.0" prefWidth="150.0" style="-fx-background-color: orange;">

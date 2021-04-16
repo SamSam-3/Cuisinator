@@ -1,11 +1,15 @@
 package sample;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.util.*;
@@ -28,26 +32,177 @@ public class Controller {
 
     private Model model;
     Stack<String> frigo  = new Stack<String>();
+    private ArrayList<String> ingredsLeft = new ArrayList<String>();
+    public ArrayList<Recipe> recipeDisplay = new ArrayList<Recipe>(); // Temporaire public
 
+    private int etatCA = 0;
+    private int etatCO = 0;
+    private int etatAV = 0;
 
-    public void setModel(Model model) {
+    VBox liste = new VBox();
+
+    public void initModel(Model model) {
         this.model = model;
     }
 
-    @FXML
-    public void handleButtonClick(ActionEvent evt){
-        Button test = (Button) evt.getSource();
-        this.model.showLayer(test.getId());
-        //Affiche IDs boutons
-        System.out.println(test.getId());
+    public void newCategories(String catName){
+        Label lbl = new Label(catName);
+        lbl.setFont(new Font("Arial", 20)); // A modifier avec css
+
+        this.diffCat.setSpacing(10); // A modifier avec css
+        this.diffCat.setAlignment(Pos.TOP_CENTER); // A modifier avec css
+        this.diffCat.getChildren().add(lbl);
+    }
+
+    public void newIngredient(String ingName){
+
+        Label ig = new Label(ingName);
+        ig.setFont(new Font("Arial", 15)); // A modifier avec css
+        this.liste.getChildren().add(ig);
+
+        this.layerCourse.setContent(liste);
+        this.layerCourse.toFront();
+    }
+
+    public void showCategories(){
+        if (etatCA == 0){
+            this.layerCategorie.setTranslateX(Math.abs(this.layerCategorie.getLayoutX()));
+            this.layerCategorie.toFront();
+            etatCA = 1;
+
+        } else {
+            this.layerCategorie.setTranslateX(0);
+            this.diffCat.getChildren().clear();
+            etatCA = 0;
+
+        }
+    }
+
+    public void showIngredients(){
+        if (etatCO == 0){
+            this.layerCourse.setTranslateX(-this.layerCourse.getWidth());
+            etatCO=1;
+        } else {
+            this.layerCourse.setTranslateX(0);
+            etatCO=0;
+        }
+    }
+
+
+    public void showRecipe(Recipe recipe){
+
+        this.ingredientsRequis.getChildren().clear();
+        this.recettePossible.setVisible(false);
+        this.recipeContainer.setVisible(true);
+
+        Pane rectPane = (Pane) this.recipeContainer.getContent();
+        Label titreRecette = new Label(recipe.getName());
+        titreRecette.setFont(new Font("Arial Black",25));
+        titreRecette.getStyleClass().add("h1");
+
+        ImageView image = new ImageView(new Image(recipe.getImage()));
+        image.getStyleClass().add("img");
+        VBox ingre = new VBox();
+
+        for (String ing : recipe.getRequirements()){
+            CheckBox cb = new CheckBox(ing);
+
+            cb.setOnAction(actionEvent -> {
+                String txt = ((CheckBox) actionEvent.getTarget()).getText();
+                if (ingredsLeft.contains(txt)){
+                    ingredsLeft.remove(txt);
+                } else {
+                    ingredsLeft.add(txt);
+                }
+                System.out.println(ingredsLeft);
+            });
+
+            ingredsLeft.add(ing);
+            ingre.getChildren().add(cb);
+        }
+
+        rectPane.getChildren().add(titreRecette);
+        rectPane.getChildren().add(image);
+        rectPane.getChildren().add(ingre);
+
+        rectPane.getChildren().add(new Label("Les étapes :"));
+        rectPane.getChildren().add(new Label(recipe.getSteps()));
+    }
+
+    public void wipe(String input){
+
+        if(input.length()>0) {
+
+            this.vb.getChildren().clear();
+            this.vbI.getChildren().clear();
+
+            this.listing.toFront();
+            this.listing.setVisible(true);
+            this.recettePossible.setVisible(true);
+
+        }
+
+        if (input.length() == 0) {
+            this.listing.setVisible(false);
+            this.ingredientsPossible.setVisible(false);
+
+            this.vb.getChildren().clear();
+            this.vbI.getChildren().clear();
+        }
+    }
+
+    public void addRecipe(String name){
+
+        /// A refaire par css
+        Label lbl = new Label(name);
+        this.vb.getChildren().add(lbl);
+    }
+
+    public void addIngredients(String ing){
+
+        /// A refaire par css
+        Label lb = new Label(ing);
+        lb.setFont(new Font("Arial",15));
+        Button cancel = new Button("X");
+        cancel.setPrefSize(5,5);
+        HBox hb = new HBox();
+        hb.getChildren().add(lb);
+        hb.getChildren().add(cancel);
+        hb.setAlignment(Pos.CENTER);
+        this.vbI.getChildren().add(hb);
+
+    }
+
+    public void saveState(){
+        this.recettePossible.setContent(this.vb);
+        this.ingredientsPossible.setContent(this.vbI);
     }
     
-    /* @FXML
-    public void categorieBtn() { }
     @FXML
-    public void courseBtn() { }
+    public void categorieBtn() { 
+        for (String name : this.model.getCategories()) {
+            this.newCategories(name); 
+        }
+        this.showCategories();
+    }
     @FXML
-    public void advanceBtn() { } */
+    public void courseBtn() { 
+        this.liste.getChildren().clear();
+        for (String s : this.ingredsLeft) {
+            this.newIngredient(s);
+        }
+        this.showIngredients();
+    }
+    @FXML
+    public void showAdvanced(){
+        if (etatAV == 0 && this.recettePossible.isVisible()) {
+            this.ingredientsPossible.setVisible(true);
+            etatAV=1;
+        } else {
+            this.ingredientsPossible.setVisible(false);
+            etatAV=0;
+        }
+    }
 
     @FXML
     public void findRecipe() {
@@ -56,8 +211,12 @@ public class Controller {
 
     @FXML
     public void watchRecipe(MouseEvent mouseEvent){
-        Text recette = (Text) mouseEvent.getTarget();
-        this.model.actualRecipe(recette.getText());
+        String recipeName = ((Text) mouseEvent.getTarget()).getText();
+        for (Recipe recipe : this.recipeDisplay){
+            if (recipe.getName().equals(recipeName)) {
+                this.showRecipe(recipe);
+            }
+        }
     }
 
     @FXML
