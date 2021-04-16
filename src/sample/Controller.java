@@ -151,6 +151,7 @@ public class Controller {
 
         /// A refaire par css
         Label lbl = new Label(name);
+        lbl.getStyleClass().add("listRecipe");
         this.vb.getChildren().add(lbl);
     }
 

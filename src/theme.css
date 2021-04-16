@@ -18,7 +18,6 @@
   -fx-background-image: url("images/avancee.png");
 }
 
-
 .listRecipe:hover{
   -fx-color: red;
   -fx-background-color: grey;
