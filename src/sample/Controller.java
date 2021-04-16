@@ -21,12 +21,11 @@ public class Controller {
     @FXML public VBox vb;
     @FXML public VBox vbI;
     @FXML public VBox listing;
-    @FXML public VBox ingredientsRequis;
+    @FXML public VBox diffCat; // Affichage des éléments "catégorie" (vertical et + propre)
     @FXML public ScrollPane ingredientsPossible;
     @FXML public ScrollPane layerCourse;
     @FXML public ScrollPane recipeContainer;
     @FXML public ScrollPane recipePossible; // Affichage des recettes contenant le terme recherché
-    @FXML public VBox diffCat; // Affichage des éléments "catégorie" (vertical et + propre)
     @FXML public TextField barreRecherche;
 
     private Model model;
@@ -88,7 +87,6 @@ public class Controller {
     }
 
     public void showRecipe(Recipe recipe){
-        this.ingredientsRequis.getChildren().clear();
         this.recipePossible.setVisible(false);
         this.recipeContainer.setVisible(true);
 

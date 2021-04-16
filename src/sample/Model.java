@@ -28,6 +28,7 @@ public class Model {
             throw new RuntimeException("Data base not found");
         }
     }
+
     public Set<Recipe> search(String searchStr, Set<String> categsFilter, Set<String> ingredsFilter) {
         if (categsFilter != null) {    
             categsFilter = this.categories; // de base on recherche sur toutes les categories
