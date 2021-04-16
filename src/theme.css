@@ -29,13 +29,17 @@
     -fx-alignment: center;
 }
 
+.cardTitle{
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-font-family: "Arial Black";
+}
 
 .card {
     -fx-border-color: #795548;
     -fx-border-width: 3;
     -fx-border-style: solid;
     -fx-border-radius: 40;
-
 }
 
 

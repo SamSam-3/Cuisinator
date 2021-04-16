@@ -247,6 +247,7 @@ public class Controller {
         }
     }
 
+
     public void mainPage(ArrayList<Recipe> recipeList){
         VBox main = (VBox) recipeContainer.getContent();
 
@@ -262,7 +263,7 @@ public class Controller {
         /// En scrollant s'il arrive a la fin des 20 premiers, on aggrandi la liste et reset mainPage()
         Recipe test = recipeList.get(0);
 
-        Rectangle rect = new Rectangle(0,0, 150, 200);
+        Rectangle rect = new Rectangle(0,0, 200, 250);
         ImagePattern image = new ImagePattern(new Image(test.getImage()));
         rect.setArcHeight(90.0);
         rect.setArcWidth(90.0);
@@ -271,6 +272,7 @@ public class Controller {
         rect.getStyleClass().add("img");
 
         Label titre = new Label(test.getName());
+        titre.getStyleClass().add("cardTitle");
 
         card.getChildren().add(rect);
         card.getChildren().add(titre);
