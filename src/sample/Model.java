@@ -87,4 +87,5 @@ public class Model {
     public Set<String> getCategories() {
         return categories;
     }
+
 }

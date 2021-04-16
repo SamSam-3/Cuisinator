@@ -50,8 +50,13 @@ public class Controller {
         card.getStyleClass().add("card"); // Faire css arrondi / etc...
         line.getStyleClass().add("line"); // Faire css margin de chaque coté
 
-        card.getChildren().add(new ImageView(new Image(randomRecipe.getImage())));
-        card.getChildren().add(new Label(randomRecipe.getName()));
+        /// POUR TEST je prend un recette au hasard
+        /// Plus tard on mettra les 20 premiers meileurs recettes (par likes) boucle for pour 20
+        /// En scrollant s'il arrive a la fin des 20 premiers, on aggrandi la liste et reset mainPage()
+        Recipe test = this.model.recipeList.get(0);
+
+        card.getChildren().add(new ImageView(new Image(test.getImage())));
+        card.getChildren().add(new Label(test.getName()));
 
         line.getChildren().add(card);
         main.getChildren().add(line);
