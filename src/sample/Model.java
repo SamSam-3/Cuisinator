@@ -39,6 +39,7 @@ public class Model {
 
                 this.control.addRecipe(name);
                 this.control.recipeDisplay.add(recipe);
+
                 System.out.println(name); // Affiche les recettes correspondantes
             }
         }

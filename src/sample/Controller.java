@@ -136,12 +136,11 @@ public class Controller {
     }
 
     private void showDropdown() {
-        this.vb.getChildren().clear();
-        this.vbI.getChildren().clear();
         this.listing.toFront();
         this.listing.setVisible(true);
         this.recipePossible.setVisible(true);
     }
+
     private void hideDropdown() {
         this.listing.setVisible(false);
         this.ingredientsPossible.setVisible(false);
@@ -150,6 +149,7 @@ public class Controller {
     }
 
     public void addRecipe(String name){
+
         /// A refaire par css
         Label lbl = new Label(name);
         this.vb.getChildren().add(lbl);
@@ -165,13 +165,16 @@ public class Controller {
         hb.getChildren().add(lb);
         hb.getChildren().add(cancel);
         hb.setAlignment(Pos.CENTER);
+        hb.getStyleClass().add("listIngredients");
         this.vbI.getChildren().add(hb);
 
     }
 
     public void saveState(){
+
         this.recipePossible.setContent(this.vb);
         this.ingredientsPossible.setContent(this.vbI);
+
     }
 
     @FXML
