@@ -77,11 +77,15 @@ public class Recipe implements Comparable<Recipe>, Serializable{
         this.likes = likes;
     }
 
+    public boolean equals(Recipe rcp) {
+        return name == rcp.name;
+    }
+
     @Override
     public String toString() {
         return this.name;
     }
-    
+
     @Override
     public int compareTo(Recipe rcp) {
         return likes - rcp.getLikes();

@@ -32,6 +32,7 @@ public class Controller {
     @FXML public TextField barreRecherche;
 
     private Model model;
+    private boolean doIngredSearch = false;
     Stack<String> frigo  = new Stack<String>();
     private ArrayList<String> ingredsLeft = new ArrayList<String>();
     public ArrayList<Recipe> recipeDisplay = new ArrayList<Recipe>(); // Temporaire public
@@ -209,7 +210,20 @@ public class Controller {
         this.vbI.getChildren().clear();
 
         if (input.length() > 0) {
-            this.model.search(input);
+            this.model.search(input); 
+            /*********  TODO: add ingred filter + categorie selected  *********\
+            Set<Recipe> recipeToDisplay = this.model.search(input, categsFilter, ingredsFilter);
+            for (Recipe rcp : recipeToDisplay) {
+                this.addRecipe(rcp.getName());
+                this.recipeDisplay.add(rcp);
+            } */
+
+            if (this.doIngredSearch) {
+                Set<String> ingredToDisplay = this.model.searchIngredients(input);
+                for (String ing : ingredToDisplay) {
+                    this.addIngredients(ing);
+                }
+            }   
             this.showDropdown();
         } else {
             this.hideDropdown();

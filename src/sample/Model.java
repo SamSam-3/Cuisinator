@@ -9,11 +9,13 @@ public class Model {
 
     private Controller control;
     private Set<String> categories;
+    private Set<String> ingredients;
 
     public Model(Controller control) {
         this.control = control;
         this.loadData();
         this.categories = recipeMap.getCategories();
+        this.ingredients = recipeMap.getIngredients();
 
         this.control.mainPage(recipeList);
     }
@@ -30,17 +32,17 @@ public class Model {
     }
 
     public Set<Recipe> search(String searchStr, Set<String> categsFilter, Set<String> ingredsFilter) {
-        if (categsFilter != null) {    
-            categsFilter = this.categories; // de base on recherche sur toutes les categories
-        }
         Set<Recipe> output = new HashSet<Recipe>();
 
-        if (ingredsFilter != null) {
+        if (categsFilter != null && categsFilter.size() > 0) {    
+            categsFilter = this.categories; // de base on recherche sur toutes les categories
+        }
+        
+        if (ingredsFilter != null && ingredsFilter.size() > 0) {
             for (String cat : categsFilter) {
                 for (String ing : ingredsFilter) {
                     for (Recipe recipe : this.recipeMap.get(cat).get(ing)) {
-                        String name = recipe.getName();
-                        if (name.toLowerCase().contains(searchStr)) {
+                        if (recipe.getName().toLowerCase().contains(searchStr)) {
                             output.add(recipe);
                         }
                     }
@@ -55,6 +57,17 @@ public class Model {
             }
         }
 
+        return output;
+    }
+    
+    public Set<String> searchIngredients(String searchStr) {
+        Set<String> output = new HashSet<String>();
+        
+        for (String ing : this.ingredients) {
+            if (ing.toLowerCase().contains(searchStr)) {
+                output.add(ing);
+            }
+        }
         return output;
     }
 
