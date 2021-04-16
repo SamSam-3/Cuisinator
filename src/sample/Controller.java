@@ -260,8 +260,7 @@ public class Controller {
         /// En scrollant s'il arrive a la fin des 20 premiers, on aggrandi la liste et reset mainPage()
         Recipe test = recipeList.get(0);
         ImageView img = new ImageView(new Image(test.getImage()));
-        img.setFitHeight(line.getHeight());
-        img.setFitWidth(line.getWidth());
+        img.getStyleClass().add("img");
 
         card.getChildren().add(img);
         card.getChildren().add(new Label(test.getName()));

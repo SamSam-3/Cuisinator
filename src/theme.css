@@ -1,7 +1,3 @@
-.root{
-   -fx-font-familly: "Arial";
-}
-
 #categorie{
   -fx-background-position: center;
   -fx-background-image: url("images/burger.png");
@@ -33,9 +29,13 @@
     -fx-alignment: center;
 }
 
+
 .card {
-    -fx-height: 30%;
-    -fx-width: 20%;
+    -fx-border-color: #795548;
+    -fx-border-width: 3;
+    -fx-border-style: solid;
+    -fx-border-radius: 40;
+
 }
 
 
