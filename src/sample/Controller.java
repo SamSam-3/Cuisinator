@@ -86,21 +86,20 @@ public class Controller {
         }
     }
 
-
     public void showRecipe(Recipe recipe){
         this.ingredientsRequis.getChildren().clear();
         this.recipePossible.setVisible(false);
         this.recipeContainer.setVisible(true);
 
-        Pane rectPane = (Pane) this.recipeContainer.getContent();
-        Label titreRecette = new Label(recipe.getName());
-        titreRecette.setFont(new Font("Arial Black",25));
-        titreRecette.getStyleClass().add("h1");
+        VBox rectPane = (VBox) this.recipeContainer.getContent();
+        rectPane.getStyleClass().add("recipePage");
+        rectPane.getChildren().clear();
 
         ImageView image = new ImageView(new Image(recipe.getImage()));
         image.getStyleClass().add("img");
-        VBox ingre = new VBox();
 
+
+        VBox ingre = new VBox();
         for (String ing : recipe.getRequirements()){
             CheckBox cb = new CheckBox(ing);
 
@@ -118,11 +117,21 @@ public class Controller {
             ingre.getChildren().add(cb);
         }
 
+        Label titreRecette = new Label(recipe.getName());
+        titreRecette.getStyleClass().add("h1");
+
+        Label titreIngredient = new Label("Les ingrédients");
+        titreIngredient.getStyleClass().add("h1");
+
+        Label titreEtape = new Label("Les étapes");
+        titreEtape.getStyleClass().add("h1");
+
         rectPane.getChildren().add(titreRecette);
         rectPane.getChildren().add(image);
+        rectPane.getChildren().add(titreIngredient);
         rectPane.getChildren().add(ingre);
+        rectPane.getChildren().add(titreEtape);
 
-        rectPane.getChildren().add(new Label("Les étapes :"));
         rectPane.getChildren().add(new Label(recipe.getSteps()));
     }
 
@@ -164,7 +173,7 @@ public class Controller {
         this.recipePossible.setContent(this.vb);
         this.ingredientsPossible.setContent(this.vbI);
     }
-    
+
     @FXML
     public void categorieBtn() { 
         for (String name : this.model.getCategories()) {
@@ -172,6 +181,7 @@ public class Controller {
         }
         this.showCategories();
     }
+
     @FXML
     public void courseBtn() { 
         this.liste.getChildren().clear();
@@ -180,6 +190,7 @@ public class Controller {
         }
         this.showIngredients();
     }
+
     @FXML
     public void showAdvanced(){
         if (etatAV == 0 && this.recipePossible.isVisible()) {

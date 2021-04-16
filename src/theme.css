@@ -22,15 +22,27 @@
   -fx-background-color: grey;
 }
 
-#imageRecette{
-  align-content: center;
+.recipePage {
+    -fx-background-color: #bcaaa4;
+    -fx-alignment: center;
 }
 
 .img{
-    /* Centrer l'image dans le fxml */
+    -fx-padding: 10;
+    -fx-background-color: firebrick;
+    -fx-background-radius: 5;
 }
 
 .h1{
-    -fx-background-color: green;
+    -fx-padding: 0 30 0 30;
+    -fx-line-spacing: 10;
+    -fx-background-color: #795548;
+    -fx-font-weight: bold;
+    -fx-font-size: 25px;
+    -fx-font-family: "Arial";
+    -fx-underline: true;
+    position: absolute;
+
+
     /* Mettre tout les titres en gras et trouver une taille convenable */
 }

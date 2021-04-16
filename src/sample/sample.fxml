@@ -43,18 +43,14 @@
             </ScrollPane>
          </children>
       </VBox>
-      <ScrollPane fx:id="recipeContainer" cache="true" focusTraversable="false" hbarPolicy="NEVER" layoutY="53.0" prefHeight="350.0" prefWidth="600.0" visible="false">
+      <ScrollPane fx:id="recipeContainer" cache="true" focusTraversable="false" hbarPolicy="NEVER" layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" visible="false">
          <content>
-            <Pane prefHeight="600.0" prefWidth="600.0">
+            <VBox maxWidth="600.0">
                <children>
-                  <Label alignment="CENTER" layoutY="315.0" prefHeight="55.0" prefWidth="600.0" styleClass="h1" text="Les ingrédients" underline="true">
-                     <font>
-                        <Font name="Arial Black" size="25.0" />
-                     </font>
-                  </Label>
                   <VBox fx:id="ingredientsRequis" alignment="CENTER_LEFT" layoutX="78.0" layoutY="379.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="111.0" prefWidth="439.0" />
+                  <Label text="Label" />
                </children>
-            </Pane>
+            </VBox>
          </content>
       </ScrollPane>
    </children>
