@@ -1,6 +1,7 @@
 package sample;
 
 import java.io.Serializable;
+import java.util.Set;
 
 public class Recipe implements Comparable<Recipe>, Serializable{
     private static final long serialVersionUID = 1L;
@@ -75,6 +76,15 @@ public class Recipe implements Comparable<Recipe>, Serializable{
 
     public void setLikes(int likes) {
         this.likes = likes;
+    }
+    
+    public boolean isContaining(Set<String> ingreds) {
+        for (String ing : this.ingredients) {
+            if (! ingreds.contains(ing)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public boolean equals(Recipe rcp) {

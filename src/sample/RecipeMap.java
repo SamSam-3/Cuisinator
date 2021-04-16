@@ -5,11 +5,11 @@ import java.util.*;
 public class RecipeMap extends HashMap<String, HashMap<String, ArrayList<Recipe>>> {
     private static final long serialVersionUID = 1L;
     
-    public RecipeMap(ArrayList<Recipe> r) { 
+    public RecipeMap(List<Recipe> r) { 
         makeRecipeMapFrom(r);
     }
 
-    private void makeRecipeMapFrom(ArrayList<Recipe> recipes) {
+    private void makeRecipeMapFrom(List<Recipe> recipes) {
         for (Recipe r : recipes) {
 
             // Récupère le dictionnaire par categorie
@@ -38,7 +38,7 @@ public class RecipeMap extends HashMap<String, HashMap<String, ArrayList<Recipe>
     public Set<String> getCategories() {
         return this.keySet();
     }
-    
+
     public Set<String> getIngredients(){
         Set<String> ingreds = new HashSet<String>();
 

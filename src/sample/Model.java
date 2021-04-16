@@ -42,7 +42,7 @@ public class Model {
             for (String cat : categsFilter) {
                 for (String ing : ingredsFilter) {
                     for (Recipe recipe : this.recipeMap.get(cat).get(ing)) {
-                        if (recipe.getName().toLowerCase().contains(searchStr)) {
+                        if (recipe.getName().toLowerCase().contains(searchStr) && recipe.isContaining(ingredsFilter)) {
                             output.add(recipe);
                         }
                     }
