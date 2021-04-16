@@ -45,12 +45,7 @@
       </VBox>
       <ScrollPane fx:id="recipeContainer" cache="true" focusTraversable="false" hbarPolicy="NEVER" layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" visible="false">
          <content>
-            <VBox maxWidth="600.0">
-               <children>
-                  <VBox fx:id="ingredientsRequis" alignment="CENTER_LEFT" layoutX="78.0" layoutY="379.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="111.0" prefWidth="439.0" />
-                  <Label text="Label" />
-               </children>
-            </VBox>
+            <VBox fx:id="main" prefHeight="200.0" prefWidth="600.0" />
          </content>
       </ScrollPane>
    </children>

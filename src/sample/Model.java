@@ -14,6 +14,8 @@ public class Model {
         this.control = control;
         this.loadData();
         this.categories = recipeMap.getCategories();
+
+        this.control.mainPage();
     }
 
     @SuppressWarnings("unchecked")

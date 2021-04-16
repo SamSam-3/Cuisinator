@@ -40,6 +40,23 @@ public class Controller {
 
     VBox liste = new VBox();
 
+    public void mainPage(){
+
+        VBox main = (VBox) recipeContainer.getContent();
+
+        HBox line = new HBox();
+        VBox card = new VBox();
+
+        card.getStyleClass().add("card"); // Faire css arrondi / etc...
+        line.getStyleClass().add("line"); // Faire css margin de chaque coté
+
+        card.getChildren().add(new ImageView(new Image(randomRecipe.getImage())));
+        card.getChildren().add(new Label(randomRecipe.getName()));
+
+        line.getChildren().add(card);
+        main.getChildren().add(line);
+    }
+
     public void initModel(Model model) {
         this.model = model;
     }
