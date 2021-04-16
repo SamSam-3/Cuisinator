@@ -29,44 +29,32 @@ public class Model {
 
 
     public void search(String input) {
-        
-        if(input.length()>0){
 
-            this.control.recipeDisplay.clear();
-            this.control.wipe(input);
 
-            //////// Recettes \\\\\\\\
-            System.out.println("############################################# Recettes #####################################################");
-            for (Recipe recipe : recipeList) {
-                String name = recipe.getName();
-                if (name.toLowerCase().contains(input)) { // A modifier pour faire des recherches sans accents et autres caracteres spéciaux
+        //////// Recettes \\\\\\\\
+        System.out.println("############################################# Recettes #####################################################");
+        for (Recipe recipe : recipeList) {
+            String name = recipe.getName();
+            if (name.toLowerCase().contains(input)) { // A modifier pour faire des recherches sans accents et autres caracteres spéciaux
 
-                    this.control.addRecipe(name);
-                    this.control.recipeDisplay.add(recipe);
-                    System.out.println(name); // Affiche les recettes correspondantes
-                }
+                this.control.addRecipe(name);
+                this.control.recipeDisplay.add(recipe);
+                System.out.println(name); // Affiche les recettes correspondantes
             }
-
-
-            //////// Ingrédients \\\\\\\\
-            System.out.println("############################################# Ingrédients #################################################");
-
-            for(String ing : recipeMap.getIngredients()){
-                if(ing.toLowerCase().contains(input)){
-                    this.control.addIngredients(ing);
-                    System.out.println(ing);
-                }
-            }
-
-            System.out.println("############################################################################################################");
-
-            this.control.saveState();
         }
 
-        if (input.length() == 0) {
-            this.control.recipeDisplay.clear();
-            this.control.wipe(input);
+
+        //////// Ingrédients \\\\\\\\
+        System.out.println("############################################# Ingrédients #################################################");
+
+        for (String ing : recipeMap.getIngredients()){
+            if (ing.toLowerCase().contains(input)){
+                this.control.addIngredients(ing);
+                System.out.println(ing);
+            }
         }
+
+        System.out.println("############################################################################################################");
     }
 
     public Set<String> getCategories() {

@@ -31,7 +31,7 @@
       </ScrollPane>
       <VBox fx:id="listing" layoutX="149.0" layoutY="53.0">
          <children>
-            <ScrollPane fx:id="recettePossible" cache="true" hbarPolicy="NEVER" maxHeight="300.0" maxWidth="300.0" onKeyPressed="#findRecipe" prefHeight="120.0" prefWidth="300.0" visible="false">
+            <ScrollPane fx:id="recipePossible" cache="true" hbarPolicy="NEVER" maxHeight="300.0" maxWidth="300.0" onKeyPressed="#findRecipe" prefHeight="120.0" prefWidth="300.0" visible="false">
                <content>
                   <VBox fx:id="vb" onMouseClicked="#watchRecipe" prefHeight="120.0" prefWidth="300.0" />
                </content>

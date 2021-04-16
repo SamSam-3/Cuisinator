@@ -54,7 +54,6 @@ public class Controller {
     }
 
     public void newIngredient(String ingName){
-
         Label ig = new Label(ingName);
         ig.setFont(new Font("Arial", 15)); // A modifier avec css
         this.liste.getChildren().add(ig);
@@ -89,7 +88,6 @@ public class Controller {
 
 
     public void showRecipe(Recipe recipe){
-
         this.ingredientsRequis.getChildren().clear();
         this.recipePossible.setVisible(false);
         this.recipeContainer.setVisible(true);
@@ -128,24 +126,18 @@ public class Controller {
         rectPane.getChildren().add(new Label(recipe.getSteps()));
     }
 
-    public void wipe(String input){
-        if(input.length()>0) {
-
-            this.vb.getChildren().clear();
-            this.vbI.getChildren().clear();
-
-            this.listing.toFront();
-            this.listing.setVisible(true);
-            this.recipePossible.setVisible(true);
-        }
-
-        if (input.length() == 0) {
-            this.listing.setVisible(false);
-            this.ingredientsPossible.setVisible(false);
-
-            this.vb.getChildren().clear();
-            this.vbI.getChildren().clear();
-        }
+    private void showDropdown() {
+        this.vb.getChildren().clear();
+        this.vbI.getChildren().clear();
+        this.listing.toFront();
+        this.listing.setVisible(true);
+        this.recipePossible.setVisible(true);
+    }
+    private void hideDropdown() {
+        this.listing.setVisible(false);
+        this.ingredientsPossible.setVisible(false);
+        this.vb.getChildren().clear();
+        this.vbI.getChildren().clear();
     }
 
     public void addRecipe(String name){
@@ -155,7 +147,6 @@ public class Controller {
     }
 
     public void addIngredients(String ing){
-
         /// A refaire par css
         Label lb = new Label(ing);
         lb.setFont(new Font("Arial",15));
@@ -202,7 +193,15 @@ public class Controller {
 
     @FXML
     public void findRecipe() {
-        this.model.search(barreRecherche.getCharacters().toString().toLowerCase());
+        this.recipeDisplay.clear();
+        String input = barreRecherche.getCharacters().toString().toLowerCase();
+        if (input.length() > 0) {
+            this.model.search(input);
+            this.saveState();
+            this.showDropdown();
+        } else {
+            this.hideDropdown();
+        }
     }
 
     @FXML
