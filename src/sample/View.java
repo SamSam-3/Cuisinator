@@ -51,14 +51,12 @@ public class View {
             this.ctrl.layerCategorie.setTranslateX(Math.abs(this.ctrl.layerCategorie.getLayoutX()));
             this.ctrl.layerCategorie.toFront();
 
-            System.out.println("Cat showed");
             etatCA = 1;
 
         } else {
             this.ctrl.layerCategorie.setTranslateX(0);
             this.ctrl.diffCat.getChildren().clear();
 
-            System.out.println("Cat unshowed");
             etatCA = 0;
 
         }

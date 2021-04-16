@@ -54,6 +54,8 @@ public class Model {
                 this.view.showCategories();
             }
             case "course" -> {
+                this.view.liste.getChildren().clear();
+
                 for (String s : this.ingredsLeft) {
                     this.view.newIngredient(s);
                 }
