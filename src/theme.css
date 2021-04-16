@@ -33,6 +33,12 @@
     -fx-alignment: center;
 }
 
+.card {
+    -fx-height: 30%;
+    -fx-width: 20%;
+}
+
+
 .img{
     -fx-padding: 10;
     -fx-background-color: firebrick;

@@ -40,27 +40,6 @@ public class Controller {
 
     VBox liste = new VBox();
 
-    public void mainPage(){
-
-        VBox main = (VBox) recipeContainer.getContent();
-
-        HBox line = new HBox();
-        VBox card = new VBox();
-
-        card.getStyleClass().add("card"); // Faire css arrondi / etc...
-        line.getStyleClass().add("line"); // Faire css margin de chaque coté
-
-        /// POUR TEST je prend un recette au hasard
-        /// Plus tard on mettra les 20 premiers meileurs recettes (par likes) boucle for pour 20
-        /// En scrollant s'il arrive a la fin des 20 premiers, on aggrandi la liste et reset mainPage()
-        Recipe test = this.model.recipeList.get(0);
-
-        card.getChildren().add(new ImageView(new Image(test.getImage())));
-        card.getChildren().add(new Label(test.getName()));
-
-        line.getChildren().add(card);
-        main.getChildren().add(line);
-    }
 
     public void initModel(Model model) {
         this.model = model;
@@ -264,5 +243,30 @@ public class Controller {
                 }
             }
         }
+    }
+
+    public void mainPage(ArrayList<Recipe> recipeList){
+        VBox main = (VBox) recipeContainer.getContent();
+
+        HBox line = new HBox();
+        VBox card = new VBox();
+
+        card.getStyleClass().add("card"); // Faire css arrondi / etc...
+        line.getStyleClass().add("line"); // Faire css margin de chaque coté
+
+        card.setAlignment(Pos.CENTER);
+        /// POUR TEST je prend un recette au hasard
+        /// Plus tard on mettra les 20 premiers meileurs recettes (par likes) boucle for pour 20
+        /// En scrollant s'il arrive a la fin des 20 premiers, on aggrandi la liste et reset mainPage()
+        Recipe test = recipeList.get(0);
+        ImageView img = new ImageView(new Image(test.getImage()));
+        img.setFitHeight(line.getHeight());
+        img.setFitWidth(line.getWidth());
+
+        card.getChildren().add(img);
+        card.getChildren().add(new Label(test.getName()));
+
+        line.getChildren().add(card);
+        main.getChildren().add(line);
     }
 }
