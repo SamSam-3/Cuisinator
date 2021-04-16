@@ -136,11 +136,13 @@ public class Controller {
     }
 
     private void showDropdown() {
+        this.vb.getChildren().clear();
+        this.vbI.getChildren().clear();
+
         this.listing.toFront();
         this.listing.setVisible(true);
         this.recipePossible.setVisible(true);
     }
-
     private void hideDropdown() {
         this.listing.setVisible(false);
         this.ingredientsPossible.setVisible(false);
@@ -210,9 +212,9 @@ public class Controller {
         this.recipeDisplay.clear();
         String input = barreRecherche.getCharacters().toString().toLowerCase();
         if (input.length() > 0) {
+            this.showDropdown();
             this.model.search(input);
             this.saveState();
-            this.showDropdown();
         } else {
             this.hideDropdown();
         }
