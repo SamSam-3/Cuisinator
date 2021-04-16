@@ -1,11 +1,5 @@
 package sample;
 
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.text.Font;
-
 import java.util.*;
 
 public class Model {
@@ -35,7 +29,7 @@ public class Model {
 
 
     public void search(String input) {
-
+        
         if(input.length()>0){
 
             this.control.recipeDisplay.clear();

@@ -16,19 +16,18 @@ import java.util.*;
 
 public class Controller {
 
-    @FXML public ScrollPane recettePossible; // Affichage des recettes contenant le terme recherché
-    @FXML public ScrollPane ingredientsPossible;
     @FXML public Pane layerCategorie;
     @FXML public Pane accueil;
-    @FXML public ScrollPane layerCourse;
-    @FXML public ScrollPane recipeContainer;
-    @FXML public VBox diffCat; // Affichage des éléments "catégorie" (vertical et + propre)
     @FXML public VBox vb;
     @FXML public VBox vbI;
     @FXML public VBox listing;
     @FXML public VBox ingredientsRequis;
+    @FXML public ScrollPane ingredientsPossible;
+    @FXML public ScrollPane layerCourse;
+    @FXML public ScrollPane recipeContainer;
+    @FXML public ScrollPane recipePossible; // Affichage des recettes contenant le terme recherché
+    @FXML public VBox diffCat; // Affichage des éléments "catégorie" (vertical et + propre)
     @FXML public TextField barreRecherche;
-
 
     private Model model;
     Stack<String> frigo  = new Stack<String>();
@@ -92,7 +91,7 @@ public class Controller {
     public void showRecipe(Recipe recipe){
 
         this.ingredientsRequis.getChildren().clear();
-        this.recettePossible.setVisible(false);
+        this.recipePossible.setVisible(false);
         this.recipeContainer.setVisible(true);
 
         Pane rectPane = (Pane) this.recipeContainer.getContent();
@@ -130,7 +129,6 @@ public class Controller {
     }
 
     public void wipe(String input){
-
         if(input.length()>0) {
 
             this.vb.getChildren().clear();
@@ -138,8 +136,7 @@ public class Controller {
 
             this.listing.toFront();
             this.listing.setVisible(true);
-            this.recettePossible.setVisible(true);
-
+            this.recipePossible.setVisible(true);
         }
 
         if (input.length() == 0) {
@@ -152,7 +149,6 @@ public class Controller {
     }
 
     public void addRecipe(String name){
-
         /// A refaire par css
         Label lbl = new Label(name);
         this.vb.getChildren().add(lbl);
@@ -174,7 +170,7 @@ public class Controller {
     }
 
     public void saveState(){
-        this.recettePossible.setContent(this.vb);
+        this.recipePossible.setContent(this.vb);
         this.ingredientsPossible.setContent(this.vbI);
     }
     
@@ -195,7 +191,7 @@ public class Controller {
     }
     @FXML
     public void showAdvanced(){
-        if (etatAV == 0 && this.recettePossible.isVisible()) {
+        if (etatAV == 0 && this.recipePossible.isVisible()) {
             this.ingredientsPossible.setVisible(true);
             etatAV=1;
         } else {
