@@ -2,7 +2,7 @@ package sample;
 
 import java.io.Serializable;
 
-public class Recipe implements Serializable{
+public class Recipe implements Comparable<Recipe>, Serializable{
     private static final long serialVersionUID = 1L;
     private String category;
     private String name;
@@ -20,11 +20,6 @@ public class Recipe implements Serializable{
         this.image = image;
         this.steps = steps;
         this.likes = (int)Math.random()*1000;
-    }
-
-    @Override
-    public String toString() {
-        return this.name;
     }
 
     public String getCategory() {
@@ -80,5 +75,15 @@ public class Recipe implements Serializable{
 
     public void setLikes(int likes) {
         this.likes = likes;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
+    
+    @Override
+    public int compareTo(Recipe rcp) {
+        return likes - rcp.getLikes();
     }
 }
