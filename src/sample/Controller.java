@@ -9,6 +9,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -94,9 +97,10 @@ public class Controller {
         rectPane.getStyleClass().add("recipePage");
         rectPane.getChildren().clear();
 
-        ImageView image = new ImageView(new Image(recipe.getImage()));
-        image.getStyleClass().add("img");
-
+        Rectangle rect = new Rectangle();
+        ImagePattern image = new ImagePattern(new Image(recipe.getImage()));
+        rect.setFill(image);
+        rect.getStyleClass().add("img");
 
         VBox ingre = new VBox();
         for (String ing : recipe.getRequirements()){
@@ -126,7 +130,7 @@ public class Controller {
         titreEtape.getStyleClass().add("h1");
 
         rectPane.getChildren().add(titreRecette);
-        rectPane.getChildren().add(image);
+        rectPane.getChildren().add(rect);
         rectPane.getChildren().add(titreIngredient);
         rectPane.getChildren().add(ingre);
         rectPane.getChildren().add(titreEtape);
@@ -257,11 +261,19 @@ public class Controller {
         /// Plus tard on mettra les 20 premiers meileurs recettes (par likes) boucle for pour 20
         /// En scrollant s'il arrive a la fin des 20 premiers, on aggrandi la liste et reset mainPage()
         Recipe test = recipeList.get(0);
-        ImageView img = new ImageView(new Image(test.getImage()));
-        img.getStyleClass().add("img");
 
-        card.getChildren().add(img);
-        card.getChildren().add(new Label(test.getName()));
+        Rectangle rect = new Rectangle(0,0, 150, 200);
+        ImagePattern image = new ImagePattern(new Image(test.getImage()));
+        rect.setArcHeight(90.0);
+        rect.setArcWidth(90.0);
+
+        rect.setFill(image);
+        rect.getStyleClass().add("img");
+
+        Label titre = new Label(test.getName());
+
+        card.getChildren().add(rect);
+        card.getChildren().add(titre);
 
         line.getChildren().add(card);
         main.getChildren().add(line);

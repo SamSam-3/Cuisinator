@@ -42,7 +42,7 @@
 .img{
     -fx-padding: 10;
     -fx-background-color: firebrick;
-    -fx-background-radius: 5;
+    -fx-border-radius: 40;
 }
 
 .h1{
