@@ -136,9 +136,8 @@ public class Controller {
     }
 
     private void showDropdown() {
-        this.vb.getChildren().clear();
-        this.vbI.getChildren().clear();
-
+        this.recipePossible.setContent(this.vb);
+        this.ingredientsPossible.setContent(this.vbI);
         this.listing.toFront();
         this.listing.setVisible(true);
         this.recipePossible.setVisible(true);
@@ -146,8 +145,6 @@ public class Controller {
     private void hideDropdown() {
         this.listing.setVisible(false);
         this.ingredientsPossible.setVisible(false);
-        this.vb.getChildren().clear();
-        this.vbI.getChildren().clear();
     }
 
     public void addRecipe(String name){
@@ -171,14 +168,7 @@ public class Controller {
         this.vbI.getChildren().add(hb);
 
     }
-
-    public void saveState(){
-
-        this.recipePossible.setContent(this.vb);
-        this.ingredientsPossible.setContent(this.vbI);
-
-    }
-
+    
     @FXML
     public void categorieBtn() { 
         for (String name : this.model.getCategories()) {
@@ -211,10 +201,12 @@ public class Controller {
     public void findRecipe() {
         this.recipeDisplay.clear();
         String input = barreRecherche.getCharacters().toString().toLowerCase();
+        this.vb.getChildren().clear();
+        this.vbI.getChildren().clear();
+
         if (input.length() > 0) {
-            this.showDropdown();
             this.model.search(input);
-            this.saveState();
+            this.showDropdown();
         } else {
             this.hideDropdown();
         }
