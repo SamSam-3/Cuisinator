@@ -89,6 +89,7 @@ public class Controller {
     public void showRecipe(Recipe recipe){
         this.recipePossible.setVisible(false);
         this.recipeContainer.setVisible(true);
+        this.ingredientsPossible.setVisible(false);
 
         VBox rectPane = (VBox) this.recipeContainer.getContent();
         rectPane.getStyleClass().add("recipePage");
