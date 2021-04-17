@@ -28,6 +28,7 @@ public class Controller {
     @FXML public ScrollPane recipeContainer;
     @FXML public ScrollPane recipePossible; // Affichage des recettes contenant le terme recherché
     @FXML public TextField barreRecherche;
+    @FXML public TextField barreTags;
 
     private Model model;
     private ArrayList<String> ingredsLeft = new ArrayList<String>();
@@ -139,16 +140,29 @@ public class Controller {
         System.out.println(recipe.getSteps());
     }
 
-    private void showDropdown() {
-        this.recipePossible.setContent(this.vb);
-        this.ingredientsPossible.setContent(this.vbI);
-        this.listing.toFront();
-        this.listing.setVisible(true);
-        this.recipePossible.setVisible(true);
+    private void showDropdown(int etat) {
+        if(etat == 0) {
+            this.recipePossible.setContent(this.vb);
+            this.vb.toFront();
+            this.vb.setVisible(true);
+            this.recipePossible.setVisible(true);
+            this.recipePossible.setDisable(false);
+        } else {
+            this.ingredientsPossible.setContent(this.vbI);
+            this.vbI.toFront();
+            this.vbI.setVisible(true);
+            this.ingredientsPossible.setVisible(true);
+            this.ingredientsPossible.setDisable(false);
+        }
     }
-    private void hideDropdown() {
-        this.listing.setVisible(false);
-        this.ingredientsPossible.setVisible(false);
+    private void hideDropdown(int etat) {
+        if(etat == 0) {
+            this.recipePossible.setVisible(false);
+            this.recipePossible.setDisable(true);
+        } else {
+            this.ingredientsPossible.setVisible(false);
+            this.ingredientsPossible.setDisable(true);
+        }
     }
 
     public void addRecipe(String name){
@@ -202,23 +216,30 @@ public class Controller {
 
     @FXML
     public void findRecipe() {
-        String input = barreRecherche.getCharacters().toString().toLowerCase();
+        String searchRec = barreRecherche.getCharacters().toString().toLowerCase();
+        String searchIng = barreTags.getCharacters().toString().toLowerCase();
         this.vb.getChildren().clear();
         this.vbI.getChildren().clear();
 
-        if (input.length() > 0) {
-            this.recipeDisplay = this.model.search(input, null, null); // TODO: categsFilter, ingredsFilter
+        if (searchRec.length() > 0) {
+            this.recipeDisplay = this.model.search(searchRec, null, null); // TODO: categsFilter, ingredsFilter
             for (Recipe rcp : this.recipeDisplay) {
                 this.addRecipe(rcp.getName());
             } 
             if (this.doIngredSearch) {
-                for (String ing : this.model.searchIngredients(input)) {
+                for (String ing : this.model.searchIngredients(searchRec)) {
                     this.addIngredients(ing);
                 }
             }   
-            this.showDropdown();
+            this.showDropdown(0);
         } else {
-            this.hideDropdown();
+            this.hideDropdown(0);
+        }
+
+        if(searchIng.length() > 0) {
+            this.showDropdown(1);
+        } else {
+            this.hideDropdown(1);
         }
     }
 

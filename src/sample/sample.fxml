@@ -11,7 +11,7 @@
             <Button fx:id="categorie" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#categorieBtn" prefHeight="52.0" prefWidth="52.0" />
             <Button fx:id="course" layoutX="534.0" layoutY="14.0" mnemonicParsing="false" onAction="#courseBtn" prefHeight="52.0" prefWidth="52.0" />
             <TextField fx:id="barreRecherche" layoutX="147.0" layoutY="10.0" onKeyReleased="#findRecipe" prefHeight="31.0" prefWidth="267.0" promptText="Je cherche par recette ..." />
-            <TextField layoutX="161.0" layoutY="41.0" prefHeight="25.0" prefWidth="239.0" promptText="Je cherche par ingrédients ..." />
+            <TextField fx:id="barreTags" layoutX="161.0" layoutY="41.0" onKeyReleased="#findRecipe" prefHeight="25.0" prefWidth="239.0" promptText="Je cherche par ingrédients ..." />
          </children>
       </Pane>
       <Pane fx:id="layerCategorie" layoutX="-150.0" layoutY="80.0" prefHeight="323.0" prefWidth="150.0" style="-fx-background-color: orange;">
@@ -21,7 +21,7 @@
                   <Font name="Arial" size="25.0" />
                </font>
             </Label>
-            <VBox fx:id="diffCat" layoutY="75.0" prefHeight="272.0" prefWidth="160.0" />
+            <VBox fx:id="diffCat" layoutY="64.0" prefHeight="260.0" prefWidth="150.0" />
          </children>
       </Pane>
       <ScrollPane fx:id="layerCourse" hbarPolicy="NEVER" layoutX="600.0" layoutY="80.0" prefHeight="323.0" prefWidth="200.0" vbarPolicy="ALWAYS">
@@ -29,14 +29,14 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="348.0" prefWidth="200.0" />
          </content>
       </ScrollPane>
-      <ScrollPane fx:id="recipePossible" cache="true" hbarPolicy="NEVER" maxHeight="300.0" maxWidth="300.0" onKeyPressed="#findRecipe" prefHeight="120.0" prefWidth="300.0" visible="false">
+      <ScrollPane fx:id="recipePossible" cache="true" hbarPolicy="NEVER" layoutX="146.0" layoutY="81.0" maxHeight="300.0" maxWidth="468.0" onKeyPressed="#findRecipe" prefHeight="129.0" prefWidth="267.0" visible="false">
          <content>
-            <VBox fx:id="vb" onMouseClicked="#watchRecipe" prefHeight="120.0" prefWidth="300.0" />
+            <VBox fx:id="vb" onMouseClicked="#watchRecipe" prefHeight="129.0" prefWidth="266.0" />
          </content>
       </ScrollPane>
-      <ScrollPane fx:id="ingredientsPossible" hbarPolicy="NEVER" prefHeight="120.0" prefWidth="300.0" visible="false">
+      <ScrollPane fx:id="ingredientsPossible" hbarPolicy="NEVER" layoutY="106.0" prefHeight="97.0" prefWidth="600.0" visible="false">
          <content>
-            <VBox fx:id="vbI" onMousePressed="#stackIngredients" prefHeight="120.0" prefWidth="300.0" />
+            <VBox fx:id="vbI" onMousePressed="#stackIngredients" prefHeight="97.0" prefWidth="598.0" />
          </content>
       </ScrollPane>
       <ScrollPane fx:id="recipeContainer" cache="true" focusTraversable="false" hbarPolicy="NEVER" layoutY="80.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="323.0" prefWidth="600.0">
@@ -44,5 +44,6 @@
             <VBox fx:id="main" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" prefWidth="600.0" />
          </content>
       </ScrollPane>
+      <HBox fx:id="tags" layoutY="79.0" prefHeight="25.0" prefWidth="600.0" style="-fx-background-color: lightgreen;" />
    </children>
 </Pane>
