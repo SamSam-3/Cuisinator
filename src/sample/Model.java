@@ -40,6 +40,30 @@ public class Model {
         // DataManager.save("like-list", likeList);
     }
 
+    public Recipe bestMatchRecipe(String searchStr) {
+        Recipe bestMatch = null;
+
+        for (Recipe recipe : this.recipeList) {
+            if (recipe.getName().toLowerCase().startsWith(searchStr)) {
+                if (bestMatch != null && bestMatch.getLikes() < recipe.getLikes()) {
+                    bestMatch = recipe;
+                } 
+            } 
+        }
+
+        return bestMatch;
+    }
+
+    public String bestMatchIngred(String searchString) {
+        String bestMatch;
+        for (String ing : this.ingredients) {
+            if (ing.toLowerCase().startsWith(searchString)) {
+                bestMatch = searchString;
+            }
+        }    
+        return bestMatch;
+    }
+
     public Set<Recipe> search(String searchStr, Set<String> categsFilter, Set<String> ingredsFilter) {
         Set<Recipe> output = new HashSet<Recipe>();
 
