@@ -4,13 +4,11 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -35,11 +33,10 @@ public class Controller {
     private boolean doIngredSearch = false;
     Stack<String> frigo  = new Stack<String>();
     private ArrayList<String> ingredsLeft = new ArrayList<String>();
-    public ArrayList<Recipe> recipeDisplay = new ArrayList<Recipe>(); // Temporaire public
+    private Set<Recipe> recipeDisplay = new HashSet<Recipe>(); 
 
     private int etatCA = 0;
     private int etatCO = 0;
-    private int etatAV = 0;
 
     VBox liste = new VBox();
 
@@ -76,7 +73,6 @@ public class Controller {
             this.layerCategorie.setTranslateX(0);
             this.diffCat.getChildren().clear();
             etatCA = 0;
-
         }
     }
 
@@ -156,7 +152,6 @@ public class Controller {
     }
 
     public void addRecipe(String name){
-
         /// A refaire par css
         Label lbl = new Label(name);
         lbl.getStyleClass().add("listRecipe");
@@ -175,7 +170,6 @@ public class Controller {
         hb.setAlignment(Pos.CENTER);
         hb.getStyleClass().add("listIngredients");
         this.vbI.getChildren().add(hb);
-
     }
     
     @FXML
@@ -196,35 +190,29 @@ public class Controller {
     }
 
     @FXML
-    public void showAdvanced(){
-        if (etatAV == 0 && this.recipePossible.isVisible()) {
-            this.ingredientsPossible.setVisible(true);
-            etatAV=1;
-        } else {
-            this.ingredientsPossible.setVisible(false);
-            etatAV=0;
-        }
+    public void showAdvanced() {
+        this.doIngredSearch = (! this.doIngredSearch) && this.recipePossible.isVisible();
+        this.ingredientsPossible.setVisible(this.doIngredSearch);
+        if (this.doIngredSearch) {
+            for (String ing : this.model.searchIngredients(barreRecherche.getCharacters().toString().toLowerCase())) {
+                this.addIngredients(ing);
+            }
+        }   
     }
 
     @FXML
     public void findRecipe() {
-        this.recipeDisplay.clear();
         String input = barreRecherche.getCharacters().toString().toLowerCase();
         this.vb.getChildren().clear();
         this.vbI.getChildren().clear();
 
         if (input.length() > 0) {
-            this.model.search(input); 
-            /*********  TODO: add ingred filter + categorie selected  *********\
-            Set<Recipe> recipeToDisplay = this.model.search(input, categsFilter, ingredsFilter);
-            for (Recipe rcp : recipeToDisplay) {
+            this.recipeDisplay = this.model.search(input, null, null); // TODO: categsFilter, ingredsFilter
+            for (Recipe rcp : this.recipeDisplay) {
                 this.addRecipe(rcp.getName());
-                this.recipeDisplay.add(rcp);
-            } */
-
+            } 
             if (this.doIngredSearch) {
-                Set<String> ingredToDisplay = this.model.searchIngredients(input);
-                for (String ing : ingredToDisplay) {
+                for (String ing : this.model.searchIngredients(input)) {
                     this.addIngredients(ing);
                 }
             }   
