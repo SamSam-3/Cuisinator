@@ -55,7 +55,7 @@ public class Model {
     }
 
     public String bestMatchIngred(String searchString) {
-        String bestMatch;
+        String bestMatch = null;
         for (String ing : this.ingredients) {
             if (ing.toLowerCase().startsWith(searchString)) {
                 bestMatch = searchString;
