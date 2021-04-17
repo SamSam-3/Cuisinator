@@ -40,18 +40,20 @@ public class Model {
         
         if (ingredsFilter != null && ingredsFilter.size() > 0) {
             for (String cat : categsFilter) {
+                var ingMap = this.recipeMap.get(cat);
                 for (String ing : ingredsFilter) {
-                    for (Recipe recipe : this.recipeMap.get(cat).get(ing)) {
-                        if (recipe.getName().toLowerCase().contains(searchStr)) {
-                            output.add(recipe);
+                    if (ingMap.containsKey(ing)) {
+                        for (Recipe recipe : ingMap.get(ing)) {
+                            if (recipe.getName().toLowerCase().contains(searchStr)) {
+                                output.add(recipe);
+                            }
                         }
                     }
                 }
             }
         } else {
             for (Recipe recipe : this.recipeList) {
-                String name = recipe.getName();
-                if (name.toLowerCase().contains(searchStr)) {
+                if (recipe.getName().toLowerCase().contains(searchStr)) {
                     output.add(recipe);
                 }
             }

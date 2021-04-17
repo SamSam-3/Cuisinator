@@ -35,6 +35,16 @@ public class RecipeMap extends HashMap<String, HashMap<String, ArrayList<Recipe>
         }
     }
 
+    public void add(Recipe recipe) {
+        var ingMap = this.get(recipe.getCategory());
+        for (String ing : recipe.getIngredients()) {
+            if (! ingMap.containsKey(ing)) {
+                ingMap.put(ing, new ArrayList<Recipe>());
+            }
+            ingMap.get(ing).add(recipe);
+        }
+    }
+
     public Set<String> getCategories() {
         return this.keySet();
     }
