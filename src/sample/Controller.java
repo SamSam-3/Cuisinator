@@ -255,7 +255,8 @@ public class Controller {
 
     public void mainPage(ArrayList<Recipe> recipeList){
         VBox main = (VBox) recipeContainer.getContent();
-
+        System.out.println(recipeList.size());
+        int indice=0;
 
 
         /// POUR TEST je prend un recette au hasard
@@ -264,38 +265,37 @@ public class Controller {
         /// Prévoir pour le nombre de carte par la taille adaptative de l'app
 
 
-        System.out.println(recipeList.size());
-        int x=0;
-        for(int i=0;i<3;i++){
-            HBox line = new HBox();
+        for(int i=0;i<3;i++){ // J'ai pris 3 et 2 parce qu'il y a que 6 recettes pour l'instant
+
+            HBox line = new HBox(); // Nouvelle ligne de cartes
             line.getStyleClass().add("line"); // Faire css margin de chaque coté
 
             for(int j=0;j<2;j++) {
-                Recipe test = recipeList.get(x);
-                x++;
-                VBox card = new VBox();
+                Recipe recipe = recipeList.get(indice);
+                indice++;
+
+                VBox card = new VBox(); // Nouvelle carte
                 card.getStyleClass().add("card"); // Faire css arrondi / etc...
 
-                card.setAlignment(Pos.CENTER);
+                card.setAlignment(Pos.CENTER); // Centre les éléments
 
                 Rectangle rect = new Rectangle(0, 0, 200, 200);
-                ImagePattern image = new ImagePattern(new Image(test.getImage()));
+                ImagePattern image = new ImagePattern(new Image(recipe.getImage()));
                 rect.setArcHeight(90.0);
                 rect.setArcWidth(90.0);
-
                 rect.setFill(image);
                 rect.getStyleClass().add("img");
 
-                Label titre = new Label(test.getName());
-                titre.getStyleClass().add("cardTitle");
+                Label titre = new Label(recipe.getName());
+                titre.getStyleClass().add("cardTitle"); // modifier la taille des caractères suivant la longueur du titre
 
-                card.getChildren().add(rect);
-                card.getChildren().add(titre);
+                card.getChildren().add(rect); //ajout element a la carte
+                card.getChildren().add(titre); //ajout element a la carte
 
-                line.getChildren().add(card);
+                line.getChildren().add(card); // Ajout des cartes a la ligne
             }
 
-            main.getChildren().add(line);
+            main.getChildren().add(line); // Ajout des line à la page d'accueil
         }
 
     }
