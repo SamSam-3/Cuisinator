@@ -193,6 +193,11 @@ public class Controller {
     public void showAdvanced() {
         this.doIngredSearch = (! this.doIngredSearch) && this.recipePossible.isVisible();
         this.ingredientsPossible.setVisible(this.doIngredSearch);
+        if (this.doIngredSearch) {
+            for (String ing : this.model.searchIngredients(barreRecherche.getCharacters().toString().toLowerCase())) {
+                this.addIngredients(ing);
+            }
+        }   
     }
 
     @FXML
