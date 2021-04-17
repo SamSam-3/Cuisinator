@@ -10,6 +10,8 @@ public class Model {
     private Controller control;
     private Set<String> categories;
     private Set<String> ingredients;
+    // private ArrayList<Recipe> favList;
+    // private ArrayList<Recipe> likeList;
 
     public Model(Controller control) {
         this.control = control;
@@ -24,11 +26,18 @@ public class Model {
     public void loadData() {
         recipeMap = (RecipeMap)DataManager.load("recipe-map");
         recipeList = (ArrayList<Recipe>)DataManager.load("recipe-list");
-        // TODO: fav.save
+        // favList = (ArrayList<Recipe>)DataManager.load("fav-list");
+        // likeList = (ArrayList<Recipe>)DataManager.load("like-list");
 
         if (recipeMap == null || recipeList == null) {
             throw new RuntimeException("Data base not found");
         }
+    }
+    public void saveData() {
+        DataManager.save("recipe-map", recipeMap);
+        DataManager.save("recipe-list", recipeList);
+        // DataManager.save("fav-list", favList);
+        // DataManager.save("like-list", likeList);
     }
 
     public Set<Recipe> search(String searchStr, Set<String> categsFilter, Set<String> ingredsFilter) {
@@ -58,7 +67,6 @@ public class Model {
                 }
             }
         }
-
         return output;
     }
     
@@ -116,4 +124,21 @@ public class Model {
         }
         return ingreds;
     }
+    
+    // public void toggleLike(Recipe recipe) {
+    //     if (! likeList.contains(recipe)) {
+    //         recipe.addLikes(1);
+    //         likeList.add(recipe);
+    //     } else {
+    //         recipe.addLikes(-1);
+    //         likeList.remove(recipe);
+    //     }
+    // }
+    // public void toggleFav(Recipe recipe) {
+    //     if (! favList.contains(recipe)) {
+    //         favList.add(recipe);
+    //     } else {
+    //         favList.remove(recipe);
+    //     }
+    // }
 }

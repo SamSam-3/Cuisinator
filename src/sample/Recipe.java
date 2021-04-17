@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Recipe implements Comparable<Recipe>, Serializable{
     private static final long serialVersionUID = 1L;
+    
     private String category;
     private String name;
     private String[] ingredients;
@@ -77,8 +78,12 @@ public class Recipe implements Comparable<Recipe>, Serializable{
         this.likes = likes;
     }
 
-    public boolean equals(Recipe rcp) {
-        return name == rcp.name;
+    public void addLikes(int number) {
+        this.likes += number;
+    }
+
+    public boolean equals(Recipe recipe) {
+        return name == recipe.name;
     }
 
     @Override
@@ -87,7 +92,7 @@ public class Recipe implements Comparable<Recipe>, Serializable{
     }
 
     @Override
-    public int compareTo(Recipe rcp) {
-        return likes - rcp.getLikes();
+    public int compareTo(Recipe recipe) {
+        return likes - recipe.getLikes();
     }
 }
