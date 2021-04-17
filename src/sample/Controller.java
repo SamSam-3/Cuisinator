@@ -268,7 +268,7 @@ public class Controller {
         /// En scrollant s'il arrive a la fin des 20 premiers, on aggrandi la liste et reset mainPage()
         Recipe test = recipeList.get(0);
 
-        Rectangle rect = new Rectangle(0,0, 200, 250);
+        Rectangle rect = new Rectangle(0,0, 200, 200);
         ImagePattern image = new ImagePattern(new Image(test.getImage()));
         rect.setArcHeight(90.0);
         rect.setArcWidth(90.0);
