@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.awt.*;
+
 public class Main extends Application {
 
     @Override
@@ -18,7 +20,9 @@ public class Main extends Application {
         ctrl.initModel(model);
 
         primaryStage.setTitle("Cuisinator");
-        Scene scene = new Scene(root, 600, 403);
+        primaryStage.setFullScreen(true);
+
+        Scene scene = new Scene(root);
         scene.getStylesheets().add("theme.css");
         primaryStage.setScene(scene);
         primaryStage.show();
