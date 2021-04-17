@@ -43,9 +43,9 @@
             </ScrollPane>
          </children>
       </VBox>
-      <ScrollPane fx:id="recipeContainer" cache="true" focusTraversable="false" hbarPolicy="NEVER" layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" visible="false">
+      <ScrollPane fx:id="recipeContainer" cache="true" focusTraversable="false" hbarPolicy="NEVER" layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0">
          <content>
-            <VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" prefWidth="600.0" />
+            <VBox fx:id="main" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" prefWidth="600.0" />
          </content>
       </ScrollPane>
    </children>
