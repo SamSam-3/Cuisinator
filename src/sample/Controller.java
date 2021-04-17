@@ -16,7 +16,7 @@ import javafx.scene.text.Text;
 import java.util.*;
 
 public class Controller {
-
+    // fxml
     @FXML public Pane layerCategorie;
     @FXML public Pane accueil;
     @FXML public VBox vb;
@@ -30,15 +30,14 @@ public class Controller {
     @FXML public TextField barreRecherche;
 
     private Model model;
-    private boolean doIngredSearch = false;
-    private Stack<String> frigo  = new Stack<String>();
     private ArrayList<String> ingredsLeft = new ArrayList<String>();
     private Set<Recipe> recipeDisplay = new HashSet<Recipe>(); 
-
+    private Stack<String> frigo  = new Stack<String>();
+    private VBox liste = new VBox();
+    // Etat
+    private boolean doIngredSearch = false;
     private int etatCA = 0;
     private int etatCO = 0;
-
-    VBox liste = new VBox();
 
 
     public void initModel(Model model) {
