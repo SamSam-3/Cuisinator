@@ -4,12 +4,12 @@ import java.util.*;
 
 public class Model {
 
-    public RecipeMap recipeMap;
-    public ArrayList<Recipe> recipeList;
-
     private Controller control;
     private Set<String> categories;
     private Set<String> ingredients;
+    
+    private ArrayList<Recipe> recipeList;
+    private RecipeMap recipeMap;
     // private ArrayList<Recipe> favList;
     // private ArrayList<Recipe> likeList;
 

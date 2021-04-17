@@ -248,17 +248,16 @@ public class Controller {
         System.out.println("Elements dans le frigo :" + frigo);
         System.out.println("Recette correspondantes : ");
 
-        // Non.
-        for (String s : frigo){
-            for (Recipe recipe : this.model.recipeList){
-                // Faire page d'accueil qui montre les recettes dispo 
-                for (String ing : recipe.getIngredients()){
-                    if (ing.equals(s)){
-                        System.out.println(recipe.getName());
-                    }
-                }
-            }
-        }
+        // for (String s : frigo){
+        //     for (Recipe recipe : this.model.recipeList){
+        //         // Faire page d'accueil qui montre les recettes dispo 
+        //         for (String ing : recipe.getIngredients()){
+        //             if (ing.equals(s)){
+        //                 System.out.println(recipe.getName());
+        //             }
+        //         }
+        //     }
+        // }
     }
 
 
