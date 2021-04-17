@@ -7,7 +7,7 @@ public class Model {
     private Controller control;
     private Set<String> categories;
     private Set<String> ingredients;
-    
+
     private ArrayList<Recipe> recipeList;
     private RecipeMap recipeMap;
     // private ArrayList<Recipe> favList;
@@ -43,7 +43,7 @@ public class Model {
     public Set<Recipe> search(String searchStr, Set<String> categsFilter, Set<String> ingredsFilter) {
         Set<Recipe> output = new HashSet<Recipe>();
 
-        if (categsFilter != null && categsFilter.size() > 0) {    
+        if (categsFilter == null || categsFilter.size() == 0) {    
             categsFilter = this.categories; // de base on recherche sur toutes les categories
         }
         
@@ -79,33 +79,6 @@ public class Model {
             }
         }
         return output;
-    }
-
-    public void search(String input) { // TODO: retirer cette version
-        //////// Recettes \\\\\\\\
-        System.out.println("############################################# Recettes #####################################################");
-
-        for (Recipe recipe : recipeList) {
-            String name = recipe.getName();
-            if (name.toLowerCase().contains(input)) { // A modifier pour faire des recherches sans accents et autres caracteres spéciaux
-                this.control.addRecipe(name);
-                this.control.recipeDisplay.add(recipe);
-
-                System.out.println(name); // Affiche les recettes correspondantes
-            }
-        }
-
-        //////// Ingrédients \\\\\\\\
-        System.out.println("############################################# Ingrédients #################################################");
-
-        for (String ing : recipeMap.getIngredients()){
-            if (ing.toLowerCase().contains(input)){
-                this.control.addIngredients(ing);
-                System.out.println(ing);
-            }
-        }
-
-        System.out.println("############################################################################################################");
     }
 
     public Set<String> getCategories() {
