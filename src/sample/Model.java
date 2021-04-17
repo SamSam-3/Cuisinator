@@ -53,7 +53,7 @@ public class Model {
             }
         } else {
             for (Recipe recipe : this.recipeList) {
-                if (recipe.getName().toLowerCase().contains(searchStr)) {
+                if (recipe.getName().toLowerCase().contains(searchStr) && categsFilter.contains(recipe.getCategory())) {
                     output.add(recipe);
                 }
             }
