@@ -98,8 +98,11 @@ public class Controller {
         rectPane.getStyleClass().add("recipePage");
         rectPane.getChildren().clear();
 
-        Rectangle rect = new Rectangle();
+        Rectangle rect = new Rectangle(0,0, 200, 250);
         ImagePattern image = new ImagePattern(new Image(recipe.getImage()));
+        rect.setArcHeight(90.0);
+        rect.setArcWidth(90.0);
+
         rect.setFill(image);
         rect.getStyleClass().add("img");
 
@@ -137,6 +140,7 @@ public class Controller {
         rectPane.getChildren().add(titreEtape);
 
         rectPane.getChildren().add(new Label(recipe.getSteps()));
+        System.out.println(recipe.getSteps());
     }
 
     private void showDropdown() {
