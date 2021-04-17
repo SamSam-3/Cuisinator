@@ -31,7 +31,7 @@ public class Controller {
 
     private Model model;
     private boolean doIngredSearch = false;
-    Stack<String> frigo  = new Stack<String>();
+    private Stack<String> frigo  = new Stack<String>();
     private ArrayList<String> ingredsLeft = new ArrayList<String>();
     private Set<Recipe> recipeDisplay = new HashSet<Recipe>(); 
 
