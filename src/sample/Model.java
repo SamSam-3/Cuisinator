@@ -103,5 +103,17 @@ public class Model {
     public Set<String> getCategories() {
         return categories;
     }
+    
+    public Set<String> getIngredByCateg(Set<String> categories) {
+        Set<String> ingreds = new HashSet<String>();
+        
+        if (categories != null && categories.size() > 0) {    
+            return this.ingredients;
+        }
 
+        for (String cat : categories) {
+            ingreds.addAll(this.recipeMap.get(cat).keySet());
+        }
+        return ingreds;
+    }
 }
