@@ -256,33 +256,47 @@ public class Controller {
     public void mainPage(ArrayList<Recipe> recipeList){
         VBox main = (VBox) recipeContainer.getContent();
 
-        HBox line = new HBox();
-        VBox card = new VBox();
 
-        card.getStyleClass().add("card"); // Faire css arrondi / etc...
-        line.getStyleClass().add("line"); // Faire css margin de chaque coté
 
-        card.setAlignment(Pos.CENTER);
         /// POUR TEST je prend un recette au hasard
         /// Plus tard on mettra les 20 premiers meileurs recettes (par likes) boucle for pour 20
         /// En scrollant s'il arrive a la fin des 20 premiers, on aggrandi la liste et reset mainPage()
-        Recipe test = recipeList.get(0);
+        /// Prévoir pour le nombre de carte par la taille adaptative de l'app
 
-        Rectangle rect = new Rectangle(0,0, 200, 200);
-        ImagePattern image = new ImagePattern(new Image(test.getImage()));
-        rect.setArcHeight(90.0);
-        rect.setArcWidth(90.0);
 
-        rect.setFill(image);
-        rect.getStyleClass().add("img");
+        System.out.println(recipeList.size());
+        int x=0;
+        for(int i=0;i<3;i++){
+            HBox line = new HBox();
+            line.getStyleClass().add("line"); // Faire css margin de chaque coté
 
-        Label titre = new Label(test.getName());
-        titre.getStyleClass().add("cardTitle");
+            for(int j=0;j<2;j++) {
+                Recipe test = recipeList.get(x);
+                x++;
+                VBox card = new VBox();
+                card.getStyleClass().add("card"); // Faire css arrondi / etc...
 
-        card.getChildren().add(rect);
-        card.getChildren().add(titre);
+                card.setAlignment(Pos.CENTER);
 
-        line.getChildren().add(card);
-        main.getChildren().add(line);
+                Rectangle rect = new Rectangle(0, 0, 200, 200);
+                ImagePattern image = new ImagePattern(new Image(test.getImage()));
+                rect.setArcHeight(90.0);
+                rect.setArcWidth(90.0);
+
+                rect.setFill(image);
+                rect.getStyleClass().add("img");
+
+                Label titre = new Label(test.getName());
+                titre.getStyleClass().add("cardTitle");
+
+                card.getChildren().add(rect);
+                card.getChildren().add(titre);
+
+                line.getChildren().add(card);
+            }
+
+            main.getChildren().add(line);
+        }
+
     }
 }
