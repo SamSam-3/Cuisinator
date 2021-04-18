@@ -20,9 +20,22 @@ public class Main extends Application {
         primaryStage.setTitle("Cuisinator");
         primaryStage.setFullScreen(true);
 
+
+
         Scene scene = new Scene(root);
         scene.getStylesheets().add("theme.css");
         primaryStage.setScene(scene);
+
+        primaryStage.widthProperty().addListener((obs, oldVal, newVal ) -> {
+            System.out.println("Largeur :"+newVal.intValue());
+            ctrl.accueil.setPrefWidth(newVal.intValue());
+        });
+
+        primaryStage.heightProperty().addListener((obs, oldVal, newVal ) -> {
+            System.out.println("Hauteur :"+newVal.intValue());
+            ctrl.accueil.setPrefHeight(newVal.intValue());
+        });
+
         primaryStage.show();
     }
 

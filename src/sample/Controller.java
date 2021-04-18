@@ -145,12 +145,14 @@ public class Controller {
             this.recipePossible.setContent(this.vb);
             this.vb.toFront();
             this.vb.setVisible(true);
+            this.recipePossible.toFront();
             this.recipePossible.setVisible(true);
             this.recipePossible.setDisable(false);
         } else {
             this.ingredientsPossible.setContent(this.vbI);
             this.vbI.toFront();
             this.vbI.setVisible(true);
+            this.ingredientsPossible.toFront();
             this.ingredientsPossible.setVisible(true);
             this.ingredientsPossible.setDisable(false);
         }
@@ -276,9 +278,7 @@ public class Controller {
 
     public void mainPage(ArrayList<Recipe> recipeList){
         VBox main = (VBox) recipeContainer.getContent();
-        System.out.println(recipeList.size());
         int indice=0;
-
 
         /// POUR TEST je prend un recette au hasard
         /// Plus tard on mettra les 20 premiers meileurs recettes (par likes) boucle for pour 20
