@@ -46,17 +46,23 @@ public class Main extends Application {
             ctrl.recipeContainer.getContent().autosize();
 
             //Buttons
-            double coef = ((newValW.intValue()+actuHeight)*(maxCoef/10))/(maxCoef);
-            System.out.println(coef/100);
-            ctrl.categorie.setLayoutX(14*(coef/100));
-            ctrl.categorie.setLayoutY(14*(coef/100));
-            ctrl.categorie.setPrefWidth(52*(coef/100));
-            ctrl.categorie.setPrefHeight(52*(coef/100));
+            double coef = (((newValW.intValue()+actuHeight)*(maxCoef/10))/(maxCoef))/100;
+            System.out.println(coef);
+            if(coef <2 ) {
+                ctrl.categorie.setPrefWidth(52 * coef);
+                ctrl.categorie.setPrefHeight(52 * coef);
+                ctrl.course.setPrefWidth(45 * coef);
+                ctrl.course.setPrefHeight(45 * coef);
+            }
 
-            ctrl.course.setLayoutX(500*(coef/100));
-            ctrl.course.setLayoutY(14*(coef/100));
-            ctrl.course.setPrefWidth(52*(coef/100));
-            ctrl.course.setPrefHeight(52*(coef/100));
+            ctrl.categorie.setLayoutX(14 * coef);
+            ctrl.categorie.setLayoutY(14 * coef);
+            ctrl.course.setLayoutX(ctrl.accueil.getWidth() - 14 - ctrl.course.getWidth());
+            ctrl.course.setLayoutY(14 * coef);
+
+            //Barre rechrche
+            ctrl.barreRecherche.setLayoutX(147*coef);
+            ctrl.barreRecherche.setPrefWidth(267*coef);
 
         });
 
@@ -73,17 +79,23 @@ public class Main extends Application {
             ctrl.recipeContainer.getContent().autosize();
 
             //Buttons
-            double coef = ((newValH.intValue()+actuWidth)*(maxCoef/10))/(maxCoef);
-            System.out.println(coef/100);
-            ctrl.categorie.setLayoutX(14*(coef/100));
-            ctrl.categorie.setLayoutY(14*(coef/100));
-            ctrl.categorie.setPrefWidth(52*(coef/100));
-            ctrl.categorie.setPrefHeight(52*(coef/100));
+            double coef = (((newValH.intValue()+actuWidth)*(maxCoef/10))/(maxCoef))/100;
+            System.out.println(coef);
+            if(coef < 2) {
+                ctrl.categorie.setPrefWidth(52 * coef);
+                ctrl.categorie.setPrefHeight(52 * coef);
 
-            ctrl.course.setLayoutX(500*(coef/100));
-            ctrl.course.setLayoutY(14*(coef/100));
-            ctrl.course.setPrefWidth(52*(coef/100));
-            ctrl.course.setPrefHeight(52*(coef/100));
+                ctrl.course.setPrefWidth(52 * coef);
+                ctrl.course.setPrefHeight(52 * coef);
+            }
+            ctrl.categorie.setLayoutX(14 * coef);
+            ctrl.categorie.setLayoutY(14 * coef);
+            ctrl.course.setLayoutX(ctrl.accueil.getWidth() - 14 - ctrl.course.getWidth());
+            ctrl.course.setLayoutY(14 * coef);
+
+            //Barre de recherche
+
+            ctrl.barreRecherche.setLayoutY(10*coef);
         }));
 
         primaryStage.show();

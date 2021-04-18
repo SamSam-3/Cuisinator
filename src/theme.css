@@ -1,17 +1,23 @@
 #categorie{
   -fx-background-position: center;
   -fx-background-image: url("images/burger.png");
+  -fx-background-repeat: no-repeat;
+  -fx-background-size: cover, auto;
 }
 
 #course{
   -fx-background-position: center;
   -fx-background-image: url("images/course.png");
+  -fx-background-repeat: no-repeat;
+  -fx-background-size: cover, auto;
 }
 
 #avancee{
   -fx-background-position: center;
   image-resolution: 1;
   -fx-background-image: url("images/avancee.png");
+  -fx-background-repeat: no-repeat;
+  -fx-background-size: cover, auto;
 }
 
 #toolbar{
