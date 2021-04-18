@@ -19,9 +19,9 @@ public class Controller {
     // fxml
     @FXML public Pane layerCategorie;
     @FXML public Pane accueil;
+    @FXML public Pane toolbar;
     @FXML public VBox vb;
     @FXML public VBox vbI;
-    @FXML public VBox listing;
     @FXML public VBox diffCat; // Affichage des éléments "catégorie" (vertical et + propre)
     @FXML public ScrollPane ingredientsPossible;
     @FXML public ScrollPane layerCourse;
@@ -35,6 +35,7 @@ public class Controller {
     private Set<Recipe> recipeDisplay = new HashSet<Recipe>(); 
     private Stack<String> frigo  = new Stack<String>();
     private VBox liste = new VBox();
+
     // Etat
     private boolean doIngredSearch = false;
     private int etatCA = 0;

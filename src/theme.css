@@ -14,6 +14,10 @@
   -fx-background-image: url("images/avancee.png");
 }
 
+#toolbar{
+   -fx-background-color: orange;
+}
+
 .listRecipe:hover{
   -fx-color: red;
   -fx-background-color: grey;

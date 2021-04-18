@@ -1,9 +1,11 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.beans.InvalidationListener;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -26,15 +28,21 @@ public class Main extends Application {
         scene.getStylesheets().add("theme.css");
         primaryStage.setScene(scene);
 
-        primaryStage.widthProperty().addListener((obs, oldVal, newVal ) -> {
-            System.out.println("Largeur :"+newVal.intValue());
-            ctrl.accueil.setPrefWidth(newVal.intValue());
+        primaryStage.widthProperty().addListener((obs, oldValW, newValW ) -> {
+            ctrl.accueil.setPrefWidth(newValW.intValue());
+            ctrl.accueil.setPrefWidth(newValW.intValue());
+            ctrl.toolbar.setPrefWidth(newValW.intValue());
+            ctrl.recipeContainer.setPrefWidth(newValW.intValue()-14);
+            ctrl.recipeContainer.getContent().autosize();
         });
 
-        primaryStage.heightProperty().addListener((obs, oldVal, newVal ) -> {
-            System.out.println("Hauteur :"+newVal.intValue());
-            ctrl.accueil.setPrefHeight(newVal.intValue());
-        });
+        primaryStage.heightProperty().addListener(((observableValue, oldValH, newValH) -> {
+            ctrl.accueil.setPrefHeight(newValH.intValue());
+            ctrl.accueil.setPrefHeight(newValH.intValue());
+            ctrl.toolbar.setPrefHeight(newValH.intValue()*0.2);
+            ctrl.recipeContainer.setPrefHeight(newValH.intValue()*0.8);
+            ctrl.recipeContainer.getContent().autosize();
+        }));
 
         primaryStage.show();
     }
