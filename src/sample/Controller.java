@@ -29,6 +29,8 @@ public class Controller {
     @FXML public ScrollPane recipePossible; // Affichage des recettes contenant le terme recherché
     @FXML public TextField barreRecherche;
     @FXML public TextField barreTags;
+    @FXML public Button course;
+    @FXML public Button categorie;
 
     private Model model;
     private ArrayList<String> ingredsLeft = new ArrayList<String>();
