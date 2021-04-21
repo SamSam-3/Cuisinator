@@ -63,6 +63,7 @@
     -fx-padding: 0 30 0 30;
     -fx-line-spacing: 10;
     -fx-background-color: #795548;
+    -fx-background-radius: 15;
     -fx-font-weight: bold;
     -fx-font-size: 25px;
     -fx-font-family: "Arial";

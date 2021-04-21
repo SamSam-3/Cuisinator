@@ -12,7 +12,10 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 
+import java.io.File;
 import java.util.*;
 
 public class Controller {
@@ -198,6 +201,13 @@ public class Controller {
         for (String name : this.model.getCategories()) {
             this.newCategories(name); 
         }
+
+        Button ajoutRecipe = new Button("Ajouter une recette");
+        diffCat.getChildren().add(ajoutRecipe);
+        ajoutRecipe.setOnMousePressed(mouseEvent -> {
+            this.addRecipe();
+            layerCategorie.setVisible(false);
+        });
         this.showCategories();
     }
 
@@ -325,5 +335,87 @@ public class Controller {
             main.getChildren().add(line); // Ajout des line à la page d'accueil
         }
 
+    }
+
+    public void addRecipe(){
+        ArrayList<String> ingredients = new ArrayList<String>();
+
+        VBox addRecipePage = (VBox) recipeContainer.getContent();
+        addRecipePage.getChildren().clear();
+        FileChooser fc = new FileChooser();
+
+        Label entete = new Label(" Ajout d'une recette :");
+        entete.getStyleClass().add("h1");
+
+        TextField title = new TextField();
+        title.setPromptText("Titre de la recette ... ");
+        title.setMaxWidth(300);
+
+        /* Faire un menu déroulant des catgéories
+        TextField category = new TextField();
+        category.setPromptText("Catégorie de la recette ... ");
+        category.setPrefWidth(200);
+        */
+
+        // Récupération de l'image (Récupère le lien vers l'image depuis le pc)
+        HBox fichier = new HBox();
+        fichier.getChildren().add(new Label("Ajouter une image : "));
+        Button btnFile = new Button("Parcourir... ");
+        fichier.getChildren().add(btnFile);
+
+        btnFile.setOnMousePressed(mouseEvent -> {
+            fc.setTitle("Open image ...");
+            File file = fc.showOpenDialog(Window.getWindows().get(0));
+
+            String lien = file.getAbsolutePath();
+        });
+
+        // Ajout des ingrédient un par un
+        HBox listeIng = new HBox();
+        Button ingPlus = new Button("Ajouter l'ingrédient");
+        TextField ing = new TextField();
+        ing.setPromptText("Donner un ingrédients ... ");
+        listeIng.getChildren().add(ing);
+        listeIng.getChildren().add(ingPlus);
+
+
+        // Affichage des ingrédients ajoutés
+        VBox vb = new VBox();
+
+        ingPlus.setOnMousePressed(mouseEvent -> {
+
+            HBox hb = new HBox();
+            Button annule = new Button("x");
+            ingredients.add(ing.getCharacters().toString().toLowerCase());
+            hb.getChildren().add(new Label(ing.getCharacters().toString().toLowerCase()));
+            hb.getChildren().add(annule);
+
+            //Evenement pour supprimer l'élément
+            annule.setOnMousePressed(mouseEvent1 -> {
+                vb.getChildren().remove(hb);
+                Label toRemove = (Label) hb.getChildren().get(0);
+                ingredients.remove(toRemove.getText());
+                System.out.println("Suppression :"+ingredients);
+
+            });
+
+            vb.getChildren().add(hb);
+            System.out.println("Ajout :"+ingredients);
+            ing.clear();
+        });
+
+
+        TextArea steps = new TextArea();
+        steps.setPromptText("Décrivez chaque étapes de votre recette\n N'hésitez pas à sauter des lignes quand vous finissez une étape.");
+
+
+        // Ajout des éléments à la page
+        addRecipePage.getChildren().add(entete);
+        addRecipePage.getChildren().add(title);
+        //addRecipePage.getChildren().add(category);
+        addRecipePage.getChildren().add(fichier);
+        addRecipePage.getChildren().add(listeIng);
+        addRecipePage.getChildren().add(vb);
+        //addRecipePage.getChildren().add(title);
     }
 }
