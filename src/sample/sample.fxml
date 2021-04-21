@@ -14,10 +14,10 @@
    <children>
       <Pane fx:id="toolbar" maxWidth="1.7976931348623157E308" prefHeight="80.0" prefWidth="1280.0">
          <children>
-            <Button fx:id="categorie" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#categorieBtn" prefHeight="52.0" prefWidth="52.0" />
+            <Button fx:id="categorie" layoutX="28.0" layoutY="14.0" mnemonicParsing="false" onAction="#categorieBtn" prefHeight="52.0" prefWidth="52.0" />
             <Button fx:id="course" layoutX="1200.0" layoutY="14.0" mnemonicParsing="false" onAction="#courseBtn" prefHeight="52.0" prefWidth="52.0" />
-            <TextField fx:id="barreRecherche" layoutX="153.0" layoutY="26.0" onKeyReleased="#findRecipe" prefHeight="31.0" prefWidth="380.0" promptText="Je cherche par recette ..." />
-            <TextField fx:id="barreTags" layoutX="724.0" layoutY="26.0" onKeyReleased="#findRecipe" prefHeight="31.0" prefWidth="380.0" promptText="Je cherche par ingrédients ..." />
+            <TextField fx:id="barreRecherche" layoutX="180.0" layoutY="26.0" onKeyReleased="#findRecipe" prefHeight="30.0" prefWidth="380.0" promptText="Je cherche par recette ..." />
+            <TextField fx:id="barreTags" layoutX="720.0" layoutY="26.0" onKeyReleased="#findRecipe" prefHeight="30.0" prefWidth="380.0" promptText="Je cherche par ingrédients ..." />
          </children>
       </Pane>
       <Pane fx:id="layerCategorie" layoutX="-370.0" layoutY="80.0" prefHeight="720.0" prefWidth="370.0" snapToPixel="false" style="-fx-background-color: orange;">

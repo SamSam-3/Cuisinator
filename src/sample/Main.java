@@ -22,18 +22,41 @@ public class Main extends Application {
         ctrl.initModel(model);
 
         primaryStage.setTitle("Cuisinator");
-        primaryStage.setFullScreen(true);
+        //primaryStage.setFullScreen(true);
 
         Scene scene = new Scene(root);
         scene.getStylesheets().add("theme.css");
         primaryStage.setScene(scene);
 
+
+        double bar = ctrl.barreRecherche.getLayoutX();
+
         primaryStage.widthProperty().addListener((obs, oldValW, newValW ) -> {
 
+            //Pane général
             ctrl.accueil.setPrefWidth(newValW.intValue());
             ctrl.accueil.setPrefWidth(newValW.intValue());
-            ctrl.toolbar.setPrefWidth(newValW.intValue());
 
+            //Toolbar
+            ctrl.toolbar.setPrefWidth(newValW.intValue());
+            ctrl.course.setLayoutX(ctrl.toolbar.getWidth()-28-ctrl.course.getWidth());
+
+            if(newValW.intValue()-560<=(bar+ctrl.barreRecherche.getWidth())){
+                //Déplacement l'une sous l'autre
+                ctrl.barreRecherche.setLayoutY(10);
+                ctrl.barreTags.setLayoutY(ctrl.barreRecherche.getHeight()+10);
+                //Déplacement en X
+                int x = (int) newValW.intValue()/2 - (int) ctrl.barreRecherche.getWidth()/2;
+                ctrl.barreRecherche.setLayoutX(x);
+                ctrl.barreTags.setLayoutX(x);
+
+            } else {
+                ctrl.barreTags.setLayoutY(25);
+                ctrl.barreRecherche.setLayoutY(25);
+
+                ctrl.barreTags.setLayoutX(newValW.intValue() - 560);
+                ctrl.barreRecherche.setLayoutX(ctrl.categorie.getLayoutX()+100+ctrl.categorie.getWidth());
+            }
         });
 
         primaryStage.heightProperty().addListener(((obs, oldValH, newValH) -> {
