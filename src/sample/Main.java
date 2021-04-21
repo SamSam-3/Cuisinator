@@ -39,7 +39,7 @@ public class Main extends Application {
             ctrl.nbCard=((int) (ctrl.accueil.getWidth()-700)/300) +2;
             if(ctrl.nbCard!=nbCardSave){
                 nbCardSave = ctrl.nbCard;
-                ctrl.mainPage(model.recipeList);
+                ctrl.mainPage(model.recipeList); //J'avais besoin de recipeList ici si jamais tu veux le repasser en priver faut trouver un moyen
             }
             //Pane général
             ctrl.accueil.setPrefWidth(newValW.intValue());
