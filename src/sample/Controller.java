@@ -38,11 +38,12 @@ public class Controller {
     private Set<Recipe> recipeDisplay = new HashSet<Recipe>(); 
     private Stack<String> frigo  = new Stack<String>();
     private VBox liste = new VBox();
+    public int nbCard = 2;
 
     // Etat
     private boolean doIngredSearch = false;
-    private int etatCA = 0;
-    private int etatCO = 0;
+    public int etatCA = 0;
+    public int etatCO = 0;
 
 
     public void initModel(Model model) {
@@ -296,7 +297,7 @@ public class Controller {
             HBox line = new HBox(); // Nouvelle ligne de cartes
             line.getStyleClass().add("line"); // Faire css margin de chaque coté
 
-            for(int j=0;j<2;j++) {
+            for(int j=0;j<nbCard;j++) {
                 Recipe recipe = recipeList.get(indice);
                 indice++;
 

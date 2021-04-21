@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -28,11 +29,14 @@ public class Main extends Application {
         scene.getStylesheets().add("theme.css");
         primaryStage.setScene(scene);
 
-
+        primaryStage.setMinWidth(700);
+        primaryStage.setMinHeight(500);
         double bar = ctrl.barreRecherche.getLayoutX();
 
-        primaryStage.widthProperty().addListener((obs, oldValW, newValW ) -> {
+        // IL FAUT QU'ON DEFINISSE UNE TAILLE MINIMAL EN GENERAL
 
+        primaryStage.widthProperty().addListener((obs, oldValW, newValW ) -> {
+            System.out.println(newValW.intValue());
             //Pane général
             ctrl.accueil.setPrefWidth(newValW.intValue());
             ctrl.accueil.setPrefWidth(newValW.intValue());
@@ -48,8 +52,13 @@ public class Main extends Application {
                 //Déplacement l'une sous l'autre
                 ctrl.barreRecherche.setLayoutY(10);
                 ctrl.barreTags.setLayoutY(ctrl.barreRecherche.getHeight()+10);
+
+                //Déplacement des listing de recherche
+                ctrl.recipePossible.setLayoutX(ctrl.barreRecherche.getLayoutX());
+                ctrl.recipePossible.setLayoutY(ctrl.barreRecherche.getLayoutY()+ctrl.barreRecherche.getHeight());
+
                 //Déplacement en X
-                int x = (int) newValW.intValue()/2 - (int) ctrl.barreRecherche.getWidth()/2;
+                int x = newValW.intValue()/2 - (int) ctrl.barreRecherche.getWidth()/2;
                 ctrl.barreRecherche.setLayoutX(x);
                 ctrl.barreTags.setLayoutX(x);
 
@@ -62,17 +71,30 @@ public class Main extends Application {
             }
 
             //layer course et cat
-            ctrl.layerCategorie.setPrefWidth((int) newValW.intValue()/3); //Changer taille du texte en fonction de la taille
-            ctrl.layerCourse.setPrefWidth((int) newValW.intValue()/3); //Changer taille du texte en fonction de la taille
-            VBox courseContent = (VBox) ctrl.layerCourse.getContent();
-            courseContent.setPrefWidth((int) newValW.intValue()/3); //Changer taille du texte en fonction de la taille
+            if(ctrl.etatCA == 0){
+                ctrl.layerCategorie.setLayoutX(-ctrl.layerCategorie.getWidth());
+            }
+            if(ctrl.etatCO == 1){
+                ctrl.layerCourse.setLayoutX(ctrl.accueil.getWidth()); //Petit bug graphique a corrigé quand on veux
+            }
+
+            ctrl.layerCategorie.setPrefWidth(newValW.intValue()/3); //Changer taille du texte en fonction de la taille du layer
+            ctrl.layerCourse.setPrefWidth(newValW.intValue()/3); //Changer taille du texte en fonction de la taille du layer
+
+
+            System.out.println(ctrl.layerCourse.getLayoutX() + " | " + ctrl.accueil.getWidth());
+
+            AnchorPane courseContent = (AnchorPane) ctrl.layerCourse.getContent();
+            courseContent.setPrefWidth(newValW.intValue()/3); //Changer taille du texte en fonction de la taille du layer
 
         });
 
         primaryStage.heightProperty().addListener(((obs, oldValH, newValH) -> {
-
+            System.out.println(newValH.intValue());
+            //Pane général
             ctrl.accueil.setPrefHeight(newValH.intValue());
             ctrl.accueil.setPrefHeight(newValH.intValue());
+            ctrl.recipeContainer.setMaxHeight(newValH.intValue()-80);
 
 
         }));
