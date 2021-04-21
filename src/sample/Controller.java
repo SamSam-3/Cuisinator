@@ -294,6 +294,7 @@ public class Controller {
 
     public void mainPage(ArrayList<Recipe> recipeList){
         VBox main = (VBox) recipeContainer.getContent();
+        main.getChildren().clear();
         int indice=0;
 
         /// POUR TEST je prend un recette au hasard
@@ -302,7 +303,7 @@ public class Controller {
         /// Prévoir pour le nombre de carte par la taille adaptative de l'app
 
 
-        for(int i=0;i<3;i++){ // J'ai pris 3 et 2 parce qu'il y a que 6 recettes pour l'instant
+        for(int i=0;i<Math.round(6/nbCard);i++){ // J'ai pris 3 et 2 parce qu'il y a que 6 recettes pour l'instant
 
             HBox line = new HBox(); // Nouvelle ligne de cartes
             line.getStyleClass().add("line"); // Faire css margin de chaque coté
@@ -339,8 +340,9 @@ public class Controller {
 
     public void addRecipe(){
         ArrayList<String> ingredients = new ArrayList<String>();
-        final String[] lien = {""};
+        final String[] lien = {""}; //Va comprendre, java me saoule pour que ca soit une array String x)
 
+        //Initialisation mainPage
         VBox addRecipePage = (VBox) recipeContainer.getContent();
         addRecipePage.getChildren().clear();
         FileChooser fc = new FileChooser();
@@ -361,7 +363,7 @@ public class Controller {
         for(String cat: model.getCategories()){
             menu.getItems().add(cat);
         }
-        getCat.getChildren().add(menu);
+        getCat.getChildren().add(menu); // Ajout du menu dans une liste horizontal
 
 
 

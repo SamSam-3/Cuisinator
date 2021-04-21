@@ -13,6 +13,8 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    private int nbCardSave = ((1280-700)/300) +2;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
@@ -33,10 +35,12 @@ public class Main extends Application {
         primaryStage.setMinHeight(500);
         double bar = ctrl.barreRecherche.getLayoutX();
 
-        // IL FAUT QU'ON DEFINISSE UNE TAILLE MINIMAL EN GENERAL
-
         primaryStage.widthProperty().addListener((obs, oldValW, newValW ) -> {
-            System.out.println(newValW.intValue());
+            ctrl.nbCard=((int) (ctrl.accueil.getWidth()-700)/300) +2;
+            if(ctrl.nbCard!=nbCardSave){
+                nbCardSave = ctrl.nbCard;
+                ctrl.mainPage(model.recipeList);
+            }
             //Pane général
             ctrl.accueil.setPrefWidth(newValW.intValue());
             ctrl.accueil.setPrefWidth(newValW.intValue());
@@ -81,16 +85,13 @@ public class Main extends Application {
             ctrl.layerCategorie.setPrefWidth(newValW.intValue()/3); //Changer taille du texte en fonction de la taille du layer
             ctrl.layerCourse.setPrefWidth(newValW.intValue()/3); //Changer taille du texte en fonction de la taille du layer
 
-
-            System.out.println(ctrl.layerCourse.getLayoutX() + " | " + ctrl.accueil.getWidth());
-
             AnchorPane courseContent = (AnchorPane) ctrl.layerCourse.getContent();
             courseContent.setPrefWidth(newValW.intValue()/3); //Changer taille du texte en fonction de la taille du layer
 
         });
 
         primaryStage.heightProperty().addListener(((obs, oldValH, newValH) -> {
-            System.out.println(newValH.intValue());
+
             //Pane général
             ctrl.accueil.setPrefHeight(newValH.intValue());
             ctrl.accueil.setPrefHeight(newValH.intValue());

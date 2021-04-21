@@ -8,7 +8,7 @@ public class Model {
     private Set<String> categories;
     private Set<String> ingredients;
 
-    private ArrayList<Recipe> recipeList;
+    public ArrayList<Recipe> recipeList;
     private RecipeMap recipeMap;
     // private ArrayList<Recipe> favList;
     // private ArrayList<Recipe> likeList;
