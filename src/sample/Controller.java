@@ -27,6 +27,7 @@ public class Controller {
     @FXML public VBox vb;
     @FXML public VBox vbI;
     @FXML public VBox diffCat; // Affichage des éléments "catégorie" (vertical et + propre)
+    @FXML public HBox tags;
     @FXML public ScrollPane ingredientsPossible;
     @FXML public ScrollPane layerCourse;
     @FXML public ScrollPane recipeContainer;
@@ -303,7 +304,7 @@ public class Controller {
         /// Prévoir pour le nombre de carte par la taille adaptative de l'app
 
 
-        for(int i=0;i<Math.round(6/nbCard);i++){ // J'ai pris 3 et 2 parce qu'il y a que 6 recettes pour l'instant
+        for(int i=0;i<Math.round(6/nbCard);i++){
 
             HBox line = new HBox(); // Nouvelle ligne de cartes
             line.getStyleClass().add("line"); // Faire css margin de chaque coté

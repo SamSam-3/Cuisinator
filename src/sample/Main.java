@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    private int nbCardSave = ((1280-700)/300) +2;
+    private int nbCardSave = 3; //Valeur par défault pour les écran 1280/720
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -36,10 +36,14 @@ public class Main extends Application {
         double bar = ctrl.barreRecherche.getLayoutX();
 
         primaryStage.widthProperty().addListener((obs, oldValW, newValW ) -> {
+            System.out.println(ctrl.accueil.getWidth());
+
             ctrl.nbCard=((int) (ctrl.accueil.getWidth()-700)/300) +2;
+            System.out.println(ctrl.nbCard);
             if(ctrl.nbCard!=nbCardSave){
                 nbCardSave = ctrl.nbCard;
                 ctrl.mainPage(model.recipeList); //J'avais besoin de recipeList ici si jamais tu veux le repasser en priver faut trouver un moyen
+                // Le rappel de mainPage fait lagger un peu l'app (peut etre a revoir pour opti)
             }
             //Pane général
             ctrl.accueil.setPrefWidth(newValW.intValue());
@@ -73,6 +77,10 @@ public class Main extends Application {
                 ctrl.barreTags.setLayoutX(newValW.intValue() - 560);
                 ctrl.barreRecherche.setLayoutX(ctrl.categorie.getLayoutX()+100+ctrl.categorie.getWidth());
             }
+
+            //tags / etc..
+            ctrl.tags.setPrefWidth(newValW.intValue());
+            ctrl.ingredientsPossible.setPrefWidth(newValW.intValue());
 
             //layer course et cat
             if(ctrl.etatCA == 0){
