@@ -20,6 +20,7 @@ public class Controller {
     @FXML public Pane layerCategorie;
     @FXML public Pane accueil;
     @FXML public Pane toolbar;
+    @FXML public Pane findByIngredients;
     @FXML public VBox vb;
     @FXML public VBox vbI;
     @FXML public VBox diffCat; // Affichage des éléments "catégorie" (vertical et + propre)
@@ -92,7 +93,7 @@ public class Controller {
     public void showRecipe(Recipe recipe){
         this.recipePossible.setVisible(false);
         this.recipeContainer.setVisible(true);
-        this.ingredientsPossible.setVisible(false);
+        this.findByIngredients.setVisible(false);
 
         VBox rectPane = (VBox) this.recipeContainer.getContent();
         rectPane.getStyleClass().add("recipePage");
@@ -154,10 +155,9 @@ public class Controller {
         } else {
             this.ingredientsPossible.setContent(this.vbI);
             this.vbI.toFront();
-            this.vbI.setVisible(true);
             this.ingredientsPossible.toFront();
-            this.ingredientsPossible.setVisible(true);
-            this.ingredientsPossible.setDisable(false);
+            this.findByIngredients.setVisible(true);
+            this.findByIngredients.setDisable(false);
         }
     }
     private void hideDropdown(int etat) {
@@ -165,8 +165,8 @@ public class Controller {
             this.recipePossible.setVisible(false);
             this.recipePossible.setDisable(true);
         } else {
-            this.ingredientsPossible.setVisible(false);
-            this.ingredientsPossible.setDisable(true);
+            this.findByIngredients.setVisible(false);
+            this.findByIngredients.setDisable(true);
         }
     }
 
@@ -179,6 +179,7 @@ public class Controller {
 
     public void addIngredients(String ing){
         /// A refaire par css
+
         Label lb = new Label(ing);
         lb.setFont(new Font("Arial",15));
         Button cancel = new Button("X");
@@ -223,6 +224,7 @@ public class Controller {
     public void findRecipe() {
         String searchRec = barreRecherche.getCharacters().toString().toLowerCase();
         String searchIng = barreTags.getCharacters().toString().toLowerCase();
+
         this.vb.getChildren().clear();
         this.vbI.getChildren().clear();
 
@@ -232,7 +234,7 @@ public class Controller {
                 this.addRecipe(rcp.getName());
             } 
             if (this.doIngredSearch) {
-                for (String ing : this.model.searchIngredients(searchRec)) {
+                for (String ing : this.model.searchIngredients(searchIng)) {
                     this.addIngredients(ing);
                 }
             }   

@@ -12,9 +12,6 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    int actuHeight = 400;
-    int actuWidth = 600;
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
@@ -25,77 +22,26 @@ public class Main extends Application {
         ctrl.initModel(model);
 
         primaryStage.setTitle("Cuisinator");
-        //primaryStage.setFullScreen(true);
-
-
-        double maxCoef = Screen.getScreens().get(0).getBounds().getMaxX() + Screen.getScreens().get(0).getBounds().getMaxY();
+        primaryStage.setFullScreen(true);
 
         Scene scene = new Scene(root);
         scene.getStylesheets().add("theme.css");
         primaryStage.setScene(scene);
 
         primaryStage.widthProperty().addListener((obs, oldValW, newValW ) -> {
-            actuWidth = newValW.intValue();
 
             ctrl.accueil.setPrefWidth(newValW.intValue());
             ctrl.accueil.setPrefWidth(newValW.intValue());
             ctrl.toolbar.setPrefWidth(newValW.intValue());
 
-            //Main Page
-            ctrl.recipeContainer.setPrefWidth(newValW.intValue()-14);
-            ctrl.recipeContainer.getContent().autosize();
-
-            //Buttons
-            double coef = (((newValW.intValue()+actuHeight)*(maxCoef/10))/(maxCoef))/100;
-            System.out.println(coef);
-            if(coef <2 ) {
-                ctrl.categorie.setPrefWidth(52 * coef);
-                ctrl.categorie.setPrefHeight(52 * coef);
-                ctrl.course.setPrefWidth(45 * coef);
-                ctrl.course.setPrefHeight(45 * coef);
-            }
-
-            ctrl.categorie.setLayoutX(14 * coef);
-            ctrl.categorie.setLayoutY(14 * coef);
-            ctrl.course.setLayoutX(ctrl.accueil.getWidth() - 14 - ctrl.course.getWidth());
-            ctrl.course.setLayoutY(14 * coef);
-
-            //Barre rechrche
-            ctrl.barreRecherche.setLayoutX(147*coef);
-            ctrl.barreRecherche.setPrefWidth(267*coef);
-
         });
 
-        primaryStage.heightProperty().addListener(((observableValue, oldValH, newValH) -> {
-            actuHeight = newValH.intValue();
+        primaryStage.heightProperty().addListener(((obs, oldValH, newValH) -> {
 
             ctrl.accueil.setPrefHeight(newValH.intValue());
             ctrl.accueil.setPrefHeight(newValH.intValue());
-            ctrl.toolbar.setPrefHeight((newValH.intValue()-37)*0.2);
 
-            //Main Page
-            ctrl.recipeContainer.setLayoutY((newValH.intValue()-37)*0.2);
-            ctrl.recipeContainer.setMinHeight((newValH.intValue()-37)*0.8);
-            ctrl.recipeContainer.getContent().autosize();
 
-            //Buttons
-            double coef = (((newValH.intValue()+actuWidth)*(maxCoef/10))/(maxCoef))/100;
-            System.out.println(coef);
-            if(coef < 2) {
-                ctrl.categorie.setPrefWidth(52 * coef);
-                ctrl.categorie.setPrefHeight(52 * coef);
-
-                ctrl.course.setPrefWidth(52 * coef);
-                ctrl.course.setPrefHeight(52 * coef);
-            }
-            ctrl.categorie.setLayoutX(14 * coef);
-            ctrl.categorie.setLayoutY(14 * coef);
-            ctrl.course.setLayoutX(ctrl.accueil.getWidth() - 14 - ctrl.course.getWidth());
-            ctrl.course.setLayoutY(14 * coef);
-
-            //Barre de recherche
-
-            ctrl.barreRecherche.setLayoutY(10*coef);
         }));
 
         primaryStage.show();
