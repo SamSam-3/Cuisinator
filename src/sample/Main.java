@@ -36,6 +36,9 @@ public class Main extends Application {
             //Pane général
             ctrl.accueil.setPrefWidth(newValW.intValue());
             ctrl.accueil.setPrefWidth(newValW.intValue());
+            ctrl.recipeContainer.setPrefWidth(newValW.intValue());
+            VBox containerContent = (VBox) ctrl.recipeContainer.getContent();
+            containerContent.setPrefWidth(newValW.intValue());
 
             //Toolbar
             ctrl.toolbar.setPrefWidth(newValW.intValue());
@@ -57,6 +60,13 @@ public class Main extends Application {
                 ctrl.barreTags.setLayoutX(newValW.intValue() - 560);
                 ctrl.barreRecherche.setLayoutX(ctrl.categorie.getLayoutX()+100+ctrl.categorie.getWidth());
             }
+
+            //layer course et cat
+            ctrl.layerCategorie.setPrefWidth((int) newValW.intValue()/3); //Changer taille du texte en fonction de la taille
+            ctrl.layerCourse.setPrefWidth((int) newValW.intValue()/3); //Changer taille du texte en fonction de la taille
+            VBox courseContent = (VBox) ctrl.layerCourse.getContent();
+            courseContent.setPrefWidth((int) newValW.intValue()/3); //Changer taille du texte en fonction de la taille
+
         });
 
         primaryStage.heightProperty().addListener(((obs, oldValH, newValH) -> {
