@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -291,10 +292,18 @@ public class Controller {
         Button annuler = new Button("x");
         annuler.getStyleClass().add("btnAnnuler");
 
+
         //Fonction pour annuler le tag
-        annuler.setOnMousePressed(mouseEvent1 -> {
-            //A FAIRE
+        annuler.setOnMousePressed(mouseEvent1 -> { //Tout les tags sont dans frigo mtn
+            tags.getChildren().remove(tag);
+            Label toRemove = (Label) tag.getChildren().get(0);
+            frigo.remove(toRemove.getText());
+            System.out.println("Elements dans le frigo :" + frigo);
         });
+
+        //Alignement et mise en page des cate
+        lb.setPadding(new Insets(5));
+        tag.setAlignment(Pos.CENTER);
 
 
         //Ajout du label et bouton comme nouveau tag
@@ -305,18 +314,7 @@ public class Controller {
         this.tags.getChildren().add(tag);
 
         System.out.println("Elements dans le frigo :" + frigo);
-        System.out.println("Recette correspondantes : ");
 
-        // for (String s : frigo){
-        //     for (Recipe recipe : this.model.recipeList){
-        //         // Faire page d'accueil qui montre les recettes dispo 
-        //         for (String ing : recipe.getIngredients()){
-        //             if (ing.equals(s)){
-        //                 System.out.println(recipe.getName());
-        //             }
-        //         }
-        //     }
-        // }
     }
 
 
