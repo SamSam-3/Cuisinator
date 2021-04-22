@@ -343,7 +343,6 @@ public class Controller {
     }
 
     public void mainPage(ArrayList<Recipe> recipeList){
-        System.out.println(model.getCategories());
         VBox main = (VBox) recipeContainer.getContent();
         main.getChildren().clear();
         int indice=0;
@@ -386,6 +385,11 @@ public class Controller {
 
                 card.getChildren().add(rect); //ajout element a la carte
                 card.getChildren().add(titre); //ajout element a la carte
+
+                // show la recette cliqué au menu
+                card.setOnMousePressed(mouseEvent -> {
+                    showRecipe(recipe);
+                });
 
                 line.getChildren().add(card); // Ajout des cartes a la ligne
                 j++;
