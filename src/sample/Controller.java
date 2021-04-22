@@ -400,6 +400,7 @@ public class Controller {
     public void addRecipe(){
         ArrayList<String> ingredients = new ArrayList<String>();
         final String[] lien = {""}; //Va comprendre, java me saoule pour que ca soit une array String x)
+        boolean verification = false;
 
         //Initialisation mainPage
         VBox addRecipePage = (VBox) recipeContainer.getContent();
@@ -483,15 +484,24 @@ public class Controller {
                     +"Ingrédients :"+ingredients+"\n"
                     +"Etapes : "+steps.getText());*/
 
-        Recipe newRecipe = new Recipe(
-                title.getText(),
-                menu.getValue(),
-                ingredients.toArray(new String[ingredients.size()]),
-                ingredients.toArray(new String[ingredients.size()]),
-                lien[0],steps.getText());
+            //Faire les verification (FLEMME POUR L'INSTANT)
 
-        //Ajouter la nouvelle recette à la base de données
+            if(verification) {
+                Recipe newRecipe = new Recipe(
+                        title.getText(),
+                        menu.getValue(),
+                        ingredients.toArray(new String[ingredients.size()]),
+                        ingredients.toArray(new String[ingredients.size()]),
+                        lien[0], steps.getText());
+
+                //Ajouter la nouvelle recette à la base de données
+                model.recipeList.add(newRecipe);
+
+            } else {
+                //Montrer qu'un champ n'est pas remplie a tel ou tel endroit
+            }
         });
+
 
         // Ajout des éléments à la page
         addRecipePage.getChildren().add(entete);
@@ -503,7 +513,5 @@ public class Controller {
         addRecipePage.getChildren().add(steps);
         addRecipePage.getChildren().add(confirmer);
     }
-
-    //Tibo garcia
 
 }
