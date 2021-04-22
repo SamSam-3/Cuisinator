@@ -44,8 +44,11 @@ public class Controller {
     private ArrayList<String> ingredsLeft = new ArrayList<String>();
     private Set<Recipe> recipeDisplay = new HashSet<Recipe>(); 
     private Stack<String> frigo  = new Stack<String>();
+    ArrayList<VBox> listCard = new ArrayList<VBox>();
     private VBox liste = new VBox();
+    private int etatCard=0;
     public int nbCard=3;
+
 
     // Etat
     private boolean doIngredSearch = false;
@@ -342,15 +345,61 @@ public class Controller {
 
     }
 
-    public void mainPage(ArrayList<Recipe> recipeList){
-        VBox main = (VBox) recipeContainer.getContent();
-        main.getChildren().clear();
-        int indice=0;
-
+    public void initCard(ArrayList<Recipe> recipeList){
         /// POUR TEST je prend un recette au hasard
         /// Plus tard on mettra les 20 premiers meileurs recettes (par likes) boucle for pour 20
         /// En scrollant s'il arrive a la fin des 20 premiers, on aggrandi la liste et reset mainPage()
         /// Prévoir pour le nombre de carte par la taille adaptative de l'app
+
+        int maxi=6;
+        for(int i=0;i<maxi;i++) {
+            Recipe recipe = recipeList.get(i);
+
+            VBox card = new VBox(); // Nouvelle carte
+            card.getStyleClass().add("card"); // Faire css arrondi / etc...
+
+            card.setAlignment(Pos.CENTER); // Centre les éléments
+
+            Rectangle rect = new Rectangle(0, 0, 200, 200);
+            Image img = new Image(recipe.getImage()); //Si l'acces a internet est ok --> affiche l'image
+            if (img.isError()) { //Si pas d'internet --> image d'erreur
+                img = new Image("images/noInternet.bmp");
+            }
+            ImagePattern image = new ImagePattern(img);
+            rect.setArcHeight(90.0);
+            rect.setArcWidth(90.0);
+            rect.setFill(image);
+            rect.getStyleClass().add("img");
+
+            Label titre = new Label(recipe.getName());
+            titre.getStyleClass().add("cardTitle"); // modifier la taille des caractères suivant la longueur du titre
+
+            card.getChildren().add(rect); //ajout element a la carte
+            card.getChildren().add(titre); //ajout element a la carte
+
+                // show la recette cliqué au menu
+            card.setOnMousePressed(mouseEvent -> {
+                showRecipe(recipe);
+            });
+
+            listCard.add(card);
+        }
+    }
+
+    public void mainPage(ArrayList<Recipe> recipeList){
+        VBox main = (VBox) recipeContainer.getContent();
+        main.getChildren().clear();
+
+        if(etatCard==0){
+            initCard(recipeList);
+            etatCard=1;
+        }
+        /// POUR TEST je prend un recette au hasard
+        /// Plus tard on mettra les 20 premiers meileurs recettes (par likes) boucle for pour 20
+        /// En scrollant s'il arrive a la fin des 20 premiers, on aggrandi la liste et reset mainPage()
+        /// Prévoir pour le nombre de carte par la taille adaptative de l'app
+
+        int indice=0;
         int maxi=6;
         int i=0;
         while(i<(maxi/nbCard)+1){
@@ -360,38 +409,7 @@ public class Controller {
 
             int j=0;
             while(j<nbCard && indice<maxi) {
-                Recipe recipe = recipeList.get(indice);
-
-                VBox card = new VBox(); // Nouvelle carte
-                card.getStyleClass().add("card"); // Faire css arrondi / etc...
-
-                card.setAlignment(Pos.CENTER); // Centre les éléments
-
-                Rectangle rect = new Rectangle(0, 0, 200, 200);
-
-
-                Image img = new Image(recipe.getImage()); //Si l'acces a internet est ok --> affiche l'image
-                if(img.isError()){ //Si pas d'internet --> image d'erreur
-                    img = new Image("images/noInternet.bmp");
-                }
-                ImagePattern image = new ImagePattern(img);
-                rect.setArcHeight(90.0);
-                rect.setArcWidth(90.0);
-                rect.setFill(image);
-                rect.getStyleClass().add("img");
-
-                Label titre = new Label(recipe.getName());
-                titre.getStyleClass().add("cardTitle"); // modifier la taille des caractères suivant la longueur du titre
-
-                card.getChildren().add(rect); //ajout element a la carte
-                card.getChildren().add(titre); //ajout element a la carte
-
-                // show la recette cliqué au menu
-                card.setOnMousePressed(mouseEvent -> {
-                    showRecipe(recipe);
-                });
-
-                line.getChildren().add(card); // Ajout des cartes a la ligne
+                line.getChildren().add(listCard.get(indice)); // Ajout des cartes a la ligne
                 j++;
                 indice++;
             }
