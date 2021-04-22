@@ -45,7 +45,7 @@ public class Controller {
     private Set<Recipe> recipeDisplay = new HashSet<Recipe>(); 
     private Stack<String> frigo  = new Stack<String>();
     private VBox liste = new VBox();
-    public int nbCard = 2;
+    public int nbCard=3;
 
     // Etat
     private boolean doIngredSearch = false;
