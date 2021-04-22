@@ -108,7 +108,12 @@ public class Controller {
         rectPane.getChildren().clear();
 
         Rectangle rect = new Rectangle(0,0, 200, 250);
-        ImagePattern image = new ImagePattern(new Image(recipe.getImage()));
+
+        Image img = new Image(recipe.getImage()); //Si l'acces a internet est ok --> affiche l'image
+        if(img.isError()){ //Si pas d'internet --> image d'erreur
+            img = new Image("images/noInternet.bmp");
+        }
+        ImagePattern image = new ImagePattern(img);
         rect.setArcHeight(90.0);
         rect.setArcWidth(90.0);
 
@@ -344,7 +349,13 @@ public class Controller {
                 card.setAlignment(Pos.CENTER); // Centre les éléments
 
                 Rectangle rect = new Rectangle(0, 0, 200, 200);
-                ImagePattern image = new ImagePattern(new Image(recipe.getImage()));
+
+
+                Image img = new Image(recipe.getImage()); //Si l'acces a internet est ok --> affiche l'image
+                if(img.isError()){ //Si pas d'internet --> image d'erreur
+                    img = new Image("images/noInternet.bmp");
+                }
+                ImagePattern image = new ImagePattern(img);
                 rect.setArcHeight(90.0);
                 rect.setArcWidth(90.0);
                 rect.setFill(image);
