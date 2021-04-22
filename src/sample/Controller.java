@@ -60,6 +60,148 @@ public class Controller {
         this.model = model;
     }
 
+    public void addRecipe(){
+        ArrayList<String> ingredients = new ArrayList<String>();
+        final String[] lien = {""}; //Va comprendre, java me saoule pour que ca soit une array String x)
+        boolean verification = false;
+
+        //Initialisation mainPage
+        VBox addRecipePage = (VBox) recipeContainer.getContent();
+        addRecipePage.getChildren().clear();
+        FileChooser fc = new FileChooser();
+
+        //Juste une entete de titre pour le style de page
+        Label entete = new Label(" Ajout d'une recette :");
+        entete.getStyleClass().add("h1");
+
+        //Titre de la recette
+        TextField title = new TextField();
+        title.setPromptText("Titre de la recette ... ");
+        title.setMaxWidth(300);
+
+        //Menu déroulant des categories
+        HBox getCat = new HBox();
+        getCat.getChildren().add(new Label("Sélection de la catégorie : "));
+        ComboBox<String> menu = new ComboBox<String>();
+        for(String cat: model.getCategories()){
+            menu.getItems().add(cat);
+        }
+        getCat.getChildren().add(menu); // Ajout du menu dans une liste horizontal
+
+
+
+        // Récupération de l'image (Récupère le lien vers l'image depuis le pc)
+        HBox fichier = new HBox();
+        fichier.getChildren().add(new Label("Ajouter une image : "));
+        Button btnFile = new Button("Parcourir... ");
+        fichier.getChildren().add(btnFile);
+
+        btnFile.setOnMousePressed(mouseEvent -> {
+            fc.setTitle("Open image ...");
+            File file = fc.showOpenDialog(Window.getWindows().get(0));
+            lien[0] = file.getAbsolutePath().toString();
+        });
+
+        // Ajout des ingrédient un par un
+        HBox listeIng = new HBox();
+        Button ingPlus = new Button("Ajouter l'ingrédient");
+        TextField ing = new TextField();
+        ing.setPromptText("Donner un ingrédients ... ");
+        listeIng.getChildren().add(ing);
+        listeIng.getChildren().add(ingPlus);
+
+
+        // Affichage des ingrédients ajoutés
+        VBox vb = new VBox();
+
+        ingPlus.setOnMousePressed(mouseEvent -> {
+
+            HBox hb = new HBox();
+            Button annule = new Button("x");
+            ingredients.add(ing.getCharacters().toString().toLowerCase());
+            hb.getChildren().add(new Label(ing.getCharacters().toString().toLowerCase()));
+            hb.getChildren().add(annule);
+
+            //Evenement pour supprimer l'élément
+            annule.setOnMousePressed(mouseEvent1 -> {
+                vb.getChildren().remove(hb);
+                Label toRemove = (Label) hb.getChildren().get(0);
+                ingredients.remove(toRemove.getText());
+
+            });
+
+            vb.getChildren().add(hb);
+            ing.clear();
+        });
+
+
+        TextArea steps = new TextArea();
+        steps.setPromptText("Décrivez chaque étapes de votre recette\n N'hésitez pas à sauter des lignes quand vous finissez une étape.");
+
+        Button confirmer = new Button("Confirmer !");
+        confirmer.setOnMousePressed(mouseEvent -> {
+           /*System.out.println(
+                   "Titre :"+title.getText()+"\n"
+                    +"Catégorie : "+menu.getValue()+"\n"
+                    +"Image : "+lien[0] +"\n"
+                    +"Ingrédients :"+ingredients+"\n"
+                    +"Etapes : "+steps.getText());*/
+
+            //Faire les verification (FLEMME POUR L'INSTANT)
+
+            if(verification) {
+                Recipe newRecipe = new Recipe(
+                        title.getText(),
+                        menu.getValue(),
+                        ingredients.toArray(new String[ingredients.size()]),
+                        ingredients.toArray(new String[ingredients.size()]),
+                        lien[0], steps.getText());
+
+                //Ajouter la nouvelle recette à la base de données
+                model.recipeList.add(newRecipe);
+
+            } else {
+                //Montrer qu'un champ n'est pas remplie a tel ou tel endroit
+            }
+        });
+
+
+        // Ajout des éléments à la page
+        addRecipePage.getChildren().add(entete);
+        addRecipePage.getChildren().add(title);
+        addRecipePage.getChildren().add(getCat);
+        addRecipePage.getChildren().add(fichier);
+        addRecipePage.getChildren().add(listeIng);
+        addRecipePage.getChildren().add(vb);
+        addRecipePage.getChildren().add(steps);
+        addRecipePage.getChildren().add(confirmer);
+    }
+
+    public void addRecipe(String name){
+        /// A refaire par css
+        Label lbl = new Label(name);
+        lbl.getStyleClass().add("listRecipe");
+        this.vb.getChildren().add(lbl);
+    }
+
+    public void addIngredients(String ing){
+        /// A refaire par css
+
+        Label lb = new Label(ing);
+        lb.setFont(new Font("Arial",15));
+
+        this.vbI.getChildren().add(lb);
+    }
+
+    public void addCategorie(String cat){
+        /// A refaire par css
+
+        Label lb = new Label(cat);
+        lb.setFont(new Font("Arial",15));
+
+        this.vbC.getChildren().add(lb);
+    }
+
     public void newCategories(String catName){
         Label lbl = new Label(catName);
         lbl.setFont(new Font("Arial", 20)); // A modifier avec css
@@ -205,31 +347,6 @@ public class Controller {
         }
     }
 
-    public void addRecipe(String name){
-        /// A refaire par css
-        Label lbl = new Label(name);
-        lbl.getStyleClass().add("listRecipe");
-        this.vb.getChildren().add(lbl);
-    }
-
-    public void addIngredients(String ing){
-        /// A refaire par css
-
-        Label lb = new Label(ing);
-        lb.setFont(new Font("Arial",15));
-
-        this.vbI.getChildren().add(lb);
-    }
-
-    public void addCategorie(String cat){
-        /// A refaire par css
-
-        Label lb = new Label(cat);
-        lb.setFont(new Font("Arial",15));
-
-        this.vbC.getChildren().add(lb);
-    }
-    
     @FXML
     public void categorieBtn() { 
         for (String name : this.model.getCategories()) {
@@ -263,7 +380,7 @@ public class Controller {
                 this.addIngredients(ing);
             }
         }   
-    }
+    } //Est ce que ca sert réellement ?? Il a pas l'air utilisé et depuis lgtps
 
     @FXML
     public void findRecipe() {
@@ -417,123 +534,6 @@ public class Controller {
             main.getChildren().add(line); // Ajout des line à la page d'accueil
         }
 
-    }
-
-    public void addRecipe(){
-        ArrayList<String> ingredients = new ArrayList<String>();
-        final String[] lien = {""}; //Va comprendre, java me saoule pour que ca soit une array String x)
-        boolean verification = false;
-
-        //Initialisation mainPage
-        VBox addRecipePage = (VBox) recipeContainer.getContent();
-        addRecipePage.getChildren().clear();
-        FileChooser fc = new FileChooser();
-
-        //Juste une entete de titre pour le style de page
-        Label entete = new Label(" Ajout d'une recette :");
-        entete.getStyleClass().add("h1");
-
-        //Titre de la recette
-        TextField title = new TextField();
-        title.setPromptText("Titre de la recette ... ");
-        title.setMaxWidth(300);
-
-        //Menu déroulant des categories
-        HBox getCat = new HBox();
-        getCat.getChildren().add(new Label("Sélection de la catégorie : "));
-        ComboBox<String> menu = new ComboBox<String>();
-        for(String cat: model.getCategories()){
-            menu.getItems().add(cat);
-        }
-        getCat.getChildren().add(menu); // Ajout du menu dans une liste horizontal
-
-
-
-        // Récupération de l'image (Récupère le lien vers l'image depuis le pc)
-        HBox fichier = new HBox();
-        fichier.getChildren().add(new Label("Ajouter une image : "));
-        Button btnFile = new Button("Parcourir... ");
-        fichier.getChildren().add(btnFile);
-
-        btnFile.setOnMousePressed(mouseEvent -> {
-            fc.setTitle("Open image ...");
-            File file = fc.showOpenDialog(Window.getWindows().get(0));
-            lien[0] = file.getAbsolutePath().toString();
-        });
-
-        // Ajout des ingrédient un par un
-        HBox listeIng = new HBox();
-        Button ingPlus = new Button("Ajouter l'ingrédient");
-        TextField ing = new TextField();
-        ing.setPromptText("Donner un ingrédients ... ");
-        listeIng.getChildren().add(ing);
-        listeIng.getChildren().add(ingPlus);
-
-
-        // Affichage des ingrédients ajoutés
-        VBox vb = new VBox();
-
-        ingPlus.setOnMousePressed(mouseEvent -> {
-
-            HBox hb = new HBox();
-            Button annule = new Button("x");
-            ingredients.add(ing.getCharacters().toString().toLowerCase());
-            hb.getChildren().add(new Label(ing.getCharacters().toString().toLowerCase()));
-            hb.getChildren().add(annule);
-
-            //Evenement pour supprimer l'élément
-            annule.setOnMousePressed(mouseEvent1 -> {
-                vb.getChildren().remove(hb);
-                Label toRemove = (Label) hb.getChildren().get(0);
-                ingredients.remove(toRemove.getText());
-
-            });
-
-            vb.getChildren().add(hb);
-            ing.clear();
-        });
-
-
-        TextArea steps = new TextArea();
-        steps.setPromptText("Décrivez chaque étapes de votre recette\n N'hésitez pas à sauter des lignes quand vous finissez une étape.");
-
-        Button confirmer = new Button("Confirmer !");
-        confirmer.setOnMousePressed(mouseEvent -> {
-           /*System.out.println(
-                   "Titre :"+title.getText()+"\n"
-                    +"Catégorie : "+menu.getValue()+"\n"
-                    +"Image : "+lien[0] +"\n"
-                    +"Ingrédients :"+ingredients+"\n"
-                    +"Etapes : "+steps.getText());*/
-
-            //Faire les verification (FLEMME POUR L'INSTANT)
-
-            if(verification) {
-                Recipe newRecipe = new Recipe(
-                        title.getText(),
-                        menu.getValue(),
-                        ingredients.toArray(new String[ingredients.size()]),
-                        ingredients.toArray(new String[ingredients.size()]),
-                        lien[0], steps.getText());
-
-                //Ajouter la nouvelle recette à la base de données
-                model.recipeList.add(newRecipe);
-
-            } else {
-                //Montrer qu'un champ n'est pas remplie a tel ou tel endroit
-            }
-        });
-
-
-        // Ajout des éléments à la page
-        addRecipePage.getChildren().add(entete);
-        addRecipePage.getChildren().add(title);
-        addRecipePage.getChildren().add(getCat);
-        addRecipePage.getChildren().add(fichier);
-        addRecipePage.getChildren().add(listeIng);
-        addRecipePage.getChildren().add(vb);
-        addRecipePage.getChildren().add(steps);
-        addRecipePage.getChildren().add(confirmer);
     }
 
 }
