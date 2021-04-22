@@ -108,7 +108,7 @@ public class Model {
     public Set<String> getCategories() {
         return categories;
     }
-    
+
     public Set<String> getIngredByCateg(Set<String> categories) {
         Set<String> ingreds = new HashSet<String>();
         

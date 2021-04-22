@@ -107,6 +107,25 @@ public class Controller {
         rectPane.getStyleClass().add("recipePage");
         rectPane.getChildren().clear();
 
+        Button btnFav = new Button();
+        //Mettre le boouton favoris dans l'angle à droite
+
+        btnFav.setOnMousePressed(mouseEvent -> {
+            if(recipe.isFavorite()){
+                recipe.setFavorite(false);
+                btnFav.setStyle("-fx-background-position: center;" +
+                        "  -fx-background-image: url('images/unstar.png'');" +
+                        "  -fx-background-repeat: no-repeat;" +
+                        "  -fx-background-size: cover, auto;");
+            } else {
+                recipe.setFavorite(true);
+                btnFav.setStyle("-fx-background-position: center;" +
+                        "  -fx-background-image: url('images/star.png');" +
+                        "  -fx-background-repeat: no-repeat;" +
+                        "  -fx-background-size: cover, auto;");
+            }
+        });
+
         Rectangle rect = new Rectangle(0,0, 200, 250);
 
         Image img = new Image(recipe.getImage()); //Si l'acces a internet est ok --> affiche l'image
@@ -147,6 +166,7 @@ public class Controller {
         Label titreEtape = new Label("Les étapes");
         titreEtape.getStyleClass().add("h1");
 
+        rectPane.getChildren().add(btnFav);
         rectPane.getChildren().add(titreRecette);
         rectPane.getChildren().add(rect);
         rectPane.getChildren().add(titreIngredient);
@@ -322,8 +342,8 @@ public class Controller {
 
     }
 
-
     public void mainPage(ArrayList<Recipe> recipeList){
+        System.out.println(model.getCategories());
         VBox main = (VBox) recipeContainer.getContent();
         main.getChildren().clear();
         int indice=0;
@@ -483,4 +503,7 @@ public class Controller {
         addRecipePage.getChildren().add(steps);
         addRecipePage.getChildren().add(confirmer);
     }
+
+    //Tibo garcia
+
 }

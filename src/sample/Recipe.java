@@ -11,6 +11,7 @@ public class Recipe implements Comparable<Recipe>, Serializable{
     private String[] requirements;
     private String image;  
     private String steps;
+    private String favorite;
     private int likes;
 
     public Recipe(String name, String category, String[] ingredients, String[] requirements, String image, String steps) {
@@ -20,9 +21,26 @@ public class Recipe implements Comparable<Recipe>, Serializable{
         this.requirements = requirements;
         this.image = image;
         this.steps = steps;
+        this.favorite = "unfavorite";
         this.likes = (int)Math.random()*1000;
+
     }
 
+    public boolean isFavorite(){
+        return this.favorite.equals("favorite");
+    }
+
+    public void setFavorite(boolean b){
+        if(b){
+            this.favorite = "favorite";
+        } else {
+            this.favorite = "unfavorite";
+        }
+    }
+
+    public String getFavorite(){
+        return this.favorite;
+    }
     public String getCategory() {
         return category;
     }
