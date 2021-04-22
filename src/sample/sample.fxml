@@ -42,11 +42,20 @@
       <Pane fx:id="findByIngredients" focusTraversable="true" layoutY="81.0" prefHeight="122.0" prefWidth="1280.0" visible="false">
          <children>
             <HBox fx:id="tags" prefHeight="25.0" prefWidth="1280.0" style="-fx-background-color: lightgreen;" />
-            <ScrollPane fx:id="ingredientsPossible" hbarPolicy="NEVER" layoutY="25.0" prefHeight="97.0" prefWidth="1280.0">
-               <content>
-                  <VBox fx:id="vbI" onMousePressed="#stackIngredients" prefHeight="98.0" prefWidth="1266.0" />
-               </content>
-            </ScrollPane>
+            <HBox layoutY="24.0" prefHeight="100.0" prefWidth="1280.0">
+               <children>
+                  <ScrollPane fx:id="categoriesPossible" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="640.0">
+                     <content>
+                        <VBox fx:id="vbC" onMousePressed="#stackTags" prefHeight="100.0" prefWidth="640.0" />
+                     </content>
+                  </ScrollPane>
+                  <ScrollPane fx:id="ingredientsPossible" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="640.0">
+                     <content>
+                        <VBox fx:id="vbI" onMousePressed="#stackTags" prefHeight="98.0" prefWidth="1266.0" />
+                     </content>
+                  </ScrollPane>
+               </children>
+            </HBox>
          </children>
       </Pane>
    </children>

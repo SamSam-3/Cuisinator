@@ -24,11 +24,13 @@ public class Controller {
     @FXML public Pane accueil;
     @FXML public Pane toolbar;
     @FXML public Pane findByIngredients;
-    @FXML public VBox vb;
-    @FXML public VBox vbI;
+    @FXML public VBox vb; //VBox recettes
+    @FXML public VBox vbI; //VBox ingrédients
+    @FXML public VBox vbC; //VBox catégories
     @FXML public VBox diffCat; // Affichage des éléments "catégorie" (vertical et + propre)
     @FXML public HBox tags;
     @FXML public ScrollPane ingredientsPossible;
+    @FXML public ScrollPane categoriesPossible;
     @FXML public ScrollPane layerCourse;
     @FXML public ScrollPane recipeContainer;
     @FXML public ScrollPane recipePossible; // Affichage des recettes contenant le terme recherché
@@ -158,20 +160,19 @@ public class Controller {
             this.recipePossible.setVisible(true);
             this.recipePossible.setDisable(false);
         } else {
-            this.ingredientsPossible.setContent(this.vbI);
+            this.doIngredSearch = true;
             this.vbI.toFront();
-            this.ingredientsPossible.toFront();
+            this.ingredientsPossible.setContent(this.vbI);
             this.findByIngredients.setVisible(true);
-            this.findByIngredients.setDisable(false);
         }
     }
+
     private void hideDropdown(int etat) {
         if(etat == 0) {
             this.recipePossible.setVisible(false);
-            this.recipePossible.setDisable(true);
         } else {
+            this.doIngredSearch = false;
             this.findByIngredients.setVisible(false);
-            this.findByIngredients.setDisable(true);
         }
     }
 
@@ -187,14 +188,17 @@ public class Controller {
 
         Label lb = new Label(ing);
         lb.setFont(new Font("Arial",15));
-        Button cancel = new Button("X");
-        cancel.setPrefSize(5,5);
-        HBox hb = new HBox();
-        hb.getChildren().add(lb);
-        hb.getChildren().add(cancel);
-        hb.setAlignment(Pos.CENTER);
-        hb.getStyleClass().add("listIngredients");
-        this.vbI.getChildren().add(hb);
+
+        this.vbI.getChildren().add(lb);
+    }
+
+    public void addCategorie(String cat){
+        /// A refaire par css
+
+        Label lb = new Label(cat);
+        lb.setFont(new Font("Arial",15));
+
+        this.vbC.getChildren().add(lb);
     }
     
     @FXML
@@ -239,23 +243,26 @@ public class Controller {
 
         this.vb.getChildren().clear();
         this.vbI.getChildren().clear();
+        this.vbC.getChildren().clear();
 
         if (searchRec.length() > 0) {
             this.recipeDisplay = this.model.search(searchRec, null, null); // TODO: categsFilter, ingredsFilter
             for (Recipe rcp : this.recipeDisplay) {
                 this.addRecipe(rcp.getName());
-            } 
-            if (this.doIngredSearch) {
-                for (String ing : this.model.searchIngredients(searchIng)) {
-                    this.addIngredients(ing);
-                }
-            }   
+            }
             this.showDropdown(0);
         } else {
             this.hideDropdown(0);
         }
 
         if(searchIng.length() > 0) {
+            for (String ing : this.model.searchIngredients(searchIng)) {
+                this.addIngredients(ing);
+            }
+            for(String cat : this.model.getCategories()){
+                this.addCategorie(cat);
+            }
+
             this.showDropdown(1);
         } else {
             this.hideDropdown(1);
@@ -273,9 +280,29 @@ public class Controller {
     }
 
     @FXML
-    public void stackIngredients(MouseEvent mouseEvent){
+    public void stackTags(MouseEvent mouseEvent){
         Text element = (Text) mouseEvent.getTarget();
         frigo.add(element.getText());
+
+        //Permet d'aligner les éléments proprement
+        HBox tag = new HBox();
+        Label lb = new Label(element.getText());
+        lb.setFont(new Font("Arial",12));
+        Button annuler = new Button("x");
+        annuler.getStyleClass().add("btnAnnuler");
+
+        //Fonction pour annuler le tag
+        annuler.setOnMousePressed(mouseEvent1 -> {
+            //A FAIRE
+        });
+
+
+        //Ajout du label et bouton comme nouveau tag
+        tag.getChildren().add(lb);
+        tag.getChildren().add(annuler);
+        tag.getStyleClass().add("tag");
+
+        this.tags.getChildren().add(tag);
 
         System.out.println("Elements dans le frigo :" + frigo);
         System.out.println("Recette correspondantes : ");

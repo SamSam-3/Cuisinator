@@ -80,7 +80,11 @@ public class Main extends Application {
 
             //tags / etc..
             ctrl.tags.setPrefWidth(newValW.intValue());
-            ctrl.ingredientsPossible.setPrefWidth(newValW.intValue());
+            ctrl.categoriesPossible.setPrefWidth(newValW.intValue()/2);
+            ctrl.categoriesPossible.getContent().autosize();
+            ctrl.ingredientsPossible.setPrefWidth(newValW.intValue()/2);
+            ctrl.ingredientsPossible.getContent().autosize();
+            ctrl.ingredientsPossible.setLayoutX(ctrl.categoriesPossible.getWidth());
 
             //layer course et cat
             if(ctrl.etatCA == 0){

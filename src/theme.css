@@ -67,9 +67,21 @@
     -fx-font-weight: bold;
     -fx-font-size: 25px;
     -fx-font-family: "Arial";
-    -fx-underline: true;
     position: absolute;
 
-
     /* Mettre tout les titres en gras et trouver une taille convenable */
+}
+
+.tag{
+    -fx-background-color: lightgrey; /* A modifier pour rendre jolie */
+    -fx-background-radius: 15;
+    -fx-font-size: 14px;
+    -fx-font-family: "Arial";
+
+}
+
+.btnAnnuler {   /* A mofidier pour rendre jolie */
+    -fx-background-color: black;
+    -fx-background-radius: 15px;
+    -fx-text-fill: white;
 }
