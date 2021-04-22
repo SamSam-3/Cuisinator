@@ -332,16 +332,16 @@ public class Controller {
         /// Plus tard on mettra les 20 premiers meileurs recettes (par likes) boucle for pour 20
         /// En scrollant s'il arrive a la fin des 20 premiers, on aggrandi la liste et reset mainPage()
         /// Prévoir pour le nombre de carte par la taille adaptative de l'app
-
-
-        for(int i=0;i<Math.round(6/nbCard);i++){
+        int maxi=6;
+        int i=0;
+        while(i<(maxi/nbCard)+1){
 
             HBox line = new HBox(); // Nouvelle ligne de cartes
             line.getStyleClass().add("line"); // Faire css margin de chaque coté
 
-            for(int j=0;j<nbCard;j++) {
+            int j=0;
+            while(j<nbCard && indice<maxi) {
                 Recipe recipe = recipeList.get(indice);
-                indice++;
 
                 VBox card = new VBox(); // Nouvelle carte
                 card.getStyleClass().add("card"); // Faire css arrondi / etc...
@@ -368,8 +368,10 @@ public class Controller {
                 card.getChildren().add(titre); //ajout element a la carte
 
                 line.getChildren().add(card); // Ajout des cartes a la ligne
+                j++;
+                indice++;
             }
-
+            i++;
             main.getChildren().add(line); // Ajout des line à la page d'accueil
         }
 
