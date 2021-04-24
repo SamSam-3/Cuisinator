@@ -3,8 +3,10 @@ package sample;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -13,10 +15,10 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
-import javafx.stage.Window;
+import javafx.stage.*;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.util.*;
 
 public class Controller {
@@ -46,6 +48,8 @@ public class Controller {
     private Stack<String> frigo  = new Stack<String>();
     ArrayList<VBox> listCard = new ArrayList<VBox>();
     private VBox liste = new VBox();
+    private Button btnFile = new Button();
+    private TextField ing = new TextField();
     private int etatCard=0;
     public int nbCard=3;
 
@@ -63,7 +67,6 @@ public class Controller {
     public void addRecipe(){
         ArrayList<String> ingredients = new ArrayList<String>();
         final String[] lien = {""}; //Va comprendre, java me saoule pour que ca soit une array String x)
-        boolean verification = false;
 
         //Initialisation mainPage
         VBox addRecipePage = (VBox) recipeContainer.getContent();
@@ -93,19 +96,34 @@ public class Controller {
         // Récupération de l'image (Récupère le lien vers l'image depuis le pc)
         HBox fichier = new HBox();
         fichier.getChildren().add(new Label("Ajouter une image : "));
-        Button btnFile = new Button("Parcourir... ");
+        btnFile = new Button("Parcourir... ");
         fichier.getChildren().add(btnFile);
 
         btnFile.setOnMousePressed(mouseEvent -> {
             fc.setTitle("Open image ...");
             File file = fc.showOpenDialog(Window.getWindows().get(0));
-            lien[0] = file.getAbsolutePath().toString();
+            lien[0] = file.getAbsolutePath();
+
+            Rectangle rect = new Rectangle(0,0, 120, 150);
+            ImagePattern image = null;
+            try {
+                image = new ImagePattern(new Image(file.toURI().toURL().toExternalForm()));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            rect.setArcHeight(90.0);
+            rect.setArcWidth(90.0);
+
+            rect.setFill(image);
+            rect.getStyleClass().add("img");
+
+            fichier.getChildren().add(rect);
         });
 
         // Ajout des ingrédient un par un
         HBox listeIng = new HBox();
         Button ingPlus = new Button("Ajouter l'ingrédient");
-        TextField ing = new TextField();
+        ing = new TextField();
         ing.setPromptText("Donner un ingrédients ... ");
         listeIng.getChildren().add(ing);
         listeIng.getChildren().add(ingPlus);
@@ -113,25 +131,26 @@ public class Controller {
 
         // Affichage des ingrédients ajoutés
         VBox vb = new VBox();
-
         ingPlus.setOnMousePressed(mouseEvent -> {
+            if(ing.getText().length()>0) {
+                HBox hb = new HBox();
+                Button annule = new Button("x");
+                annule.getStyleClass().add("btnAnnuler");
+                ingredients.add(ing.getCharacters().toString().toLowerCase());
+                hb.getChildren().add(new Label(ing.getCharacters().toString().toLowerCase()));
+                hb.getChildren().add(annule);
 
-            HBox hb = new HBox();
-            Button annule = new Button("x");
-            ingredients.add(ing.getCharacters().toString().toLowerCase());
-            hb.getChildren().add(new Label(ing.getCharacters().toString().toLowerCase()));
-            hb.getChildren().add(annule);
+                //Evenement pour supprimer l'élément
+                annule.setOnMousePressed(mouseEvent1 -> {
+                    vb.getChildren().remove(hb);
+                    Label toRemove = (Label) hb.getChildren().get(0);
+                    ingredients.remove(toRemove.getText());
 
-            //Evenement pour supprimer l'élément
-            annule.setOnMousePressed(mouseEvent1 -> {
-                vb.getChildren().remove(hb);
-                Label toRemove = (Label) hb.getChildren().get(0);
-                ingredients.remove(toRemove.getText());
+                });
 
-            });
-
-            vb.getChildren().add(hb);
-            ing.clear();
+                vb.getChildren().add(hb);
+                ing.clear();
+            }
         });
 
 
@@ -140,16 +159,9 @@ public class Controller {
 
         Button confirmer = new Button("Confirmer !");
         confirmer.setOnMousePressed(mouseEvent -> {
-           /*System.out.println(
-                   "Titre :"+title.getText()+"\n"
-                    +"Catégorie : "+menu.getValue()+"\n"
-                    +"Image : "+lien[0] +"\n"
-                    +"Ingrédients :"+ingredients+"\n"
-                    +"Etapes : "+steps.getText());*/
 
-            //Faire les verification (FLEMME POUR L'INSTANT)
-
-            if(verification) {
+            //J'ai trouvé que ca comme verif pour l'instant
+            if(this.condition(title,menu,lien[0],ingredients,steps)) {
                 Recipe newRecipe = new Recipe(
                         title.getText(),
                         menu.getValue(),
@@ -162,6 +174,22 @@ public class Controller {
 
             } else {
                 //Montrer qu'un champ n'est pas remplie a tel ou tel endroit
+                Stage popup = new Stage(); //J'ai fais une PopUp, j'apprend des trucs c'est cool x)
+                popup.initModality(Modality.APPLICATION_MODAL);
+                popup.setTitle("This is a pop up window");
+
+                Label error = new Label("Champs requis manquants.");
+                Button ok = new Button("Ok");
+                ok.setOnAction(e -> popup.close());
+
+                HBox layout = new HBox(5);
+
+                layout.getChildren().addAll(error,ok);
+                layout.setAlignment(Pos.CENTER);
+
+                Scene scene = new Scene(layout, 300, 100);
+                popup.setScene(scene);
+                popup.showAndWait();
             }
         });
 
@@ -175,6 +203,49 @@ public class Controller {
         addRecipePage.getChildren().add(vb);
         addRecipePage.getChildren().add(steps);
         addRecipePage.getChildren().add(confirmer);
+    }
+
+    public boolean condition(TextField title,ComboBox<String> menu, String lien, ArrayList<String> ingredients, TextArea etapes){
+        boolean verif = true;
+        String errStyle = "-fx-border-color: red;";
+        String goodStyle = "-fx-border-color: black;";
+
+        if(title.getText().length()==0){
+            title.setStyle(errStyle);
+            verif = false;
+        } else {
+            title.setStyle(goodStyle);
+        }
+
+        if(menu.getValue() ==null || menu.getValue().length()==0){
+            menu.setStyle(errStyle);
+            verif = false;
+        } else {
+            menu.setStyle(goodStyle);
+        }
+
+        if(lien.length() == 0){
+            btnFile.setStyle(errStyle);
+            verif = false;
+        } else {
+            btnFile.setStyle(goodStyle);
+        }
+
+        if(ingredients.size()==0){
+            ing.setStyle(errStyle);
+            verif = false;
+        } else {
+            ing.setStyle(goodStyle);
+        }
+
+        if(etapes.getText().length()==0){
+            etapes.setStyle(errStyle);
+            verif = false;
+        } else {
+            etapes.setStyle(goodStyle);
+        }
+
+        return verif;
     }
 
     public void addRecipe(String name){
