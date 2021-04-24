@@ -600,6 +600,8 @@ public class Controller {
     public void mainPage(ArrayList<Recipe> recipeList) throws MalformedURLException {
         VBox main = (VBox) recipeContainer.getContent();
         main.getChildren().clear();
+        main.setSpacing(50);
+        main.setPadding(new Insets(30,0,0,0));
 
         if(etatCard==0){
             initCard(recipeList);
@@ -615,11 +617,14 @@ public class Controller {
         while(i<(recipeList.size()/nbCard)+1){
 
             HBox line = new HBox(); // Nouvelle ligne de cartes
+            line.setSpacing(100);
             line.getStyleClass().add("line"); // Faire css margin de chaque coté
 
             int j=0;
             while(j<nbCard && indice<recipeList.size()) {
-                line.getChildren().add(listCard.get(indice)); // Ajout des cartes a la ligne
+                VBox card = listCard.get(indice);
+                line.setAlignment(Pos.CENTER);
+                line.getChildren().add(card); // Ajout des cartes a la ligne
                 j++;
                 indice++;
             }
