@@ -105,6 +105,12 @@ public class Main extends Application {
             AnchorPane courseContent = (AnchorPane) ctrl.layerCourse.getContent();
             courseContent.setPrefWidth(newValW.intValue()/3); //Changer taille du texte en fonction de la taille du layer
 
+            //Met à jour la barre de recherche des tags
+            ctrl.findByIngredients.setPrefWidth(newValW.intValue());
+            ctrl.categoriesPossible.setMinWidth(newValW.intValue()/2);
+            ctrl.ingredientsPossible.setMinWidth(newValW.intValue()/2);
+            ctrl.tags.setPrefWidth(newValW.intValue());
+
         });
 
         primaryStage.heightProperty().addListener(((obs, oldValH, newValH) -> {

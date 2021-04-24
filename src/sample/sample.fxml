@@ -29,7 +29,7 @@
           <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" />
          </content>
       </ScrollPane>
-      <ScrollPane fx:id="recipePossible" cache="true" hbarPolicy="NEVER" layoutX="152.0" layoutY="57.0" maxHeight="300.0" maxWidth="468.0" onKeyPressed="#findRecipe" prefHeight="129.0" prefWidth="380.0" visible="false">
+      <ScrollPane fx:id="recipePossible" cache="true" hbarPolicy="NEVER" layoutX="180.0" layoutY="57.0" maxHeight="300.0" maxWidth="468.0" onKeyPressed="#findRecipe" prefHeight="129.0" prefWidth="380.0" visible="false">
          <content>
             <VBox fx:id="vb" onMouseClicked="#watchRecipe" prefHeight="130.0" prefWidth="371.0" />
          </content>
@@ -42,16 +42,16 @@
       <Pane fx:id="findByIngredients" focusTraversable="true" layoutY="81.0" prefHeight="122.0" prefWidth="1280.0" visible="false">
          <children>
             <HBox fx:id="tags" prefHeight="25.0" prefWidth="1280.0" style="-fx-background-color: lightgreen;" />
-            <HBox layoutY="24.0" prefHeight="100.0" prefWidth="1280.0">
+            <HBox layoutY="24.0" maxWidth="-Infinity" prefHeight="100.0" prefWidth="1280.0">
                <children>
-                  <ScrollPane fx:id="categoriesPossible" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="640.0">
+                  <ScrollPane fx:id="categoriesPossible" hbarPolicy="NEVER" prefHeight="200.0">
                      <content>
-                        <VBox fx:id="vbC" onMousePressed="#stackTags" prefHeight="100.0" prefWidth="640.0" />
+                        <VBox fx:id="vbC" maxWidth="-Infinity" onMousePressed="#stackTags" prefHeight="100.0" prefWidth="640.0" />
                      </content>
                   </ScrollPane>
                   <ScrollPane fx:id="ingredientsPossible" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="640.0">
                      <content>
-                        <VBox fx:id="vbI" onMousePressed="#stackTags" prefHeight="98.0" prefWidth="1266.0" />
+                        <VBox fx:id="vbI" maxWidth="-Infinity" onMousePressed="#stackTags" prefHeight="100.0" prefWidth="640.0" />
                      </content>
                   </ScrollPane>
                </children>
