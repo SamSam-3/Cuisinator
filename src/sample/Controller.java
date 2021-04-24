@@ -282,6 +282,7 @@ public class Controller {
 
         Label lb = new Label(ing);
         lb.setFont(new Font("Arial",15));
+        lb.getStyleClass().add("listIngredients");
 
         this.vbI.getChildren().add(lb);
     }
@@ -291,6 +292,7 @@ public class Controller {
 
         Label lb = new Label(cat);
         lb.setFont(new Font("Arial",15));
+        lb.getStyleClass().add("listIngredients");
 
         this.vbC.getChildren().add(lb);
     }

@@ -25,13 +25,13 @@
 }
 
 .listRecipe:hover{
-  -fx-color: red;
-  -fx-background-color: grey;
+    -fx-text-fill: white;
+    -fx-background-color: grey;
 }
 
 .listIngredients:hover{
-  -fx-color: red;
-  -fx-background-color: grey;
+    -fx-text-fill: white;
+    -fx-background-color: grey;
 }
 
 .recipePage {
