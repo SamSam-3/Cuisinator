@@ -53,6 +53,7 @@ public class Controller {
     private TextField ing = new TextField();
     private int etatCard=0;
     public int nbCard=3;
+    public String actuPage = "";
 
     // Etat
     private boolean doIngredSearch = false;
@@ -65,6 +66,7 @@ public class Controller {
     }
 
     public void addRecipe(){
+        actuPage = "addRecipe";
         ArrayList<String> ingredients = new ArrayList<String>();
         final String[] lien = {""}; //Va comprendre, java me saoule pour que ca soit une array String x)
 
@@ -325,6 +327,7 @@ public class Controller {
     }
 
     public void showRecipe(Recipe recipe) throws MalformedURLException {
+        actuPage = "showRecipe";
         this.recipePossible.setVisible(false);
         this.recipeContainer.setVisible(true);
         this.findByIngredients.setVisible(false);
@@ -598,6 +601,7 @@ public class Controller {
     }
 
     public void mainPage(ArrayList<Recipe> recipeList) throws MalformedURLException {
+        actuPage = "mainPage";
         VBox main = (VBox) recipeContainer.getContent();
         main.getChildren().clear();
         main.setSpacing(50);
