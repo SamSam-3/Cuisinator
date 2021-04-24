@@ -172,7 +172,7 @@ public class Controller {
                 //Ajouter la nouvelle recette à la base de données
                 model.recipeList.add(newRecipe);
                 try {
-                    etatCard=0;
+                    this.etatCard=0;
                     this.mainPage(model.recipeList);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -220,6 +220,7 @@ public class Controller {
         addRecipePage.getChildren().add(vb);
         addRecipePage.getChildren().add(steps);
         addRecipePage.getChildren().add(confirmer);
+
     }
 
     //Possiblement déplacer dans le modele
@@ -582,10 +583,7 @@ public class Controller {
         /// En scrollant s'il arrive a la fin des 20 premiers, on aggrandi la liste et reset mainPage()
         /// Prévoir pour le nombre de carte par la taille adaptative de l'app
 
-
-        for(int i=0;i<recipeList.size();i++) {
-            Recipe recipe = recipeList.get(i);
-
+        for (Recipe recipe : recipeList) {
             VBox card = new VBox(); // Nouvelle carte
             card.getStyleClass().add("card"); // Faire css arrondi / etc...
 
@@ -594,8 +592,8 @@ public class Controller {
             Rectangle rect = new Rectangle(0, 0, 200, 200);
 
             Image img = new Image(new File(recipe.getImage()).toURI().toURL().toString()); //Si image sur le pc
-            if(img.isError()) {
-                if(img.getException().getClass().equals(FileNotFoundException.class)){
+            if (img.isError()) {
+                if (img.getException().getClass().equals(FileNotFoundException.class)) {
                     img = new Image(recipe.getImage()); //Si internet --> image depuis le web
                 } else {
                     img = new Image("images/noInternet.bmp"); //Si pas d'internet --> image d'erreur
@@ -613,7 +611,7 @@ public class Controller {
             card.getChildren().add(rect); //ajout element a la carte
             card.getChildren().add(titre); //ajout element a la carte
 
-                // show la recette cliqué au menu
+            // show la recette cliqué au menu
             card.setOnMousePressed(mouseEvent -> {
                 try {
                     showRecipe(recipe);
@@ -621,22 +619,24 @@ public class Controller {
                     e.printStackTrace();
                 }
             });
-
             listCard.add(card);
         }
     }
 
     public void mainPage(ArrayList<Recipe> recipeList) throws MalformedURLException {
         actuPage = "mainPage";
+        System.out.println(this.model.recipeList+" | "+recipeList);
+        if(etatCard==0){
+            this.initCard(recipeList);
+            etatCard=1;
+        }
+
         VBox main = (VBox) recipeContainer.getContent();
         main.getChildren().clear();
         main.setSpacing(50);
         main.setPadding(new Insets(30,0,0,0));
 
-        if(etatCard==0){
-            initCard(recipeList);
-            etatCard=1;
-        }
+
         /// POUR TEST je prend un recette au hasard
         /// Plus tard on mettra les 20 premiers meileurs recettes (par likes) boucle for pour 20
         /// En scrollant s'il arrive a la fin des 20 premiers, on aggrandi la liste et reset mainPage()
@@ -644,11 +644,11 @@ public class Controller {
 
         int indice=0;
         int i=0;
-        while(i<(recipeList.size()/nbCard)+1){
+        while(i<(listCard.size()/nbCard)+1){
 
             HBox line = new HBox(); // Nouvelle ligne de cartes
             line.setSpacing(100);
-            line.getStyleClass().add("line"); // Faire css margin de chaque coté
+            line.getStyleClass().add("line");
 
             int j=0;
             while(j<nbCard && indice<recipeList.size()) {

@@ -25,6 +25,7 @@ public class Main extends Application {
         Controller ctrl = loader.getController();
         Model model = new Model(ctrl);
         ctrl.initModel(model);
+        ctrl.mainPage(model.recipeList);
 
         primaryStage.setTitle("Cuisinator");
         //primaryStage.setFullScreen(true);
@@ -40,7 +41,7 @@ public class Main extends Application {
         primaryStage.widthProperty().addListener((obs, oldValW, newValW ) -> {
 
             ctrl.nbCard=((int) (ctrl.accueil.getWidth()-700)/300) +2;
-            if(ctrl.nbCard!=nbCardSave && ctrl.actuPage.equals("mainPage")){ // A revoir si jamais t'es en recette ou en ajout de recette
+            if(ctrl.nbCard!=nbCardSave && ctrl.actuPage.equals("mainPage")){
                 nbCardSave = ctrl.nbCard;
                 try {
                     ctrl.mainPage(model.recipeList); //J'avais besoin de recipeList ici si jamais tu veux le repasser en priver faut trouver un moyen

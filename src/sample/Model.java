@@ -20,7 +20,6 @@ public class Model {
         this.categories = recipeMap.getCategories();
         this.ingredients = recipeMap.getIngredients();
 
-        this.control.mainPage(recipeList);
     }
 
     @SuppressWarnings("unchecked")
