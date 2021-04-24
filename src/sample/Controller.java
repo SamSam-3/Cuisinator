@@ -308,6 +308,7 @@ public class Controller {
 
         } else {
             this.layerCategorie.setTranslateX(0);
+            this.layerCategorie.toBack();
             this.diffCat.getChildren().clear();
             etatCA = 0;
         }

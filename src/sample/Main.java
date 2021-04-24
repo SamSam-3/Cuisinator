@@ -49,7 +49,7 @@ public class Main extends Application {
                 }
                 // Le rappel de mainPage fait lagger un peu l'app (peut etre a revoir pour opti)
             }
-            
+
             //Pane général
             ctrl.accueil.setPrefWidth(newValW.intValue());
             ctrl.accueil.setPrefWidth(newValW.intValue());
@@ -94,6 +94,7 @@ public class Main extends Application {
             //layer course et cat
             if(ctrl.etatCA == 0){
                 ctrl.layerCategorie.setLayoutX(-ctrl.layerCategorie.getWidth());
+                System.out.println(ctrl.layerCategorie.getWidth()+" | "+ctrl.layerCategorie.getLayoutX());
             }
             if(ctrl.etatCO == 1){
                 ctrl.layerCourse.setLayoutX(ctrl.accueil.getWidth()); //Petit bug graphique a corrigé quand on veux
