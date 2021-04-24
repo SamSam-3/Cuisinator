@@ -361,10 +361,10 @@ public class Controller {
                 img = new Image("images/noInternet.bmp"); //Si pas d'internet --> image d'erreur
             }
         }
+
         ImagePattern image = new ImagePattern(img);
         rect.setArcHeight(90.0);
         rect.setArcWidth(90.0);
-
         rect.setFill(image);
         rect.getStyleClass().add("img");
 
@@ -395,6 +395,7 @@ public class Controller {
         Label titreEtape = new Label("Les étapes");
         titreEtape.getStyleClass().add("h1");
 
+        rectPane.setSpacing(5);
         rectPane.getChildren().add(btnFav);
         rectPane.getChildren().add(titreRecette);
         rectPane.getChildren().add(rect);
@@ -437,9 +438,9 @@ public class Controller {
 
         Button ajoutRecipe = new Button("Ajouter une recette");
         diffCat.getChildren().add(ajoutRecipe);
+
         ajoutRecipe.setOnMousePressed(mouseEvent -> {
             this.addRecipe();
-            layerCategorie.setVisible(false);
         });
         this.showCategories();
     }

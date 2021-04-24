@@ -38,11 +38,9 @@ public class Main extends Application {
         double bar = ctrl.barreRecherche.getLayoutX();
 
         primaryStage.widthProperty().addListener((obs, oldValW, newValW ) -> {
-            System.out.println(ctrl.accueil.getWidth());
 
             ctrl.nbCard=((int) (ctrl.accueil.getWidth()-700)/300) +2;
-            System.out.println(ctrl.nbCard);
-            if(ctrl.nbCard!=nbCardSave){
+            if(ctrl.nbCard!=nbCardSave){ // A revoir si jamais t'es en recette ou en ajout de recette
                 nbCardSave = ctrl.nbCard;
                 try {
                     ctrl.mainPage(model.recipeList); //J'avais besoin de recipeList ici si jamais tu veux le repasser en priver faut trouver un moyen
@@ -51,6 +49,7 @@ public class Main extends Application {
                 }
                 // Le rappel de mainPage fait lagger un peu l'app (peut etre a revoir pour opti)
             }
+            
             //Pane général
             ctrl.accueil.setPrefWidth(newValW.intValue());
             ctrl.accueil.setPrefWidth(newValW.intValue());
