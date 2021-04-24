@@ -53,8 +53,6 @@ public class Controller {
     private TextField ing = new TextField();
     private int etatCard=0;
     public int nbCard=3;
-    private int maxiCard=6;
-
 
     // Etat
     private boolean doIngredSearch = false;
@@ -173,7 +171,6 @@ public class Controller {
 
                 //Ajouter la nouvelle recette à la base de données
                 model.recipeList.add(newRecipe);
-                maxiCard++;
                 try {
                     etatCard=0;
                     this.mainPage(model.recipeList);
@@ -557,7 +554,7 @@ public class Controller {
         /// Prévoir pour le nombre de carte par la taille adaptative de l'app
 
 
-        for(int i=0;i<maxiCard;i++) {
+        for(int i=0;i<recipeList.size();i++) {
             Recipe recipe = recipeList.get(i);
 
             VBox card = new VBox(); // Nouvelle carte
@@ -615,13 +612,13 @@ public class Controller {
 
         int indice=0;
         int i=0;
-        while(i<(maxiCard/nbCard)+1){
+        while(i<(recipeList.size()/nbCard)+1){
 
             HBox line = new HBox(); // Nouvelle ligne de cartes
             line.getStyleClass().add("line"); // Faire css margin de chaque coté
 
             int j=0;
-            while(j<nbCard && indice<maxiCard) {
+            while(j<nbCard && indice<recipeList.size()) {
                 line.getChildren().add(listCard.get(indice)); // Ajout des cartes a la ligne
                 j++;
                 indice++;
