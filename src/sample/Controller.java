@@ -18,6 +18,7 @@ import javafx.scene.text.Text;
 import javafx.stage.*;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.util.*;
 
@@ -52,6 +53,7 @@ public class Controller {
     private TextField ing = new TextField();
     private int etatCard=0;
     public int nbCard=3;
+    private int maxiCard=6;
 
 
     // Etat
@@ -171,6 +173,13 @@ public class Controller {
 
                 //Ajouter la nouvelle recette à la base de données
                 model.recipeList.add(newRecipe);
+                maxiCard++;
+                try {
+                    etatCard=0;
+                    this.mainPage(model.recipeList);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
 
             } else {
                 //Montrer qu'un champ n'est pas remplie a tel ou tel endroit
@@ -205,10 +214,11 @@ public class Controller {
         addRecipePage.getChildren().add(confirmer);
     }
 
+    //Possiblement déplacer dans le modele
     public boolean condition(TextField title,ComboBox<String> menu, String lien, ArrayList<String> ingredients, TextArea etapes){
         boolean verif = true;
         String errStyle = "-fx-border-color: red;";
-        String goodStyle = "-fx-border-color: black;";
+        String goodStyle = "-fx-border-color: transparent;";
 
         if(title.getText().length()==0){
             title.setStyle(errStyle);
@@ -248,11 +258,15 @@ public class Controller {
         return verif;
     }
 
-    public void addRecipe(String name){
+    public void addRecipe(Recipe r){
         /// A refaire par css
-        Label lbl = new Label(name);
+        HBox hb = new HBox();
+
+        Label lbl = new Label(r.getName());
         lbl.getStyleClass().add("listRecipe");
-        this.vb.getChildren().add(lbl);
+        hb.getChildren().addAll(lbl,new Label("\t"+r.getLikes()),new ImageView(new Image("images/like.png")));
+
+        this.vb.getChildren().add(hb);
     }
 
     public void addIngredients(String ing){
@@ -314,7 +328,7 @@ public class Controller {
         }
     }
 
-    public void showRecipe(Recipe recipe){
+    public void showRecipe(Recipe recipe) throws MalformedURLException {
         this.recipePossible.setVisible(false);
         this.recipeContainer.setVisible(true);
         this.findByIngredients.setVisible(false);
@@ -344,9 +358,13 @@ public class Controller {
 
         Rectangle rect = new Rectangle(0,0, 200, 250);
 
-        Image img = new Image(recipe.getImage()); //Si l'acces a internet est ok --> affiche l'image
-        if(img.isError()){ //Si pas d'internet --> image d'erreur
-            img = new Image("images/noInternet.bmp");
+        Image img = new Image(new File(recipe.getImage()).toURI().toURL().toString()); //Si image sur le pc
+        if(img.isError()) {
+            if(img.getException().getClass().equals(FileNotFoundException.class)){
+                img = new Image(recipe.getImage()); //Si internet --> image depuis le web
+            } else {
+                img = new Image("images/noInternet.bmp"); //Si pas d'internet --> image d'erreur
+            }
         }
         ImagePattern image = new ImagePattern(img);
         rect.setArcHeight(90.0);
@@ -390,7 +408,6 @@ public class Controller {
         rectPane.getChildren().add(titreEtape);
 
         rectPane.getChildren().add(new Label(recipe.getSteps()));
-        System.out.println(recipe.getSteps());
     }
 
     private void showDropdown(int etat) {
@@ -465,7 +482,7 @@ public class Controller {
         if (searchRec.length() > 0) {
             this.recipeDisplay = this.model.search(searchRec, null, null); // TODO: categsFilter, ingredsFilter
             for (Recipe rcp : this.recipeDisplay) {
-                this.addRecipe(rcp.getName());
+                this.addRecipe(rcp);
             }
             this.showDropdown(0);
         } else {
@@ -487,7 +504,7 @@ public class Controller {
     }
 
     @FXML
-    public void watchRecipe(MouseEvent mouseEvent){
+    public void watchRecipe(MouseEvent mouseEvent) throws MalformedURLException {
         String recipeName = ((Text) mouseEvent.getTarget()).getText();
         for (Recipe recipe : this.recipeDisplay){
             if (recipe.getName().equals(recipeName)) {
@@ -533,14 +550,14 @@ public class Controller {
 
     }
 
-    public void initCard(ArrayList<Recipe> recipeList){
+    public void initCard(ArrayList<Recipe> recipeList) throws MalformedURLException {
         /// POUR TEST je prend un recette au hasard
         /// Plus tard on mettra les 20 premiers meileurs recettes (par likes) boucle for pour 20
         /// En scrollant s'il arrive a la fin des 20 premiers, on aggrandi la liste et reset mainPage()
         /// Prévoir pour le nombre de carte par la taille adaptative de l'app
 
-        int maxi=6;
-        for(int i=0;i<maxi;i++) {
+
+        for(int i=0;i<maxiCard;i++) {
             Recipe recipe = recipeList.get(i);
 
             VBox card = new VBox(); // Nouvelle carte
@@ -549,9 +566,14 @@ public class Controller {
             card.setAlignment(Pos.CENTER); // Centre les éléments
 
             Rectangle rect = new Rectangle(0, 0, 200, 200);
-            Image img = new Image(recipe.getImage()); //Si l'acces a internet est ok --> affiche l'image
-            if (img.isError()) { //Si pas d'internet --> image d'erreur
-                img = new Image("images/noInternet.bmp");
+
+            Image img = new Image(new File(recipe.getImage()).toURI().toURL().toString()); //Si image sur le pc
+            if(img.isError()) {
+                if(img.getException().getClass().equals(FileNotFoundException.class)){
+                    img = new Image(recipe.getImage()); //Si internet --> image depuis le web
+                } else {
+                    img = new Image("images/noInternet.bmp"); //Si pas d'internet --> image d'erreur
+                }
             }
             ImagePattern image = new ImagePattern(img);
             rect.setArcHeight(90.0);
@@ -567,14 +589,18 @@ public class Controller {
 
                 // show la recette cliqué au menu
             card.setOnMousePressed(mouseEvent -> {
-                showRecipe(recipe);
+                try {
+                    showRecipe(recipe);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
             });
 
             listCard.add(card);
         }
     }
 
-    public void mainPage(ArrayList<Recipe> recipeList){
+    public void mainPage(ArrayList<Recipe> recipeList) throws MalformedURLException {
         VBox main = (VBox) recipeContainer.getContent();
         main.getChildren().clear();
 
@@ -588,15 +614,14 @@ public class Controller {
         /// Prévoir pour le nombre de carte par la taille adaptative de l'app
 
         int indice=0;
-        int maxi=6;
         int i=0;
-        while(i<(maxi/nbCard)+1){
+        while(i<(maxiCard/nbCard)+1){
 
             HBox line = new HBox(); // Nouvelle ligne de cartes
             line.getStyleClass().add("line"); // Faire css margin de chaque coté
 
             int j=0;
-            while(j<nbCard && indice<maxi) {
+            while(j<nbCard && indice<maxiCard) {
                 line.getChildren().add(listCard.get(indice)); // Ajout des cartes a la ligne
                 j++;
                 indice++;

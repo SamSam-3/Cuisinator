@@ -11,6 +11,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.net.MalformedURLException;
+
 public class Main extends Application {
 
     private int nbCardSave = 3; //Valeur par défault pour les écran 1280/720
@@ -42,7 +44,11 @@ public class Main extends Application {
             System.out.println(ctrl.nbCard);
             if(ctrl.nbCard!=nbCardSave){
                 nbCardSave = ctrl.nbCard;
-                ctrl.mainPage(model.recipeList); //J'avais besoin de recipeList ici si jamais tu veux le repasser en priver faut trouver un moyen
+                try {
+                    ctrl.mainPage(model.recipeList); //J'avais besoin de recipeList ici si jamais tu veux le repasser en priver faut trouver un moyen
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
                 // Le rappel de mainPage fait lagger un peu l'app (peut etre a revoir pour opti)
             }
             //Pane général

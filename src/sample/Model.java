@@ -1,5 +1,6 @@
 package sample;
 
+import java.net.MalformedURLException;
 import java.util.*;
 
 public class Model {
@@ -13,7 +14,7 @@ public class Model {
     // private ArrayList<Recipe> favList;
     // private ArrayList<Recipe> likeList;
 
-    public Model(Controller control) {
+    public Model(Controller control) throws MalformedURLException {
         this.control = control;
         this.loadData();
         this.categories = recipeMap.getCategories();
