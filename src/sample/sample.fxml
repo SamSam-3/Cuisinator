@@ -34,9 +34,9 @@
             <VBox fx:id="vb" onMouseClicked="#watchRecipe" prefHeight="130.0" prefWidth="371.0" />
          </content>
       </ScrollPane>
-      <ScrollPane fx:id="recipeContainer" cache="true" fitToHeight="true" focusTraversable="false" hbarPolicy="NEVER" layoutY="80.0" maxHeight="-Infinity" minWidth="-Infinity" prefWidth="1280.0">
+      <ScrollPane fx:id="recipeContainer" cache="true" focusTraversable="false" hbarPolicy="NEVER" layoutY="80.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0">
          <content>
-            <VBox fx:id="main" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="720.0" />
+            <VBox fx:id="main" alignment="TOP_CENTER" fillWidth="false" maxWidth="-Infinity" minHeight="-Infinity" prefWidth="1280.0" />
          </content>
       </ScrollPane>
       <Pane fx:id="findByIngredients" focusTraversable="true" layoutY="81.0" prefHeight="122.0" prefWidth="1280.0" visible="false">

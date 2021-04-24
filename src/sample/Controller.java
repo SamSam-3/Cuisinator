@@ -631,7 +631,7 @@ public class Controller {
             i++;
             main.getChildren().add(line); // Ajout des line à la page d'accueil
         }
-
+        main.autosize();
     }
 
 }

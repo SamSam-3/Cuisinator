@@ -94,7 +94,6 @@ public class Main extends Application {
             //layer course et cat
             if(ctrl.etatCA == 0){
                 ctrl.layerCategorie.setLayoutX(-ctrl.layerCategorie.getWidth());
-                System.out.println(ctrl.layerCategorie.getWidth()+" | "+ctrl.layerCategorie.getLayoutX());
             }
             if(ctrl.etatCO == 1){
                 ctrl.layerCourse.setLayoutX(ctrl.accueil.getWidth()); //Petit bug graphique a corrigé quand on veux
@@ -114,7 +113,8 @@ public class Main extends Application {
             ctrl.accueil.setPrefHeight(newValH.intValue());
             ctrl.accueil.setPrefHeight(newValH.intValue());
             ctrl.recipeContainer.setMaxHeight(newValH.intValue()-80);
-
+            VBox containerContent = (VBox) ctrl.recipeContainer.getContent();
+            containerContent.setPrefHeight(newValH.intValue());
 
         }));
 
