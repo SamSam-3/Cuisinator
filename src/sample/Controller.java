@@ -47,7 +47,7 @@ public class Controller {
     private ArrayList<String> ingredsLeft = new ArrayList<String>();
     private Set<Recipe> recipeDisplay = new HashSet<Recipe>(); 
     private Stack<String> frigo  = new Stack<String>();
-    ArrayList<VBox> listCard = new ArrayList<VBox>();
+    private ArrayList<VBox> listCard = new ArrayList<VBox>();
     private VBox liste = new VBox();
     private Button btnFile = new Button();
     private TextField ing = new TextField();
@@ -199,8 +199,19 @@ public class Controller {
             }
         });
 
-        // Ajout des éléments à la page
+        Button btnHome = new Button();
+        btnHome.setAlignment(Pos.CENTER_LEFT);
+        btnHome.getStyleClass().add("home");
+        btnHome.setOnMousePressed(mouseEvent -> {
+            try {
+                this.mainPage(model.recipeList);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        });
 
+        // Ajout des éléments à la page
+        addRecipePage.getChildren().add(btnHome);
         addRecipePage.getChildren().add(entete);
         addRecipePage.getChildren().add(title);
         addRecipePage.getChildren().add(getCat);
@@ -336,9 +347,13 @@ public class Controller {
         rectPane.getStyleClass().add("recipePage");
         rectPane.getChildren().clear();
 
+        HBox buttonBar = new HBox();
+        Button btnHome = new Button();
+        btnHome.setAlignment(Pos.CENTER_LEFT);
+        btnHome.getStyleClass().add("home");
         Button btnFav = new Button();
+        btnFav.setAlignment(Pos.CENTER_RIGHT);
         //Mettre le boouton favoris dans l'angle à droite
-
         btnFav.setOnMousePressed(mouseEvent -> {
             if(recipe.isFavorite()){
                 recipe.setFavorite(false);
@@ -354,6 +369,15 @@ public class Controller {
                         "  -fx-background-size: cover, auto;");
             }
         });
+        btnHome.setOnMousePressed(mouseEvent -> {
+            try {
+                this.mainPage(model.recipeList);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        });
+        buttonBar.getChildren().addAll(btnHome,btnFav);
+
 
         Rectangle rect = new Rectangle(0,0, 200, 250);
 
@@ -400,7 +424,7 @@ public class Controller {
         titreEtape.getStyleClass().add("h1");
 
         rectPane.setSpacing(5);
-        rectPane.getChildren().add(btnFav);
+        rectPane.getChildren().add(buttonBar);
         rectPane.getChildren().add(titreRecette);
         rectPane.getChildren().add(rect);
         rectPane.getChildren().add(titreIngredient);
