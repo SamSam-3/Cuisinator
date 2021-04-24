@@ -92,7 +92,6 @@ public class Controller {
         getCat.getChildren().add(menu); // Ajout du menu dans une liste horizontal
 
 
-
         // Récupération de l'image (Récupère le lien vers l'image depuis le pc)
         HBox fichier = new HBox();
         fichier.getChildren().add(new Label("Ajouter une image : "));
@@ -153,7 +152,6 @@ public class Controller {
             }
         });
 
-
         TextArea steps = new TextArea();
         steps.setPromptText("Décrivez chaque étapes de votre recette\n N'hésitez pas à sauter des lignes quand vous finissez une étape.");
 
@@ -199,8 +197,8 @@ public class Controller {
             }
         });
 
-
         // Ajout des éléments à la page
+
         addRecipePage.getChildren().add(entete);
         addRecipePage.getChildren().add(title);
         addRecipePage.getChildren().add(getCat);
@@ -403,7 +401,6 @@ public class Controller {
         rectPane.getChildren().add(titreIngredient);
         rectPane.getChildren().add(ingre);
         rectPane.getChildren().add(titreEtape);
-
         rectPane.getChildren().add(new Label(recipe.getSteps()));
     }
 
@@ -541,6 +538,7 @@ public class Controller {
         tag.getChildren().add(annuler);
         tag.getStyleClass().add("tag");
 
+        tags.setSpacing(5);
         this.tags.getChildren().add(tag);
 
         System.out.println("Elements dans le frigo :" + frigo);
