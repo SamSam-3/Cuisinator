@@ -103,7 +103,7 @@ public class Main extends Application {
             courseContent.setPrefWidth(newValW.intValue()/3); //Changer taille du texte en fonction de la taille du layer
 
             ctrl.diffCat.setPrefWidth(ctrl.layerCategorie.getWidth());
-
+            ctrl.layerCategorie.getChildren().get(0).setLayoutX((ctrl.layerCategorie.getWidth()/2)-100);
 
             //Met à jour la barre de recherche des tags
             ctrl.findByIngredients.setPrefWidth(newValW.intValue());
