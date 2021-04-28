@@ -43,11 +43,8 @@ public class Main extends Application {
             ctrl.nbCard=((int) (ctrl.accueil.getWidth()-700)/300) +2;
             if(ctrl.nbCard!=nbCardSave && ctrl.actuPage.equals("mainPage")){
                 nbCardSave = ctrl.nbCard;
-                try {
-                    ctrl.mainPage(model.recipeList); //J'avais besoin de recipeList ici si jamais tu veux le repasser en priver faut trouver un moyen
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
+                ctrl.mainPage(model.recipeList); //J'avais besoin de recipeList ici si jamais tu veux le repasser en priver faut trouver un moyen
+                
                 // Le rappel de mainPage fait lagger un peu l'app (peut etre a revoir pour opti)
             }
 

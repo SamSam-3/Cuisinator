@@ -22,6 +22,8 @@ import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.util.*;
 
+import javax.management.RuntimeErrorException;
+
 public class Controller {
     // fxml
     @FXML public Pane layerCategorie;
@@ -171,12 +173,9 @@ public class Controller {
 
                 //Ajouter la nouvelle recette à la base de données
                 model.recipeList.add(newRecipe);
-                try {
-                    this.etatCard=0;
-                    this.mainPage(model.recipeList);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
+                this.etatCard=0;
+                this.mainPage(model.recipeList);
+              
 
             } else {
                 //Montrer qu'un champ n'est pas remplie a tel ou tel endroit
@@ -203,11 +202,7 @@ public class Controller {
         btnHome.setAlignment(Pos.CENTER_LEFT);
         btnHome.getStyleClass().add("home");
         btnHome.setOnMousePressed(mouseEvent -> {
-            try {
-                this.mainPage(model.recipeList);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
+            this.mainPage(model.recipeList);
         });
 
         // Ajout des éléments à la page
@@ -339,6 +334,32 @@ public class Controller {
             etatCO=0;
         }
     }
+    private Rectangle frameImage(Recipe recipe, int w, int h) {
+        Rectangle rect = new Rectangle(0,0, w, h);
+
+        Image img;
+        try {
+            img = new Image(new File(recipe.getImage()).toURI().toURL().toString());
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } 
+        //Si image sur le pc
+        if(img.isError()) {
+            // System.out.println("isError");
+            if(img.getException().getClass().equals(FileNotFoundException.class)){
+                img = new Image((recipe.getImage())); //Si internet --> image depuis le web
+                // System.out.println(img);
+            } else {
+                img = new Image("images/noInternet.bmp"); //Si pas d'internet --> image d'erreur
+            }
+        }
+        ImagePattern image = new ImagePattern(img);
+        rect.setArcHeight(90.0);
+        rect.setArcWidth(90.0);
+        rect.setFill(image);
+        rect.getStyleClass().add("img");
+        return rect;
+    }
 
     public void showRecipe(Recipe recipe) throws MalformedURLException {
         actuPage = "showRecipe";
@@ -373,31 +394,12 @@ public class Controller {
             }
         });
         btnHome.setOnMousePressed(mouseEvent -> {
-            try {
-                this.mainPage(model.recipeList);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
+            this.mainPage(model.recipeList);
         });
         buttonBar.getChildren().addAll(btnHome,btnFav);
 
 
-        Rectangle rect = new Rectangle(0,0, 200, 250);
-
-        Image img = new Image(new File(recipe.getImage()).toURI().toURL().toString()); //Si image sur le pc
-        if(img.isError()) {
-            if(img.getException().getClass().equals(FileNotFoundException.class)){
-                img = new Image(recipe.getImage()); //Si internet --> image depuis le web
-            } else {
-                img = new Image("images/noInternet.bmp"); //Si pas d'internet --> image d'erreur
-            }
-        }
-
-        ImagePattern image = new ImagePattern(img);
-        rect.setArcHeight(90.0);
-        rect.setArcWidth(90.0);
-        rect.setFill(image);
-        rect.getStyleClass().add("img");
+        Rectangle rect = this.frameImage(recipe, 200, 250);
 
         VBox ingre = new VBox();
         for (String ing : recipe.getRequirements()){
@@ -577,7 +579,7 @@ public class Controller {
 
     }
 
-    public void initCard(ArrayList<Recipe> recipeList) throws MalformedURLException {
+    public void initCard(ArrayList<Recipe> recipeList) {
         /// POUR TEST je prend un recette au hasard
         /// Plus tard on mettra les 20 premiers meileurs recettes (par likes) boucle for pour 20
         /// En scrollant s'il arrive a la fin des 20 premiers, on aggrandi la liste et reset mainPage()
@@ -589,21 +591,7 @@ public class Controller {
 
             card.setAlignment(Pos.CENTER); // Centre les éléments
 
-            Rectangle rect = new Rectangle(0, 0, 200, 200);
-
-            Image img = new Image(new File(recipe.getImage()).toURI().toURL().toString()); //Si image sur le pc
-            if (img.isError()) {
-                if (img.getException().getClass().equals(FileNotFoundException.class)) {
-                    img = new Image(recipe.getImage()); //Si internet --> image depuis le web
-                } else {
-                    img = new Image("images/noInternet.bmp"); //Si pas d'internet --> image d'erreur
-                }
-            }
-            ImagePattern image = new ImagePattern(img);
-            rect.setArcHeight(90.0);
-            rect.setArcWidth(90.0);
-            rect.setFill(image);
-            rect.getStyleClass().add("img");
+            Rectangle rect = this.frameImage(recipe, 200, 200);
 
             Label titre = new Label(recipe.getName());
             titre.getStyleClass().add("cardTitle"); // modifier la taille des caractères suivant la longueur du titre
@@ -623,7 +611,7 @@ public class Controller {
         }
     }
 
-    public void mainPage(ArrayList<Recipe> recipeList) throws MalformedURLException {
+    public void mainPage(ArrayList<Recipe> recipeList) {
         actuPage = "mainPage";
         System.out.println(this.model.recipeList+" | "+recipeList);
         if(etatCard==0){
