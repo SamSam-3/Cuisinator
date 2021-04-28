@@ -94,3 +94,12 @@
     -fx-pref-width: 50;
     -fx-pref-height: 50;
 }
+
+.btnFavDefault{
+-fx-background-position: center;
+    -fx-background-image: url("images/unstar.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover, auto;
+    -fx-pref-width: 50;
+    -fx-pref-height: 50;
+}

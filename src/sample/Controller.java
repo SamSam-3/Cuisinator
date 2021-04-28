@@ -376,12 +376,14 @@ public class Controller {
         btnHome.getStyleClass().add("home");
         Button btnFav = new Button();
         btnFav.setAlignment(Pos.CENTER_RIGHT);
+        btnFav.getStyleClass().add("btnFavDefault");
+
         //Mettre le boouton favoris dans l'angle à droite
         btnFav.setOnMousePressed(mouseEvent -> {
             if(recipe.isFavorite()){
                 recipe.setFavorite(false);
                 btnFav.setStyle("-fx-background-position: center;" +
-                        "  -fx-background-image: url('images/unstar.png'');" +
+                        "  -fx-background-image: url('images/unstar.png');" +
                         "  -fx-background-repeat: no-repeat;" +
                         "  -fx-background-size: cover, auto;");
             } else {
