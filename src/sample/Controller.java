@@ -360,6 +360,24 @@ public class Controller {
         return rect;
     }
 
+
+    private void fav(Recipe recipe, Button btnFav){
+        if(recipe.isFavorite()){
+            btnFav.setStyle("-fx-background-position: center;" +
+                    "  -fx-background-image: url('images/unstar.png');" +
+                    "  -fx-background-repeat: no-repeat;" +
+                    "  -fx-background-size: cover, auto;" +
+                    "  -fx-pref-width: 50;"+
+                    "  -fx-pref-height: 50;");
+        } else {
+            btnFav.setStyle("-fx-background-position: center;" +
+                    "  -fx-background-image: url('images/star.png');" +
+                    "  -fx-background-repeat: no-repeat;" +
+                    "  -fx-background-size: cover, auto;" +
+                    "  -fx-pref-width: 50;"+
+                    "  -fx-pref-height: 50;");
+        }
+    }
     public void showRecipe(Recipe recipe) throws MalformedURLException {
         actuPage = "showRecipe";
         this.recipePossible.setVisible(false);
@@ -376,22 +394,16 @@ public class Controller {
         btnHome.getStyleClass().add("home");
         Button btnFav = new Button();
         btnFav.setAlignment(Pos.CENTER_RIGHT);
-        btnFav.getStyleClass().add("btnFavDefault");
+        fav(recipe,btnFav);
 
         //Mettre le boouton favoris dans l'angle à droite
         btnFav.setOnMousePressed(mouseEvent -> {
             if(recipe.isFavorite()){
                 recipe.setFavorite(false);
-                btnFav.setStyle("-fx-background-position: center;" +
-                        "  -fx-background-image: url('images/unstar.png');" +
-                        "  -fx-background-repeat: no-repeat;" +
-                        "  -fx-background-size: cover, auto;");
+                fav(recipe,btnFav);
             } else {
                 recipe.setFavorite(true);
-                btnFav.setStyle("-fx-background-position: center;" +
-                        "  -fx-background-image: url('images/star.png');" +
-                        "  -fx-background-repeat: no-repeat;" +
-                        "  -fx-background-size: cover, auto;");
+                fav(recipe,btnFav);
             }
         });
         btnHome.setOnMousePressed(mouseEvent -> {
