@@ -37,11 +37,14 @@ public class Main extends Application {
         primaryStage.widthProperty().addListener((obs, oldValW, newValW ) -> {
 
             ctrl.nbCard=((int) (ctrl.accueil.getWidth()-700)/300) +2;
+
             if(ctrl.nbCard!=nbCardSave && ctrl.actuPage.equals("mainPage")){
                 nbCardSave = ctrl.nbCard;
-                ctrl.mainPage(model.recipeList); //J'avais besoin de recipeList ici si jamais tu veux le repasser en priver faut trouver un moyen
-                
-                // Le rappel de mainPage fait lagger un peu l'app (peut etre a revoir pour opti)
+                ctrl.mainPage(model.recipeList);
+            }
+            if(ctrl.nbCard!=nbCardSave && ctrl.actuPage.equals("catPage")){
+                nbCardSave = ctrl.nbCard;
+                ctrl.categoryPage(ctrl.catCourrant);
             }
 
             //Pane général
@@ -99,6 +102,9 @@ public class Main extends Application {
             AnchorPane courseContent = (AnchorPane) ctrl.layerCourse.getContent();
             courseContent.setPrefWidth(newValW.intValue()/3); //Changer taille du texte en fonction de la taille du layer
 
+            ctrl.diffCat.setPrefWidth(ctrl.layerCategorie.getWidth());
+
+
             //Met à jour la barre de recherche des tags
             ctrl.findByIngredients.setPrefWidth(newValW.intValue());
             ctrl.categoriesPossible.setMinWidth(newValW.intValue()/2);
@@ -114,7 +120,7 @@ public class Main extends Application {
             ctrl.accueil.setPrefHeight(newValH.intValue());
             ctrl.recipeContainer.setMaxHeight(newValH.intValue()-80);
             ctrl.recipeContainer.getContent().autosize();
-
+            ctrl.diffCat.autosize();
         }));
 
         primaryStage.show();

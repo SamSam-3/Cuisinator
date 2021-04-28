@@ -94,3 +94,8 @@
     -fx-pref-width: 50;
     -fx-pref-height: 50;
 }
+
+.catName{
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 20;
+}

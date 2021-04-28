@@ -55,6 +55,7 @@ public class Controller {
     private int etatCard=0;
     public int nbCard=3;
     public String actuPage = "";
+    public String catCourrant = "";
 
     // Etat
     private boolean doIngredSearch = false;
@@ -294,10 +295,9 @@ public class Controller {
 
     public void newCategories(String catName){
         Label lbl = new Label(catName);
-        lbl.setFont(new Font("Arial", 20)); // A modifier avec css
+        lbl.getStyleClass().add("catName");
 
-        this.diffCat.setSpacing(10); // A modifier avec css
-        this.diffCat.setAlignment(Pos.TOP_CENTER); // A modifier avec css
+        this.diffCat.setAlignment(Pos.CENTER); // A modifier avec css
         this.diffCat.getChildren().add(lbl);
     }
 
@@ -478,10 +478,15 @@ public class Controller {
     }
 
     @FXML
-    public void categorieBtn() { 
+    public void categorieBtn() {
+        this.diffCat.setSpacing(10); // A modifier avec css
         for (String name : this.model.getCategories()) {
             this.newCategories(name); 
         }
+        Label favoris = new Label("favoris");
+        favoris.getStyleClass().add("catName");
+
+        diffCat.getChildren().add(favoris);
 
         Button ajoutRecipe = new Button("Ajouter une recette");
         diffCat.getChildren().add(ajoutRecipe);
@@ -490,6 +495,47 @@ public class Controller {
             this.addRecipe();
         });
         this.showCategories();
+    }
+
+    public void getCategory(MouseEvent mouseEvent){
+        String catClicked = ((Text) mouseEvent.getTarget()).getText();
+        this.categoryPage(catClicked);
+    }
+
+    public void categoryPage(String catClicked){
+        actuPage = "catPage";
+        catCourrant = catClicked;
+        VBox catPage = (VBox) this.recipeContainer.getContent();
+        catPage.getChildren().clear();
+        ArrayList<VBox> cartes = new ArrayList<VBox>();
+
+        if(catClicked.equals("favoris")){
+            for(Recipe recipe : model.recipeList) {
+                if(recipe.isFavorite()) {
+                    cartes.add(listCard.get(model.recipeList.indexOf(recipe)));
+                }
+            }
+            int indice=0;
+            int i=0;
+            while(i<(cartes.size()/nbCard)+1){
+
+                HBox line = new HBox(); // Nouvelle ligne de cartes
+                line.setSpacing(100);
+                line.getStyleClass().add("line");
+
+                int j=0;
+                while(j<nbCard && indice<cartes.size()) {
+                    VBox card = cartes.get(indice);
+                    line.setAlignment(Pos.CENTER);
+                    line.getChildren().add(card); // Ajout des cartes a la ligne
+                    j++;
+                    indice++;
+                }
+                i++;
+                catPage.getChildren().add(line); // Ajout des line à la page d'accueil
+            }
+            catPage.autosize();
+        }
     }
 
     @FXML
