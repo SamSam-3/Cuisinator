@@ -10,8 +10,8 @@ public class Model {
 
     public ArrayList<Recipe> recipeList; //J'ai du le passer en public dans le main (va voir si ca te dérange sinon supprime le commentaire)
     private RecipeMap recipeMap;
-    // private ArrayList<Recipe> favList;
-    // private ArrayList<Recipe> likeList;
+    private ArrayList<Recipe> favList;
+    private ArrayList<Recipe> likeList;
 
     public Model(Controller control) {
         this.control = control;
@@ -24,8 +24,8 @@ public class Model {
     public void loadData() {
         recipeMap = (RecipeMap)DataManager.load("recipe-map");
         recipeList = (ArrayList<Recipe>)DataManager.load("recipe-list");
-        // favList = (ArrayList<Recipe>)DataManager.load("fav-list");
-        // likeList = (ArrayList<Recipe>)DataManager.load("like-list");
+        favList = (ArrayList<Recipe>)DataManager.load("fav-list");
+        likeList = (ArrayList<Recipe>)DataManager.load("like-list");
 
         if (recipeMap == null || recipeList == null) {
             throw new RuntimeException("Data base not found");
@@ -34,8 +34,8 @@ public class Model {
     public void saveData() {
         DataManager.save("recipe-map", recipeMap);
         DataManager.save("recipe-list", recipeList);
-        // DataManager.save("fav-list", favList);
-        // DataManager.save("like-list", likeList);
+        DataManager.save("fav-list", favList);
+        DataManager.save("like-list", likeList);
     }
 
     public Recipe bestMatchRecipe(String searchStr) {
@@ -120,20 +120,20 @@ public class Model {
         return ingreds;
     }
     
-    // public void toggleLike(Recipe recipe) {
-    //     if (! likeList.contains(recipe)) {
-    //         recipe.addLikes(1);
-    //         likeList.add(recipe);
-    //     } else {
-    //         recipe.addLikes(-1);
-    //         likeList.remove(recipe);
-    //     }
-    // }
-    // public void toggleFav(Recipe recipe) {
-    //     if (! favList.contains(recipe)) {
-    //         favList.add(recipe);
-    //     } else {
-    //         favList.remove(recipe);
-    //     }
-    // }
+    public void toggleLike(Recipe recipe) {
+        if (! likeList.contains(recipe)) {
+            recipe.addLikes(1);
+            likeList.add(recipe);
+        } else {
+            recipe.addLikes(-1);
+            likeList.remove(recipe);
+        }
+    }
+    public void toggleFav(Recipe recipe) {
+        if (! favList.contains(recipe)) {
+            favList.add(recipe);
+        } else {
+            favList.remove(recipe);
+        }
+    }
 }

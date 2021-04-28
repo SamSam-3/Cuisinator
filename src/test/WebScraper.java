@@ -128,15 +128,18 @@ public class WebScraper {
 
 
         //////////////////// Test de collecte de donnée ////////////////////
-        ArrayList<Recipe> r = collectRecipes();
+        // ArrayList<Recipe> r = collectRecipes();
 
         //////////////////// Test mapping ////////////////////
-        RecipeMap mappedRecipe = new RecipeMap(r);
-        System.out.println(mappedRecipe);
+        // RecipeMap mappedRecipe = new RecipeMap(r);
+        // System.out.println(mappedRecipe);
 
         //////////////////// Test de sauvegarde ////////////////////
-        DataManager.save("recipe-map", mappedRecipe);
-        DataManager.save("recipe-list", r);
+        // DataManager.save("recipe-map", mappedRecipe);
+        // DataManager.save("recipe-list", r);
+        // DataManager.save("fav-list", new ArrayList<Recipe>());
+        // DataManager.save("like-list", new ArrayList<Recipe>());
+
 
         //////////////////// Test de charge en memoire ////////////////////
         // ArrayList<Recipe> r = (ArrayList<Recipe>)DataManager.load("recipe-list");
@@ -144,6 +147,8 @@ public class WebScraper {
         //     System.out.println(recipe.getLikes());
         // }
         // System.out.println((int)(Math.random()*1000));
+
+
     }
 
 }
