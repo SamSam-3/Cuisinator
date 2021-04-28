@@ -22,7 +22,7 @@ public class Recipe implements Comparable<Recipe>, Serializable{
         this.image = image;
         this.steps = steps;
         this.favorite = "unfavorite";
-        this.likes = (int)Math.random()*1000;
+        this.likes = (int)(Math.random()*1000);
 
     }
 

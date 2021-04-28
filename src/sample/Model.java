@@ -1,6 +1,5 @@
 package sample;
 
-import java.net.MalformedURLException;
 import java.util.*;
 
 public class Model {
@@ -14,12 +13,11 @@ public class Model {
     // private ArrayList<Recipe> favList;
     // private ArrayList<Recipe> likeList;
 
-    public Model(Controller control) throws MalformedURLException {
+    public Model(Controller control) {
         this.control = control;
         this.loadData();
         this.categories = recipeMap.getCategories();
         this.ingredients = recipeMap.getIngredients();
-
     }
 
     @SuppressWarnings("unchecked")

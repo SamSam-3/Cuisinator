@@ -139,8 +139,11 @@ public class WebScraper {
         DataManager.save("recipe-list", r);
 
         //////////////////// Test de charge en memoire ////////////////////
-        //RecipeMap r = (RecipeMap)DataManager.load("recipes-map");
-        //System.out.println(r);
+        // ArrayList<Recipe> r = (ArrayList<Recipe>)DataManager.load("recipe-list");
+        // for (Recipe recipe : r) {
+        //     System.out.println(recipe.getLikes());
+        // }
+        // System.out.println((int)(Math.random()*1000));
     }
 
 }
