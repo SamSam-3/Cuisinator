@@ -22,7 +22,7 @@
                   <Font name="Arial" size="25.0" />
                </font>
                <opaqueInsets>
-                  <Insets />
+                  <Insets bottom="200.0" />
                </opaqueInsets>
                <padding>
                   <Insets bottom="100.0" />

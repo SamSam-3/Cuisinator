@@ -479,7 +479,9 @@ public class Controller {
 
     @FXML
     public void categorieBtn() {
-        this.diffCat.setSpacing(10); // A modifier avec css
+
+        this.diffCat.setPadding(new Insets(100)); // A modifier avec css
+        this.diffCat.setSpacing(20);
         for (String name : this.model.getCategories()) {
             this.newCategories(name); 
         }
