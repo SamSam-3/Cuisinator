@@ -41,6 +41,7 @@ public class Recipe implements Comparable<Recipe>, Serializable{
     public String getFavorite(){
         return this.favorite;
     }
+
     public String getCategory() {
         return category;
     }

@@ -364,20 +364,21 @@ public class Controller {
     private void fav(Recipe recipe, Button btnFav){
         if(recipe.isFavorite()){
             btnFav.setStyle("-fx-background-position: center;" +
-                    "  -fx-background-image: url('images/unstar.png');" +
+                    "  -fx-background-image: url('images/star.png');" +
                     "  -fx-background-repeat: no-repeat;" +
                     "  -fx-background-size: cover, auto;" +
                     "  -fx-pref-width: 50;"+
                     "  -fx-pref-height: 50;");
         } else {
             btnFav.setStyle("-fx-background-position: center;" +
-                    "  -fx-background-image: url('images/star.png');" +
+                    "  -fx-background-image: url('images/unstar.png');" +
                     "  -fx-background-repeat: no-repeat;" +
                     "  -fx-background-size: cover, auto;" +
                     "  -fx-pref-width: 50;"+
                     "  -fx-pref-height: 50;");
         }
     }
+
     public void showRecipe(Recipe recipe) throws MalformedURLException {
         actuPage = "showRecipe";
         this.recipePossible.setVisible(false);
@@ -627,7 +628,6 @@ public class Controller {
 
     public void mainPage(ArrayList<Recipe> recipeList) {
         actuPage = "mainPage";
-        System.out.println(this.model.recipeList+" | "+recipeList);
         if(etatCard==0){
             this.initCard(recipeList);
             etatCard=1;
