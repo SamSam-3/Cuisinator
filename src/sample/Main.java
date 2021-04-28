@@ -113,8 +113,7 @@ public class Main extends Application {
             ctrl.accueil.setPrefHeight(newValH.intValue());
             ctrl.accueil.setPrefHeight(newValH.intValue());
             ctrl.recipeContainer.setMaxHeight(newValH.intValue()-80);
-            VBox containerContent = (VBox) ctrl.recipeContainer.getContent();
-            containerContent.setPrefHeight(newValH.intValue());
+            ctrl.recipeContainer.getContent().autosize();
 
         }));
 
