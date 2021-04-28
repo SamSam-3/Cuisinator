@@ -584,6 +584,7 @@ public class Controller {
         /// Plus tard on mettra les 20 premiers meileurs recettes (par likes) boucle for pour 20
         /// En scrollant s'il arrive a la fin des 20 premiers, on aggrandi la liste et reset mainPage()
         /// Prévoir pour le nombre de carte par la taille adaptative de l'app
+        listCard.clear();
 
         for (Recipe recipe : recipeList) {
             VBox card = new VBox(); // Nouvelle carte
