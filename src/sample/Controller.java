@@ -107,18 +107,7 @@ public class Controller {
             File file = fc.showOpenDialog(Window.getWindows().get(0));
             lien[0] = file.getAbsolutePath();
 
-            Rectangle rect = new Rectangle(0,0, 120, 150);
-            ImagePattern image = null;
-            try {
-                image = new ImagePattern(new Image(file.toURI().toURL().toExternalForm()));
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            rect.setArcHeight(90.0);
-            rect.setArcWidth(90.0);
-
-            rect.setFill(image);
-            rect.getStyleClass().add("img");
+            Rectangle rect = frameImage(lien[0], 120, 150);
 
             fichier.getChildren().add(rect);
         });
@@ -333,11 +322,11 @@ public class Controller {
             etatCO=0;
         }
     }
-    private Rectangle frameImage(Recipe recipe, int w, int h) {
+    private Rectangle frameImage(String fileName, int w, int h) {
         Rectangle rect = new Rectangle(0,0, w, h);
         Image img;
         try {
-            img = new Image(new File(recipe.getImage()).toURI().toURL().toString());
+            img = new Image(new File(fileName).toURI().toURL().toString());
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         } 
@@ -345,19 +334,19 @@ public class Controller {
         if(img.isError()) {
             // System.out.println("isError");
             if(img.getException().getClass().equals(FileNotFoundException.class)){
-                img = new Image((recipe.getImage())); //Si internet --> image depuis le web
+                img = new Image(fileName); //Si internet --> image depuis le web
                 // System.out.println(img);
             } else {
                 img = new Image("images/noInternet.bmp"); //Si pas d'internet --> image d'erreur
             }
         }
-        return rect;
-        // ImagePattern image = new ImagePattern(img);
-        // rect.setArcHeight(90.0);
-        // rect.setArcWidth(90.0);
-        // rect.setFill(image);
-        // rect.getStyleClass().add("img");
         // return rect;
+        ImagePattern image = new ImagePattern(img);
+        rect.setArcHeight(90.0);
+        rect.setArcWidth(90.0);
+        rect.setFill(image);
+        rect.getStyleClass().add("img");
+        return rect;
     }
 
 
@@ -407,7 +396,7 @@ public class Controller {
         buttonBar.getChildren().addAll(btnHome,btnFav);
 
 
-        Rectangle rect = this.frameImage(recipe, 200, 250);
+        Rectangle rect = this.frameImage(recipe.getImage(), 200, 250);
 
         VBox ingre = new VBox();
         for (String ing : recipe.getRequirements()){
@@ -653,7 +642,7 @@ public class Controller {
 
             card.setAlignment(Pos.CENTER); // Centre les éléments
 
-            Rectangle rect = this.frameImage(recipe, 200, 200);
+            Rectangle rect = this.frameImage(recipe.getImage(), 200, 200);
 
             Label titre = new Label(recipe.getName());
             titre.getStyleClass().add("cardTitle"); // modifier la taille des caractères suivant la longueur du titre
