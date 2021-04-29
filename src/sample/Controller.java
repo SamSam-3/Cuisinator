@@ -47,7 +47,7 @@ public class Controller {
     private Model model;
     private ArrayList<String> ingredsLeft = new ArrayList<String>();
     private Set<Recipe> recipeDisplay = new HashSet<Recipe>(); 
-    private Stack<String> frigo  = new Stack<String>();
+    private Set<String> frigo  = new HashSet<String>();
     private ArrayList<VBox> listCard = new ArrayList<VBox>();
     private VBox liste = new VBox();
     private Button btnFile = new Button();
@@ -593,42 +593,77 @@ public class Controller {
         }
     }
 
+    public void recipeTag(){
+        ArrayList<VBox> cartes = new ArrayList<VBox>();
+        VBox main = (VBox) recipeContainer.getContent();
+        main.getChildren().clear();
+
+        for(Recipe r : this.model.search("",null, frigo)){
+            cartes.add(listCard.get(model.getRecipes().indexOf(r)+1));
+        }
+
+        int indice=0;
+        int i=0;
+        while(i<(cartes.size()/nbCard)+1){
+
+            HBox line = new HBox(); // Nouvelle ligne de cartes
+            line.setSpacing(100);
+            line.getStyleClass().add("line");
+
+            int j=0;
+            while(j<nbCard && indice<cartes.size()) {
+                VBox card = listCard.get(indice);
+                line.setAlignment(Pos.CENTER);
+                line.getChildren().add(card); // Ajout des cartes a la ligne
+                j++;
+                indice++;
+            }
+            i++;
+            main.getChildren().add(line); // Ajout des line à la page d'accueil
+        }
+    main.autosize();
+    }
+
     @FXML
     public void stackTags(MouseEvent mouseEvent){
         Text element = (Text) mouseEvent.getTarget();
-        frigo.add(element.getText());
-
-        //Permet d'aligner les éléments proprement
-        HBox tag = new HBox();
-        Label lb = new Label(element.getText());
-        lb.setFont(new Font("Arial",12));
-        Button annuler = new Button("x");
-        annuler.getStyleClass().add("btnAnnuler");
+        if(!frigo.contains(element.getText())) {
+            frigo.add(element.getText());
+            this.recipeTag();
 
 
-        //Fonction pour annuler le tag
-        annuler.setOnMousePressed(mouseEvent1 -> { //Tout les tags sont dans frigo mtn
-            tags.getChildren().remove(tag);
-            Label toRemove = (Label) tag.getChildren().get(0);
-            frigo.remove(toRemove.getText());
+            //Permet d'aligner les éléments proprement
+            HBox tag = new HBox();
+            Label lb = new Label(element.getText());
+            lb.setFont(new Font("Arial", 12));
+            Button annuler = new Button("x");
+            annuler.getStyleClass().add("btnAnnuler");
+
+
+            //Fonction pour annuler le tag
+            annuler.setOnMousePressed(mouseEvent1 -> { //Tout les tags sont dans frigo mtn
+                tags.getChildren().remove(tag);
+                Label toRemove = (Label) tag.getChildren().get(0);
+                frigo.remove(toRemove.getText());
+                this.recipeTag();
+                System.out.println("Elements dans le frigo :" + frigo);
+            });
+
+            //Alignement et mise en page des cate
+            lb.setPadding(new Insets(5));
+            tag.setAlignment(Pos.CENTER);
+
+
+            //Ajout du label et bouton comme nouveau tag
+            tag.getChildren().add(lb);
+            tag.getChildren().add(annuler);
+            tag.getStyleClass().add("tag");
+
+            tags.setSpacing(5);
+            this.tags.getChildren().add(tag);
+
             System.out.println("Elements dans le frigo :" + frigo);
-        });
-
-        //Alignement et mise en page des cate
-        lb.setPadding(new Insets(5));
-        tag.setAlignment(Pos.CENTER);
-
-
-        //Ajout du label et bouton comme nouveau tag
-        tag.getChildren().add(lb);
-        tag.getChildren().add(annuler);
-        tag.getStyleClass().add("tag");
-
-        tags.setSpacing(5);
-        this.tags.getChildren().add(tag);
-
-        System.out.println("Elements dans le frigo :" + frigo);
-
+        }
     }
 
     public void initCard(ArrayList<Recipe> recipeList) {

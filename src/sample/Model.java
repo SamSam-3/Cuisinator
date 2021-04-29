@@ -75,9 +75,9 @@ public class Model {
                 for (String ing : ingredsFilter) {
                     if (ingMap.containsKey(ing)) {
                         for (Recipe recipe : ingMap.get(ing)) {
-                            if (recipe.getName().toLowerCase().contains(searchStr)) {
+                            //if (recipe.getName().toLowerCase().contains(searchStr)) {
                                 output.add(recipe);
-                            }
+                            //}
                         }
                     }
                 }
