@@ -517,27 +517,34 @@ public class Controller {
                     cartes.add(listCard.get(model.recipeList.indexOf(recipe)));
                 }
             }
-            int indice=0;
-            int i=0;
-            while(i<(cartes.size()/nbCard)+1){
-
-                HBox line = new HBox(); // Nouvelle ligne de cartes
-                line.setSpacing(100);
-                line.getStyleClass().add("line");
-
-                int j=0;
-                while(j<nbCard && indice<cartes.size()) {
-                    VBox card = cartes.get(indice);
-                    line.setAlignment(Pos.CENTER);
-                    line.getChildren().add(card); // Ajout des cartes a la ligne
-                    j++;
-                    indice++;
+        } else {
+            for(Recipe recipe : model.recipeList) {
+                if(recipe.getCategory().equals(catCourrant)) {
+                    cartes.add(listCard.get(model.recipeList.indexOf(recipe)));
                 }
-                i++;
-                catPage.getChildren().add(line); // Ajout des line à la page d'accueil
             }
-            catPage.autosize();
         }
+
+        int indice=0;
+        int i=0;
+        while(i<(cartes.size()/nbCard)+1){
+
+            HBox line = new HBox(); // Nouvelle ligne de cartes
+            line.setSpacing(100);
+            line.getStyleClass().add("line");
+
+            int j=0;
+            while(j<nbCard && indice<cartes.size()) {
+                VBox card = cartes.get(indice);
+                line.setAlignment(Pos.CENTER);
+                line.getChildren().add(card); // Ajout des cartes a la ligne
+                j++;
+                indice++;
+            }
+            i++;
+            catPage.getChildren().add(line); // Ajout des line à la page d'accueil
+        }
+        catPage.autosize();
     }
 
     @FXML
