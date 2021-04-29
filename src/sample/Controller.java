@@ -69,6 +69,7 @@ public class Controller {
 
     public void addRecipe(){
         actuPage = "addRecipe";
+        showCategories();
         ArrayList<String> ingredients = new ArrayList<String>();
         final String[] lien = {""}; //Va comprendre, java me saoule pour que ca soit une array String x)
 
@@ -490,6 +491,7 @@ public class Controller {
     public void categoryPage(String catClicked){
         actuPage = "catPage";
         catCourrant = catClicked;
+        showCategories();
         VBox catPage = (VBox) this.recipeContainer.getContent();
         catPage.getChildren().clear();
         ArrayList<VBox> cartes = new ArrayList<VBox>();
