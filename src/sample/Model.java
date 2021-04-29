@@ -8,8 +8,8 @@ public class Model {
     private Set<String> categories;
     private Set<String> ingredients;
 
-    public ArrayList<Recipe> recipeList; //J'ai du le passer en public dans le main (va voir si ca te dérange sinon supprime le commentaire)
-    private RecipeMap recipeMap;
+    private ArrayList<Recipe> recipeList;
+    public RecipeMap recipeMap;
     private ArrayList<Recipe> favList;
     private ArrayList<Recipe> likeList;
 
@@ -129,11 +129,31 @@ public class Model {
             likeList.remove(recipe);
         }
     }
-    public void toggleFav(Recipe recipe) {
+    public boolean toggleFav(Recipe recipe) {
         if (! favList.contains(recipe)) {
             favList.add(recipe);
+            return true;
         } else {
             favList.remove(recipe);
+            return false;
         }
+    }
+    public ArrayList<Recipe> getRecipes() {
+        return this.recipeList;
+    }
+    public ArrayList<Recipe> getFavorites() {
+        return this.favList;
+    }
+    public ArrayList<Recipe> getLikes() {
+        return this.likeList;
+    }
+
+    public void addRecipe(Recipe recipe) {
+        this.recipeList.add(recipe);
+        this.recipeMap.add(recipe);
+    }
+
+    public boolean isFavorite(Recipe recipe) {
+        return favList.contains(recipe);
     }
 }

@@ -21,7 +21,7 @@ public class Main extends Application {
         Controller ctrl = loader.getController();
         Model model = new Model(ctrl);
         ctrl.initModel(model);
-        ctrl.mainPage(model.recipeList);
+        ctrl.mainPage();
 
         primaryStage.setTitle("Cuisinator");
         //primaryStage.setFullScreen(true);
@@ -40,7 +40,7 @@ public class Main extends Application {
 
             if(ctrl.nbCard!=nbCardSave && ctrl.actuPage.equals("mainPage")){
                 nbCardSave = ctrl.nbCard;
-                ctrl.mainPage(model.recipeList);
+                ctrl.mainPage();
             }
             if(ctrl.nbCard!=nbCardSave && ctrl.actuPage.equals("catPage")){
                 nbCardSave = ctrl.nbCard;

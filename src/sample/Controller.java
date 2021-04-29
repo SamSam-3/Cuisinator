@@ -172,9 +172,9 @@ public class Controller {
                         lien[0], steps.getText());
 
                 //Ajouter la nouvelle recette à la base de données
-                model.recipeList.add(newRecipe);
+                model.addRecipe(newRecipe);
                 this.etatCard=0;
-                this.mainPage(model.recipeList);
+                this.mainPage();
               
 
             } else {
@@ -202,7 +202,7 @@ public class Controller {
         btnHome.setAlignment(Pos.CENTER_LEFT);
         btnHome.getStyleClass().add("home");
         btnHome.setOnMousePressed(mouseEvent -> {
-            this.mainPage(model.recipeList);
+            this.mainPage();
         });
 
         // Ajout des éléments à la page
@@ -335,7 +335,6 @@ public class Controller {
     }
     private Rectangle frameImage(Recipe recipe, int w, int h) {
         Rectangle rect = new Rectangle(0,0, w, h);
-
         Image img;
         try {
             img = new Image(new File(recipe.getImage()).toURI().toURL().toString());
@@ -352,17 +351,18 @@ public class Controller {
                 img = new Image("images/noInternet.bmp"); //Si pas d'internet --> image d'erreur
             }
         }
-        ImagePattern image = new ImagePattern(img);
-        rect.setArcHeight(90.0);
-        rect.setArcWidth(90.0);
-        rect.setFill(image);
-        rect.getStyleClass().add("img");
         return rect;
+        // ImagePattern image = new ImagePattern(img);
+        // rect.setArcHeight(90.0);
+        // rect.setArcWidth(90.0);
+        // rect.setFill(image);
+        // rect.getStyleClass().add("img");
+        // return rect;
     }
 
 
-    private void fav(Recipe recipe, Button btnFav){
-        if(recipe.isFavorite()){
+    private void fav(boolean isFav, Button btnFav){
+        if (isFav){
             btnFav.setStyle("-fx-background-position: center;" +
                     "  -fx-background-image: url('images/star.png');" +
                     "  -fx-background-repeat: no-repeat;" +
@@ -395,20 +395,14 @@ public class Controller {
         btnHome.getStyleClass().add("home");
         Button btnFav = new Button();
         btnFav.setAlignment(Pos.CENTER_RIGHT);
-        fav(recipe,btnFav);
+        fav(model.isFavorite(recipe),btnFav);
 
         //Mettre le boouton favoris dans l'angle à droite
         btnFav.setOnMousePressed(mouseEvent -> {
-            if(recipe.isFavorite()){
-                recipe.setFavorite(false);
-                fav(recipe,btnFav);
-            } else {
-                recipe.setFavorite(true);
-                fav(recipe,btnFav);
-            }
+            fav(model.toggleFav(recipe), btnFav);
         });
         btnHome.setOnMousePressed(mouseEvent -> {
-            this.mainPage(model.recipeList);
+            this.mainPage();
         });
         buttonBar.getChildren().addAll(btnHome,btnFav);
 
@@ -512,15 +506,13 @@ public class Controller {
         ArrayList<VBox> cartes = new ArrayList<VBox>();
 
         if(catClicked.equals("favoris")){
-            for(Recipe recipe : model.recipeList) {
-                if(recipe.isFavorite()) {
-                    cartes.add(listCard.get(model.recipeList.indexOf(recipe)));
-                }
+            for (Recipe r : model.getFavorites()) {
+                cartes.add(listCard.get(model.getRecipes().indexOf(r))); // Wtf?
             }
         } else {
-            for(Recipe recipe : model.recipeList) {
+            for(Recipe recipe : model.getRecipes()) {
                 if(recipe.getCategory().equals(catCourrant)) {
-                    cartes.add(listCard.get(model.recipeList.indexOf(recipe)));
+                    cartes.add(listCard.get(model.getRecipes().indexOf(recipe)));
                 }
             }
         }
@@ -681,7 +673,8 @@ public class Controller {
         }
     }
 
-    public void mainPage(ArrayList<Recipe> recipeList) {
+    public void mainPage() {
+        ArrayList<Recipe> recipeList = this.model.getRecipes();
         actuPage = "mainPage";
         if(etatCard==0){
             this.initCard(recipeList);
