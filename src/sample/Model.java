@@ -120,13 +120,15 @@ public class Model {
         return ingreds;
     }
     
-    public void toggleLike(Recipe recipe) {
+    public boolean toggleLike(Recipe recipe) {
         if (! likeList.contains(recipe)) {
             recipe.addLikes(1);
             likeList.add(recipe);
+            return true;
         } else {
             recipe.addLikes(-1);
             likeList.remove(recipe);
+            return false;
         }
     }
     public boolean toggleFav(Recipe recipe) {
