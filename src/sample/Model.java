@@ -4,7 +4,6 @@ import java.util.*;
 
 public class Model {
 
-    private Controller control;
     private Set<String> categories;
     private Set<String> ingredients;
 
@@ -13,8 +12,7 @@ public class Model {
     private ArrayList<Recipe> favList;
     private ArrayList<Recipe> likeList;
 
-    public Model(Controller control) {
-        this.control = control;
+    public Model() {
         this.loadData();
         this.categories = recipeMap.getCategories();
         this.ingredients = recipeMap.getIngredients();

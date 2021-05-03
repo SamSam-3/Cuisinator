@@ -51,17 +51,17 @@ public class WebScraper {
         String[][] urlDir = {
             {"salades-economiques", "avocat-en-salade"},
 
-            {"cuisine-indienne", "les-paellas", "recette-brochette-grillade", "les-oeufs", 
-            "les-poissons", "gibiers", "recette-brochette-grillade", "viande-dinde", "viande-de-porc", 
-            "viande-de-boeuf", "volaille-poulet", "viande-de-veau", "viande-mouton", "viande-oie", 
+            {"cuisine-indienne", "les-paellas", "recette-brochette-grillade", "les-oeufs",
+            "les-poissons", "gibiers", "recette-brochette-grillade", "viande-dinde", "viande-de-porc",
+            "viande-de-boeuf", "volaille-poulet", "viande-de-veau", "viande-mouton", "viande-oie",
             "cuisine-exotique", "les-legumes",  "potages-et-soupes", "terrines-de-legumes", "les-spaghettis", "tomato-ketchup", "terrines-de-legumes"},
-            
+
             {"les-desserts" , "les-pates-levees"},
-            
+
             {"les-sauces"}
         };
         String[] tags = {"salade", "plat", "dessert", "sauce"};
- 
+
         for (int i = 0; i < tags.length; i++) {
             for (String url : urlDir[i]) {
 
@@ -70,7 +70,7 @@ public class WebScraper {
                     Elements linkGroup = doc.select("h3 a");
                     int size = linkGroup.size();
                     int acc = 0;
-        
+
                     for (Element el : linkGroup) {
                         ////////// Affiche le progrès //////////
                         System.out.println(i + " - ( " + acc + "/" + size + " )");
@@ -91,7 +91,7 @@ public class WebScraper {
                     System.out.println(err);
                 }
             }
-            
+
         }
 
         System.out.println("Data has been collected succesfully");
@@ -112,14 +112,14 @@ public class WebScraper {
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
 
     }
-    
+
 
     public static void main(String[] args) {
         //////////////////// Test ////////////////////
@@ -147,8 +147,6 @@ public class WebScraper {
         //     System.out.println(recipe.getLikes());
         // }
         // System.out.println((int)(Math.random()*1000));
-
-
     }
 
 }

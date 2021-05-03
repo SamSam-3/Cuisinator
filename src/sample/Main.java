@@ -19,7 +19,7 @@ public class Main extends Application {
         Parent root = loader.load();
 
         Controller ctrl = loader.getController();
-        Model model = new Model(ctrl);
+        Model model = new Model();
         ctrl.initModel(model);
         ctrl.mainPage();
 

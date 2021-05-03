@@ -58,7 +58,6 @@ public class Controller {
     public String catCourrant = "";
 
     // Etat
-    private boolean doIngredSearch = false;
     public int etatCA = 0;
     public int etatCO = 0;
 
@@ -341,7 +340,6 @@ public class Controller {
                 img = new Image("images/noInternet.bmp"); //Si pas d'internet --> image d'erreur
             }
         }
-        // return rect;
         ImagePattern image = new ImagePattern(img);
         rect.setArcHeight(90.0);
         rect.setArcWidth(90.0);
@@ -445,7 +443,6 @@ public class Controller {
             this.recipePossible.setVisible(true);
             this.recipePossible.setDisable(false);
         } else {
-            this.doIngredSearch = true;
             this.vbI.toFront();
             this.ingredientsPossible.setContent(this.vbI);
             this.findByIngredients.setVisible(true);
@@ -456,7 +453,6 @@ public class Controller {
         if(etat == 0) {
             this.recipePossible.setVisible(false);
         } else {
-            this.doIngredSearch = false;
             this.findByIngredients.setVisible(false);
         }
     }
