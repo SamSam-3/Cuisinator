@@ -540,17 +540,6 @@ public class Controller {
     }
 
     @FXML
-    public void showAdvanced() {
-        this.doIngredSearch = (! this.doIngredSearch) && this.recipePossible.isVisible();
-        this.ingredientsPossible.setVisible(this.doIngredSearch);
-        if (this.doIngredSearch) {
-            for (String ing : this.model.searchIngredients(barreRecherche.getCharacters().toString().toLowerCase())) {
-                this.addIngredients(ing);
-            }
-        }   
-    } //Est ce que ca sert réellement ?? Il a pas l'air utilisé et depuis lgtps
-
-    @FXML
     public void findRecipe() {
         String searchRec = barreRecherche.getCharacters().toString().toLowerCase();
         String searchIng = barreTags.getCharacters().toString().toLowerCase();
@@ -598,7 +587,7 @@ public class Controller {
         VBox main = (VBox) recipeContainer.getContent();
         main.getChildren().clear();
 
-        for(Recipe r : this.model.search("",null, frigo)){
+        for(Recipe r : this.model.search("", null, frigo)){
             cartes.add(listCard.get(model.getRecipes().indexOf(r)+1));
         }
 
