@@ -151,6 +151,7 @@ public class Model {
     public void addRecipe(Recipe recipe) {
         this.recipeList.add(recipe);
         this.recipeMap.add(recipe);
+        this.saveData();
     }
 
     public boolean isFavorite(Recipe recipe) {

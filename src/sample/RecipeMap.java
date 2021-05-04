@@ -2,7 +2,7 @@ package sample;
 
 import java.util.*;
 
-public class RecipeMap extends HashMap<String, HashMap<String, ArrayList<Recipe>>> {
+public class RecipeMap extends HashMap<String, HashMap<String, Set<Recipe>>> {
     private static final long serialVersionUID = 1L;
     
     public RecipeMap(List<Recipe> r) { 
@@ -13,19 +13,19 @@ public class RecipeMap extends HashMap<String, HashMap<String, ArrayList<Recipe>
         for (Recipe r : recipes) {
 
             // Récupère le dictionnaire par categorie
-            HashMap<String, ArrayList<Recipe>> ingredientMap = this.get(r.getCategory()); 
+            HashMap<String, Set<Recipe>> ingredientMap = this.get(r.getCategory()); 
             // Ou en fait un nouveau s'il n'éxiste pas déjà pour cette catégorie
             if (ingredientMap == null) { 
-                ingredientMap = new HashMap<String, ArrayList<Recipe>>();
+                ingredientMap = new HashMap<String, Set<Recipe>>();
                 this.put(r.getCategory(), ingredientMap);
             }
 
             for (String ingredient : r.getIngredients()) {
             
                 // Même chose pour le dictionnaire par ingrédients 
-                ArrayList<Recipe> recipesByIngredient = ingredientMap.get(ingredient); 
+                Set<Recipe> recipesByIngredient = ingredientMap.get(ingredient); 
                 if (recipesByIngredient == null) {
-                    recipesByIngredient = new ArrayList<Recipe>();
+                    recipesByIngredient = new HashSet<Recipe>();
                     ingredientMap.put(ingredient, recipesByIngredient);
                 }
                 
@@ -39,7 +39,7 @@ public class RecipeMap extends HashMap<String, HashMap<String, ArrayList<Recipe>
         var ingMap = this.get(recipe.getCategory());
         for (String ing : recipe.getIngredients()) {
             if (! ingMap.containsKey(ing)) {
-                ingMap.put(ing, new ArrayList<Recipe>());
+                ingMap.put(ing, new HashSet<Recipe>());
             }
             ingMap.get(ing).add(recipe);
         }

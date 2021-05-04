@@ -257,8 +257,7 @@ public class Controller {
 
         Label lbl = new Label(r.getName());
         lbl.getStyleClass().add("listRecipe");
-        hb.getChildren().addAll(lbl,new Label("\t"+r.getLikes()),new ImageView(new Image("images/like.png")));
-
+        hb.getChildren().addAll(lbl,new Label("\t"+r.getLikes()), new ImageView(new Image("images/like.png")));
         this.vb.getChildren().add(hb);
     }
 
