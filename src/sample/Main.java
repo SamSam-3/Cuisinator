@@ -58,14 +58,15 @@ public class Main extends Application {
             ctrl.toolbar.setPrefWidth(newValW.intValue());
             ctrl.course.setLayoutX(ctrl.toolbar.getWidth()-28-ctrl.course.getWidth());
 
+
+            //Déplacement des listing de recherche
+            ctrl.recipePossible.setLayoutX(ctrl.barreRecherche.getLayoutX());
+            ctrl.recipePossible.setLayoutY(ctrl.barreRecherche.getLayoutY()+ctrl.barreRecherche.getHeight());
+
             if(newValW.intValue()-560<=(bar+ctrl.barreRecherche.getWidth())){
                 //Déplacement l'une sous l'autre
                 ctrl.barreRecherche.setLayoutY(10);
                 ctrl.barreTags.setLayoutY(ctrl.barreRecherche.getHeight()+10);
-
-                //Déplacement des listing de recherche
-                ctrl.recipePossible.setLayoutX(ctrl.barreRecherche.getLayoutX());
-                ctrl.recipePossible.setLayoutY(ctrl.barreRecherche.getLayoutY()+ctrl.barreRecherche.getHeight());
 
                 //Déplacement en X
                 int x = newValW.intValue()/2 - (int) ctrl.barreRecherche.getWidth()/2;
